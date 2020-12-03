@@ -58,6 +58,7 @@ public class DBFunction {
         }
         return true;
     }
+    //添加好友
     public static boolean addFriend(int receiveId,int sendId,String massage){
         try {
             pstmtMasssge.setInt(1,receiveId);
