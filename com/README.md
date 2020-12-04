@@ -1,5 +1,5 @@
 # public static boolean judgeLogin(int id,String pwd)
-判断登录，登录成功返回true
+判断登录，登录成功返回User类，否则为空
 # public static boolean createUser(String pwd, String name, int sex, String birthday, String address, String phone, String signature)
 密码，用户名，性别为必填项，性别：0为保密，1为男，2为女，其他可填null
 # public static boolean addFriend(int receiveId,int sendId)
