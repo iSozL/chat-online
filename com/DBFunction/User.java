@@ -13,6 +13,10 @@ public class User {
     private List<String> userGroup;
     private List<UserFriend> userFriend;
 
+    public User(int id, String userName, int userSex, String userBirthday, String userAddress, String userPhone, String userSignature){
+        this(id, userName, userSex, userBirthday, userAddress, userPhone, userSignature,null,null);
+    }
+
     public User(int id, String userName, int userSex, String userBirthday, String userAddress, String userPhone, String userSignature, List<String> userGroup, List<UserFriend> userFriend) {
         this.id = id;
         this.userName = userName;
@@ -95,5 +99,20 @@ public class User {
 
     public void setUserFriend(List<UserFriend> userFriend) {
         this.userFriend = userFriend;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", userSex=" + userSex +
+                ", userBirthday='" + userBirthday + '\'' +
+                ", userAddress='" + userAddress + '\'' +
+                ", userPhone='" + userPhone + '\'' +
+                ", userSignature='" + userSignature + '\'' +
+                ", userGroup=" + userGroup +
+                ", userFriend=" + userFriend +
+                '}';
     }
 }
