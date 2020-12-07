@@ -1,4 +1,4 @@
-package com.DBFunction;
+package com.dbfunction;
 
 import java.util.List;
 
@@ -12,10 +12,6 @@ public class User {
     private String userSignature;
     private List<String> userGroup;
     private List<UserFriend> userFriend;
-
-    public User(int id, String userName, int userSex, String userBirthday, String userAddress, String userPhone, String userSignature){
-        this(id, userName, userSex, userBirthday, userAddress, userPhone, userSignature,null,null);
-    }
 
     public User(int id, String userName, int userSex, String userBirthday, String userAddress, String userPhone, String userSignature, List<String> userGroup, List<UserFriend> userFriend) {
         this.id = id;

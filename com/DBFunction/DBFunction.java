@@ -1,4 +1,4 @@
-package com.DBFunction;
+package com.dbfunction;
 
 
 import com.connmysql.ConnMysql;
@@ -68,7 +68,7 @@ public class DBFunction {
     }
 
     //删除已读消息
-    private static final String deleteReadMassage = "DELETE FROM read_massage WHERE user_receive =? and user_send=? and is_friend_request=?";
+    private static final String deleteReadMassage = "DELETE FROM read_massage WHERE user_receive =? and user_send=? and massage=? and send_time=? and is_friend_request=?";
     private static PreparedStatement pstmtDeleteReadMassage;
     static {
         try {
@@ -199,6 +199,7 @@ public class DBFunction {
         }
     }
 
+    //修改好友分组
     private static final String updateGroup = "UPDATE user_relation SET user_group=? WHERE user_id1=?";
     private static PreparedStatement pstmtUpdateGroup;
     static {
@@ -209,11 +210,43 @@ public class DBFunction {
         }
     }
 
+    //删除分组
     private static final String deleteGroup = "DELETE FROM group_information WHERE user_id=? and user_group=?";
     private static PreparedStatement pstmtDeleteGroup;
     static {
         try {
             pstmtDeleteGroup = connection.prepareStatement(deleteGroup);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    //添加好友印象
+    private static final String addEvaluate = "INSERT INTO user_evaluate VALUES (?,?,?)";
+    private static PreparedStatement pstmtAddEvaluate;
+    static {
+        try {
+            pstmtAddEvaluate = connection.prepareStatement(addEvaluate);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private static final String showEvaluate = "SELECT * FROM user_evaluate WHERE user_id1=?";
+    private static PreparedStatement pstmtShowEvaluate;
+    static {
+        try {
+            pstmtShowEvaluate = connection.prepareStatement(showEvaluate);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private static final String deleteEvaluate = "DELETE FROM user_evaluate WHERE user_id1=? and user_id2=? and evaluate=?";
+    private static PreparedStatement pstmtDeleteEvaluate;
+    static {
+        try {
+            pstmtDeleteEvaluate = connection.prepareStatement(deleteEvaluate);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -326,6 +359,7 @@ public class DBFunction {
         }
     }
 
+    //获取分组
     public static List getGroup(int userId){
         try {
             pstmtGetGroupInfo.setInt(1,userId);
@@ -367,7 +401,7 @@ public class DBFunction {
     }
 
     //发送消息
-    public static boolean sendMassage(int receiveId,int sendId,String massage){
+    public static boolean sendMassage(int sendId,int receiveId,String massage){
         try {
             pstmtSendMasssge.setInt(1,receiveId);
             pstmtSendMasssge.setInt(2,sendId);
@@ -398,7 +432,7 @@ public class DBFunction {
     }
 
     //获取所有未读消息
-    public static List getAllUnreadMassage(int receiveId){
+    public static List getUnreadMassage(int receiveId){
         List<Massage> massages = new ArrayList<Massage>();
         try {
             pstmtGetAllUnreadMassge.setInt(1,receiveId);
@@ -432,6 +466,22 @@ public class DBFunction {
         }
     }
 
+    //删除已读消息
+    public static boolean deleteReadMassage(int receiveId,int sendId,String massage,String sendTime,int isFriendRequest){
+        try {
+            pstmtDeleteReadMassage.setInt(1,receiveId);
+            pstmtDeleteReadMassage.setInt(2,sendId);
+            pstmtDeleteReadMassage.setString(3,massage);
+            pstmtDeleteReadMassage.setString(4,sendTime);
+            pstmtDeleteReadMassage.setInt(5,isFriendRequest);
+            pstmtDeleteReadMassage.executeUpdate();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+
     //添加分组
     public static boolean addGroup(int id, String groupName){
         try {
@@ -461,6 +511,7 @@ public class DBFunction {
         }
     }
 
+    //删除好友
     public static boolean deleteFriend(int userId1,int userId2){
         try {
             pstmtDeleteFriend.setInt(1,userId1);
@@ -476,12 +527,56 @@ public class DBFunction {
         }
     }
 
-    public static boolean moveFriend(int userId1,int userId2,String DstGroup){
+    //移动好友分组
+    public static boolean moveFriend(int userId1,int userId2,String group){
         try {
-            pstmtMoveFriend.setString(1,DstGroup);
+            pstmtMoveFriend.setString(1,group);
             pstmtMoveFriend.setInt(2,userId1);
             pstmtMoveFriend.setInt(3,userId2);
             pstmtMoveFriend.executeUpdate();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+
+    //添加好友印象
+    public static boolean addEvaluate(int userId1, int userId2, String evaluate){
+        try {
+            pstmtAddEvaluate.setInt(1,userId2);
+            pstmtAddEvaluate.setInt(2,userId1);
+            pstmtAddEvaluate.setString(3,evaluate);
+            pstmtAddEvaluate.executeUpdate();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+
+    //查看好友印象
+    public static List showEvaluate(int userId){
+        List<Evaluate> evaluates = new ArrayList<Evaluate>();
+        try {
+            pstmtShowEvaluate.setInt(1,userId);
+            ResultSet rs = pstmtShowEvaluate.executeQuery();
+            while (rs.next()){
+                evaluates.add(new Evaluate(rs.getInt(1),rs.getInt(2),rs.getString(3)));
+            }
+            return evaluates;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
+    }
+
+    public static boolean deleteEvaluate(int userId1,int userId2,String evaluate){
+        try {
+            pstmtDeleteEvaluate.setInt(1,userId1);
+            pstmtDeleteEvaluate.setInt(2,userId2);
+            pstmtDeleteEvaluate.setString(3,evaluate);
+            pstmtDeleteEvaluate.executeUpdate();
             return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -506,26 +601,13 @@ public class DBFunction {
             分组查询
             好友移动
             删除分组（删除分组，好友放入默认分组）
-        待完成：
-            删除消息记录
             添加好友印象
             查看好友印象
             删除好友印象
+            删除消息记录
+        待完成：
          */
 
-
-        /*
-        private static PreparedStatement pstmtJudgeLogin;
-        private static PreparedStatement pstmtCreateUser;
-        private static PreparedStatement pstmtSendMasssge;
-        private static PreparedStatement pstmtDeleteUnreadMassage;
-        private static PreparedStatement pstmtAddReadMasssge;
-        private static PreparedStatement pstmtCreateGroup;
-        private static PreparedStatement pstmtGetUnreadMassge;
-        private static PreparedStatement pstmtGetAllUnreadMassge;
-        private static PreparedStatement pstmtGetGroupInfo;
-        private static PreparedStatement pstmtGetFriend;
-        */
         //用户登录（成功）
 //        System.out.println(judgeLogin(10001, "123456"));
 
@@ -540,16 +622,16 @@ public class DBFunction {
 //        addGroup(10001,"我的最爱");
 
         //发送消息（成功）
-//        sendMassage(10001,10001,"你好");
+//        sendMassage(10001,10002,"你好");
 
         //未读消息显示（成功）
-//        List<Massage> massages =  getUnreadMassage(10000);
-//        for(Massage massage:massages){
+//        List<Massage> massages1 =  getAllUnreadMassage(10001);
+//        for(Massage massage:massages1){
 //            System.out.println(massage.getUserReceive() + " " + massage.getUserSend() + " " + massage.getMassage() + " " + massage.getSendTime() + " " + massage.getIsFriendRequest());
 //        }
 
         //获取某一个人消息
-//        List<Massage> massages =  getUnreadMassage(10001,10001);
+//        List<Massage> massages =  getUnreadMassage(10001,10002);
 //        for(Massage massage:massages){
 //            System.out.println(massage.getUserReceive() + " " + massage.getUserSend() + " " + massage.getMassage() + " " + massage.getSendTime() + " " + massage.getIsFriendRequest());
 //        }
@@ -558,7 +640,10 @@ public class DBFunction {
 //        addFriend(10001,10002,"hello world!","我的最爱");
 
         //阅读消息
-//        readMassage(10001,10001);
+//        readMassage(10001,10002);
+
+        //删除消息
+//        deleteReadMassage(10001,10002,"你好","2020-12-7 11:47:57",0);
 
         //查看资料卡
 //        getUserinfo(10001);
@@ -574,6 +659,15 @@ public class DBFunction {
 
         //删除分组
 //        deleteGroup(10001,"我的最爱");
+
+        //添加好友印象
+//        addEvaluate(10001,10002,"这是个傻逼");
+
+        //查询好友印象
+//        System.out.println(showEvaluate(10001));
+
+        //删除好友印象
+//        deleteEvaluate(10001,10002,"这是个傻逼");
 
     }
 }
