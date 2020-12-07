@@ -1,9 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+  HashRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+
+import Login from './views/login/index';
 
 const Index:React.FC = () => {
   return (
-    <div>hello, chat</div>
+    <Router>
+      <Switch>
+        <Route path="/login" component={Login} exact></Route>
+      </Switch>
+    </Router>
   )
 }
 
