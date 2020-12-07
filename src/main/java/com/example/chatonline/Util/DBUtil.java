@@ -1,8 +1,6 @@
-package com.example.jwtx.Util;
+package com.example.chatonline.Util;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

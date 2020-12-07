@@ -1,8 +1,6 @@
-package com.example.jwtx.Model;
+package com.example.chatonline.Model;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.HashMap;

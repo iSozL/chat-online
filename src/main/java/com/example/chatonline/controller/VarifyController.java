@@ -1,16 +1,13 @@
-package com.example.jwtx.controller;
+package com.example.chatonline.controller;
 
-import com.example.jwtx.Model.JsonResult;
-import com.example.jwtx.Service.UserService;
-import com.example.jwtx.Util.DBUtil;
-import com.example.jwtx.Util.JWTUtil;
+import com.example.chatonline.Model.JsonResult;
+import com.example.chatonline.Service.UserService;
+import com.example.chatonline.Util.DBUtil;
+import com.example.chatonline.Util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 @RestController
 public class VarifyController {

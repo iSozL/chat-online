@@ -1,4 +1,4 @@
-package com.example.jwtx;
+package com.example.chatonline;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

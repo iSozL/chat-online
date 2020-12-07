@@ -1,7 +1,6 @@
-package com.example.jwtx.Dao;
+package com.example.chatonline.Dao;
 
-import com.example.jwtx.Model.User;
-import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
+import com.example.chatonline.Model.User;
 
 import java.sql.Connection;
 

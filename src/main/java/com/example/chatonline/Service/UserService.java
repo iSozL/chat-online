@@ -1,8 +1,7 @@
-package com.example.jwtx.Service;
+package com.example.chatonline.Service;
 
-import com.example.jwtx.Dao.Impl.UserDaoImpl;
-import com.example.jwtx.Dao.UserDao;
-import com.example.jwtx.Model.User;
+import com.example.chatonline.Dao.UserDao;
+import com.example.chatonline.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

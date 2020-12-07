@@ -1,4 +1,4 @@
-package com.example.jwtx.Model;
+package com.example.chatonline.Model;
 
 public class User {
     private  int  userId;
