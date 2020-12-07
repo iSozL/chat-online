@@ -1,4 +1,4 @@
-package com.dbfunction;
+package com.DBFunction;
 
 public class Massage {
     private int userReceive;

@@ -1,9 +1,17 @@
-package com.dbfunction;
+package com.DBFunction;
 
 public class UserFriend{
    private int userId;
    private String userGroup;
    private int isAccept;
+
+   public UserFriend(){
+       this(0,null,0);
+   }
+
+   public UserFriend(int userId){
+       this(userId,null,0);
+   }
 
    public UserFriend(int userId,String userGroup,int isAccept){
        this.userId=userId;
