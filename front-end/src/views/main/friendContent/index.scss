@@ -1,0 +1,72 @@
+.friend-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+  height: 100%;
+  border: 1px solid #cccccc;
+  background-color: #d5d8db;
+}
+.unread {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  width: 90%;
+  height: 8%;
+  border-radius: 5px;
+  background-color: #f0f1f1;
+  img {
+    margin-right: 10px;
+  }
+}
+
+.content{
+  margin-top: 20px;
+  width: 90%;
+  height: 85%;
+  border-radius: 5px;
+  background-color: #f0f1f1;
+}
+.site-custom-tab-bar {
+  z-index: 1;
+  background: #fff;
+}
+
+.ant-tabs > .ant-tabs-nav .ant-tabs-nav-list, .ant-tabs > div > .ant-tabs-nav .ant-tabs-nav-list {
+  padding-left: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: -webkit-transform 0.3s;
+  transition: transform 0.3s;
+  transition: transform 0.3s, -webkit-transform 0.3s;
+}
+
+.ant-tabs-tab {
+  position: relative;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 12px 10px;
+  font-size: 14px;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+.user-msg {
+  width: 90%;
+  height: 60px;
+  border: 1px solid #cccccc;
+}
+.user-msg:hover {
+  width: 90%;
+  height: 60px;
+  border: 1px solid #cccccc;
+  background-color: #fff;
+}

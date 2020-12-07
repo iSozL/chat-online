@@ -7,12 +7,14 @@ import {
 } from "react-router-dom";
 
 import Login from './views/login/index';
+import Main from './views/main/index'
 
 const Index:React.FC = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/login" component={Login} exact></Route>
+        <Route path="/login" component={Login}></Route>
+        <Route path="/" component={Main} exact></Route>
       </Switch>
     </Router>
   )
