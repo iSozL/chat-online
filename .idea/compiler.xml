@@ -6,16 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="jwtx" />
+        <module name="chat-online" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="jwtx" target="1.8" />
+      <module name="chat-online" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="jwtx" options="-parameters" />
+      <module name="chat-online" options="-parameters" />
     </option>
   </component>
 </project>
