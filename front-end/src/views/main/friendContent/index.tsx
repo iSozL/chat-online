@@ -1,8 +1,47 @@
 import * as React from 'react';
 import './index.scss'
 import { Tabs } from 'antd';
+import Scroll from 'react-custom-scrollbars';
 
 const { TabPane } = Tabs;
+
+
+const MsgList = () => {
+  return (
+    <Scroll>
+      <div className="user-msg">
+        312321
+      </div>
+      <div className="user-msg">
+        312321
+      </div>
+      <div className="user-msg">
+        312321
+      </div>
+      <div className="user-msg">
+        312321
+      </div>
+      <div className="user-msg">
+        312321
+      </div>
+      <div className="user-msg">
+        312321
+      </div>
+      <div className="user-msg">
+        312321
+      </div>
+      <div className="user-msg">
+        312321
+      </div>
+      <div className="user-msg">
+        312321
+      </div>
+      <div className="user-msg">
+        312321
+      </div>
+    </Scroll>
+  )
+}
 
 const FriendContent = () => {
   return (
@@ -20,16 +59,8 @@ const FriendContent = () => {
             }
             key="1"
           >
-            <div style={{display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center"}}>
-              <div className="user-msg">
-                1
-              </div>
-              <div className="user-msg">
-                1
-              </div>
-              <div className="user-msg">
-                1
-              </div>
+            <div style={{height: "400px", display: "flex", flexDirection: "column", alignItems: "center",}}>
+              <MsgList />
             </div>
           </TabPane>
           <TabPane

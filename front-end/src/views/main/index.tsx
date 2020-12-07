@@ -4,18 +4,20 @@ import FriendContent from './friendContent/index';
 import Message from './message/index'
 const Main: React.FC = () => {
   return (
-    <div className="main-container">
-      <div className="aside">
-        <div className="avater">
-          <img src={require('../../assets/imgs/avater.svg')} />
+    <div className="main">
+      <div className="main-container">
+        <div className="aside">
+          <div className="avater">
+            <img src={require('../../assets/imgs/avater.svg')} />
+          </div>
+          <div>
+            <img className="me" src={require('../../assets/imgs/me.svg')} />
+          </div>
         </div>
-        <div>
-          <img className="me" src={require('../../assets/imgs/me.svg')} />
+        <div className="main-body">
+          <FriendContent />
+          <Message />
         </div>
-      </div>
-      <div className="main-body">
-        <FriendContent />
-        <Message />
       </div>
     </div>
   )
