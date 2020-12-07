@@ -1,4 +1,4 @@
-package com.example.jwtx.Util;
+package com.example.chatonline.Util;
 
 public class COMUtil {
     public static int initUserId()

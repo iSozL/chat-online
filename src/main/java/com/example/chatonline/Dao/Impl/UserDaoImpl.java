@@ -1,14 +1,12 @@
-package com.example.jwtx.Dao.Impl;
+package com.example.chatonline.Dao.Impl;
 
-import com.example.jwtx.Dao.UserDao;
-import com.example.jwtx.Model.User;
+import com.example.chatonline.Dao.UserDao;
+import com.example.chatonline.Model.User;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @Repository("userDaoImpl")
 public class UserDaoImpl implements UserDao {

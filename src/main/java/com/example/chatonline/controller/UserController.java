@@ -1,22 +1,17 @@
-package com.example.jwtx.controller;
+package com.example.chatonline.controller;
 
-import com.example.jwtx.Model.JsonResult;
-import com.example.jwtx.Model.User;
-import com.example.jwtx.Service.UserService;
-import com.example.jwtx.Util.COMUtil;
-import com.example.jwtx.Util.DBUtil;
-import com.example.jwtx.Util.JWTUtil;
+import com.example.chatonline.Model.JsonResult;
+import com.example.chatonline.Model.User;
+import com.example.chatonline.Service.UserService;
+import com.example.chatonline.Util.COMUtil;
+import com.example.chatonline.Util.DBUtil;
+import com.example.chatonline.Util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Priority;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class UserController {

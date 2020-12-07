@@ -1,22 +1,16 @@
-package com.example.jwtx.Util;
+package com.example.chatonline.Util;
 
 import io.jsonwebtoken.*;
-import jdk.nashorn.internal.ir.debug.ClassHistogramElement;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
-
-import org.springframework.stereotype.Service;
 //jwt含有三部分：头部（header）、载荷（payload）、签证（signature）
 /*
 *(1)头部一般有两部分信息：声明类型、声明加密的算法（通常使用HMAC SHA256）
