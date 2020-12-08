@@ -2,6 +2,9 @@ import * as React from 'react';
 import './index.scss'
 import FriendContent from './friendContent/index';
 import Message from './message/index'
+import { Container } from './store/index'
+
+
 const Main: React.FC = () => {
   return (
     <div className="main">
@@ -15,8 +18,10 @@ const Main: React.FC = () => {
           </div>
         </div>
         <div className="main-body">
-          <FriendContent />
-          <Message />
+          <Container>
+            <FriendContent />
+            <Message />
+          </Container>
         </div>
       </div>
     </div>

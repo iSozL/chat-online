@@ -1,13 +1,17 @@
-import { url } from 'inspector';
-import React from 'react';
+import React, {useContext} from 'react';
+import {changeUserContext} from '../store/index'
 import './index.scss'
 const Message = () => {
+  const { userMsg, useDispatch } = useContext(changeUserContext)
   return (
     <div className="msg-container">
-      {/* <img className="none-msg" src={require('../../../assets/imgs/msg-bg.svg')} /> */}
-      <div className="msg-body">
-        1
-      </div>
+      {
+        userMsg.show ? 
+        <div className="msg-body">
+          {userMsg.username}
+        </div> :
+        <img className="none-msg" src={require('../../../assets/imgs/msg-bg.svg')} />
+      }
       <div className="msg-footer"></div>
     </div>
   )
