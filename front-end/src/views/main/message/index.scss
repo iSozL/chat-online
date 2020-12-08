@@ -37,3 +37,284 @@
   height: 200px;
   padding: 0 60px;
 }
+$popper-border-color: #1890ff;
+$popper-background-color: #fff;
+
+.popper {
+  display: inline-block;
+  color: #000;
+	font-size: 14px;
+	line-height: 18px;
+  padding: 10px;
+  margin: 0 18px;
+  max-width: 288px;
+	position: relative;
+  border-radius: 5px;
+  background: $popper-background-color;
+  box-sizing: border-box;
+  box-shadow: 0px 3px 3px 0 #fff;
+}
+
+.arrow-box {
+  z-index: 5;
+	position: relative;
+  background: $popper-background-color;
+  box-sizing: border-box;
+  box-shadow: 0px 3px 3px 0 #fff;
+
+  &.arrow-bottom {
+    &::after,
+    &::before {
+      position: absolute;
+      bottom: -3px; // 6px - 3px
+      left: 50%;
+      content: " ";
+      height: 0;
+      width: 0;
+      pointer-events: none;
+      border: solid transparent;
+      box-sizing: border-box;
+      transform-origin: 0 0;
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      z-index: 4;
+
+      border-width: 6px;
+      border-style: solid;
+      border-color: transparent $popper-background-color $popper-background-color transparent;
+    }
+
+    &::before {
+      z-index: 3;
+
+      bottom: -4px; // 6px - 2px
+
+      border-width: 6px; // .arrow_box border width + .arrow width
+      border-style: solid;
+      border-color: transparent $popper-border-color $popper-border-color transparent;
+
+      box-shadow: 3px 3px 3px 0 #fff;
+    }
+  }
+
+  &.arrow-top {
+    &::after,
+    &::before {
+      position: absolute;
+      top: -8px;  // 6px + 2px
+      left: 50%;
+      content: " ";
+      height: 0;
+      width: 0;
+      pointer-events: none;
+      border: solid transparent;
+      box-sizing: border-box;
+      transform-origin: 0 0;
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      z-index: 4;
+
+      border-width: 6px;
+      border-style: solid;
+      border-color: #fff;
+    }
+
+    &::before {
+			display: none;
+
+      border-width: 6px;
+      border-style: solid;
+      border-color: $popper-border-color transparent transparent $popper-border-color;
+
+      box-shadow: 3px 3px 3px 0 #fff;
+    }
+  }
+
+  &.arrow-left {
+    &::after,
+    &::before {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      content: " ";
+      height: 0;
+      width: 0;
+      pointer-events: none;
+      border: solid transparent;
+      box-sizing: border-box;
+      transform-origin: 0 0;
+      transform: translateY(-8px) rotate(45deg);
+    }
+
+    &::after {
+      z-index: 4;
+
+      border-width: 6px;
+      border-style: solid;
+      border-color: transparent transparent $popper-background-color $popper-background-color;
+    }
+
+    &::before {
+      z-index: 3;
+
+      left: -1px; // 表示边框的三角必须必须在气泡边框的外部，所以算上 1 像素的边框
+
+      border-width: 6px;
+      border-style: solid;
+      border-color: transparent transparent $popper-border-color $popper-border-color;
+
+      box-shadow: 3px 3px 3px 0 #fff;
+    }
+  }
+
+  &.arrow-right {
+    &::after,
+    &::before {
+      position: absolute;
+      top: 50%;
+      right: -12px; // 6px + 6px, 边框的 1 像素被三角遮挡
+      content: " ";
+      height: 0;
+      width: 0;
+      pointer-events: none;
+      border: solid transparent;
+      box-sizing: border-box;
+      transform-origin: 0 0;
+      transform: translateY(-8px) rotate(45deg);
+    }
+
+    &::after {
+      z-index: 4;
+
+      border-width: 6px;
+      border-style: solid;
+      border-color: $popper-background-color $popper-background-color transparent transparent;
+    }
+
+    &::before {
+      z-index: 3;
+
+      right: -13px; // 6px + 1px + 6px, 表示边框的三角必须必须在气泡边框的外部，所以算上 1 像素的边框
+
+      border-width: 6px;
+      border-style: solid;
+      border-color: $popper-border-color $popper-border-color transparent transparent;
+
+      box-shadow: 3px 3px 3px 0 #fff;
+    }
+  }
+}
+
+.popper,
+.arrow-box {
+	&.border {
+		border: 1px solid $popper-border-color;
+	}
+}
+
+.demo {
+	color: #fff;
+	margin-top: 18px;
+	
+	.row {
+		width: 100%;
+		max-width: 375px;
+		margin: 0 auto;
+		
+		&::before,
+		&::after {
+			content: '';
+			display: table;
+		}
+		
+		&::after {
+			clear: both;
+		}
+	}
+
+	.column,
+	.columns {
+		width: 100%;
+		padding-left: 18px;
+		padding-right: 18px;
+		float: left;
+	}
+	
+	.row {
+		margin-bottom: 38px;
+		
+		p {
+			margin-bottom: 18px;
+		}
+	}
+	
+	.tip,
+	.solution {
+		font-size: 12px;
+		line-height: normal;
+		margin-bottom: 18px;
+		
+		span {
+			font-weight: bold;
+			text-decoration: underline;
+		}
+	}
+	
+	.solution {
+		color: #d1d1d1;
+		
+		span {
+			text-decoration: none;
+		}
+		
+		a {
+			color: #d1d1d1;
+		}
+	}
+	
+	a {
+		color: #4A90E2;
+	}
+	
+	ul {
+		counter-reset: my-badass-counter;
+		
+		li {
+			margin-bottom: 8px;
+			content: counter(my-badass-counter);
+			counter-increment: my-badass-counter;
+			
+			&::before {
+				content: counter(my-badass-counter);
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				display: inline-block;
+				line-height: 24px;
+				color: #B1B1B1;
+				text-align: center;
+				margin-right: 8px;
+				background: #efefef;
+			}
+		}
+	}
+	
+	.no-border {
+		border-color: $popper-background-color;
+		
+		&::after,
+    &::before {
+			border-color: $popper-background-color;
+    }
+	}
+}
+
+.minHeight-38 {
+	min-height: 38px;
+	height: auto !important;
+	height: 38px;
+}
