@@ -8,7 +8,9 @@ const Message = () => {
       {
         userMsg.show ? 
         <div className="msg-body">
-          {userMsg.username}
+          <div className="msg-header">
+            {userMsg.username}
+          </div>
         </div> :
         <img className="none-msg" src={require('../../../assets/imgs/msg-bg.svg')} />
       }
