@@ -11,7 +11,7 @@ web程序设计大作业
 $ git clone
 $ cd chat-online
 $ cd front-end
-$ yarn || npm run install
+$ yarn || npm install
 // 调试
 $ yarn dev || npm run dev
 // 打包
