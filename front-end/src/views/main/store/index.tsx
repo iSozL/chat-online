@@ -18,7 +18,8 @@ const reducer = (state: any, action: any) => {
 export const Container = (props: any) => {
   const [userMsg, useDispatch] = useReducer(reducer, {
     show: false,
-    username: undefined
+    username: undefined,
+    msgs: []
   })
   return (
     <changeUserContext.Provider value={{userMsg, useDispatch}}>
