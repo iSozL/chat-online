@@ -10,20 +10,40 @@ const MsgList = () => {
   const { userMsg, useDispatch } = useContext(changeUserContext)
   return (
     <Scroll>
-      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '1', show: true}})}}>
-        1
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+        <div className="msg">
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
+        </div>
       </div>
-      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '2', show: true}})}}>
-        2
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+        <div className="msg">
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
+        </div>
       </div>
-      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '3', show: true}})}}>
-        3
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+        <div className="msg">
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
+        </div>
       </div>
-      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '4', show: true}})}}>
-        4
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+        <div className="msg">
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
+        </div>
       </div>
-      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '5', show: true}})}}>
-        5
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+        <div className="msg">
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
+        </div>
       </div>
     </Scroll>
   )

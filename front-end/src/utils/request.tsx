@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { notification } from 'antd';
+import { message } from 'antd';
 
 const request = axios.create({
   timeout: 10000
@@ -11,7 +11,7 @@ request.interceptors.request.use((config) => {
   config.headers.Authorization = getToken()
   return config
 }, (error) => {
-  notification.error(
+  message.error(
     {
       message: 'Error',
       description: String(error)
@@ -21,7 +21,7 @@ request.interceptors.request.use((config) => {
 })
 
 request.interceptors.response.use((res) => res, (error) => {
-  notification.error({
+  message.error({
     message: 'Error',
     description: String(error),
   });

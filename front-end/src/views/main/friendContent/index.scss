@@ -64,10 +64,15 @@
   width: 90%;
   height: 60px;
   border: 1px solid #cccccc;
+  display: flex;
+  justify-content: center;
 }
 .user-msg:hover {
   width: 90%;
   height: 60px;
   border: 1px solid #cccccc;
   background-color: #fff;
+}
+.msg {
+  width: 70%;
 }
