@@ -43,3 +43,13 @@
   border: 1px solid #f0f1f1;
   display: flex;
 }
+.menu {
+  color: #1890ff
+}
+.menu > div {
+  border-bottom: 1px solid #f0f1f1;
+  padding: 10px 0;
+}
+.menu > div:hover {
+  cursor: pointer;
+}

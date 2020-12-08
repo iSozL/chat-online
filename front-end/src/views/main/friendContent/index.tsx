@@ -1,29 +1,111 @@
 import React, { useContext } from 'react';
 import './index.scss'
-import { Tabs } from 'antd';
+import { Tabs, Popover } from 'antd';
 import Scroll from 'react-custom-scrollbars';
 import { changeUserContext, CHANGE_USER } from '../store/index'
 
 const { TabPane } = Tabs;
 
+const detail = (
+  <div>
+    <div>孙笑川</div>
+    <div>带带大师兄</div>
+    <div>大家笑一笑就好</div>
+  </div>
+)
+
+const FriendsList = () => {
+  const { userMsg, useDispatch } = useContext(changeUserContext)
+  return (
+    <Scroll>
+      <Popover content={detail} placement="right">
+        <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+          <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+          <div className="msg">
+            <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          </div>
+        </div>
+      </Popover>
+      <Popover content={detail} placement="right">
+        <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+          <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+          <div className="msg">
+            <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          </div>
+        </div>
+      </Popover>
+      <Popover content={detail} placement="right">
+        <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+          <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+          <div className="msg">
+            <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          </div>
+        </div>
+      </Popover>
+      <Popover content={detail} placement="right">
+        <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+          <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+          <div className="msg">
+            <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          </div>
+        </div>
+      </Popover>
+    </Scroll>
+  )
+}
+
 const MsgList = () => {
   const { userMsg, useDispatch } = useContext(changeUserContext)
   return (
     <Scroll>
-      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '1', show: true}})}}>
-        1
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+        <div className="msg">
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
+        </div>
       </div>
-      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '2', show: true}})}}>
-        2
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+        <div className="msg">
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
+        </div>
       </div>
-      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '3', show: true}})}}>
-        3
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+        <div className="msg">
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
+        </div>
       </div>
-      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '4', show: true}})}}>
-        4
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+        <div className="msg">
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
+        </div>
       </div>
-      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '5', show: true}})}}>
-        5
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+        <div className="msg">
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
+        </div>
+      </div>
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+        <div className="msg">
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
+        </div>
+      </div>
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+        <div className="msg">
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
+        </div>
       </div>
     </Scroll>
   )
@@ -57,7 +139,9 @@ const FriendContent = () => {
             }
             key="2"
           >
-            Tab 2
+            <div style={{height: "420px", display: "flex", flexDirection: "column", alignItems: "center", padding: "5px 0"}}>
+              <FriendsList />
+            </div>
           </TabPane>
         </Tabs>
       </div>
