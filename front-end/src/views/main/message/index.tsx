@@ -1,12 +1,20 @@
-import React, {useContext} from 'react';
+import React, { useContext, useRef } from 'react';
 import {changeUserContext} from '../store/index'
 import './index.scss'
-import { Button, Input } from 'antd'
-const { TextArea } = Input
+import { Button, Popover } from 'antd'
+// const { TextArea } = Input
 import Scroll from 'react-custom-scrollbars'
+import 'emoji-mart/css/emoji-mart.css'
+import { Picker } from 'emoji-mart'
 
 const Message = () => {
   const { userMsg, useDispatch } = useContext(changeUserContext)
+  const inputs = useRef<any>()
+  const emoji = (
+    <div>
+      <Picker onSelect={(emoji: any)=> {inputs.current.value += emoji.native}} />
+    </div>
+  )
   return (
     <div className="msg-container">
       {
@@ -47,10 +55,12 @@ const Message = () => {
         </div>
         <div className="msg-footer">
           <div className="footer-top">
-            <img style={{width: "30px", height: "30px"}} src={require('../../../assets/imgs/face.svg')}></img>
+            <Popover content={emoji} placement="leftTop">
+              <img style={{width: "30px", height: "30px"}} src={require('../../../assets/imgs/face.svg')}></img>
+            </Popover>
           </div>
           <div className="footer-body">
-            <TextArea rows={6} />
+            <textarea className="ant-input" ref={inputs} />
             <Button style={{float: 'right', marginTop: "10px"}} type="primary">发送</Button>
           </div>
           <div className="footer-bottom">
