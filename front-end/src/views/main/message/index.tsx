@@ -3,6 +3,7 @@ import {changeUserContext} from '../store/index'
 import './index.scss'
 import { Button, Input } from 'antd'
 const { TextArea } = Input
+import Scroll from 'react-custom-scrollbars'
 
 const Message = () => {
   const { userMsg, useDispatch } = useContext(changeUserContext)
@@ -14,7 +15,35 @@ const Message = () => {
         <div className="msg-body">
           <div className="msg-header">
             {userMsg.username}
-          </div>  
+          </div>
+          <div>
+            <Scroll style={{height: "45vh", width: "99%", display: "flex"}}>
+              <div style={{padding: "10px 30px"}}>
+                <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+                <div className="arrow-box popper border arrow-left">
+                  我徒弟呢？
+                </div>
+              </div>
+              <div style={{padding: "10px 30px", flex: 1, textAlign: "right"}}>
+                <div className="arrow-box popper border arrow-right">
+                  我不到啊
+                </div>
+                <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+              </div>
+              <div style={{padding: "10px 30px"}}>
+                <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+                <div className="arrow-box popper border arrow-left">
+                  我徒弟呢？
+                </div>
+              </div>
+              <div style={{padding: "10px 30px", flex: 1, textAlign: "right"}}>
+                <div className="arrow-box popper border arrow-right">
+                  我不到啊
+                </div>
+                <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+              </div>
+            </Scroll>
+          </div>
         </div>
         <div className="msg-footer">
           <div className="footer-top">
