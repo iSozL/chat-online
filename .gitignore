@@ -36,3 +36,5 @@ dist/
 *.min.css
 
 .vscode/
+package-lock.json*
+yarn.lock*
