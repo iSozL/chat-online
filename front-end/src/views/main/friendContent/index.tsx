@@ -1,43 +1,29 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import './index.scss'
 import { Tabs } from 'antd';
 import Scroll from 'react-custom-scrollbars';
+import { changeUserContext, CHANGE_USER } from '../store/index'
 
 const { TabPane } = Tabs;
 
-
 const MsgList = () => {
+  const { userMsg, useDispatch } = useContext(changeUserContext)
   return (
     <Scroll>
-      <div className="user-msg">
-        312321
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '1', show: true}})}}>
+        1
       </div>
-      <div className="user-msg">
-        312321
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '2', show: true}})}}>
+        2
       </div>
-      <div className="user-msg">
-        312321
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '3', show: true}})}}>
+        3
       </div>
-      <div className="user-msg">
-        312321
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '4', show: true}})}}>
+        4
       </div>
-      <div className="user-msg">
-        312321
-      </div>
-      <div className="user-msg">
-        312321
-      </div>
-      <div className="user-msg">
-        312321
-      </div>
-      <div className="user-msg">
-        312321
-      </div>
-      <div className="user-msg">
-        312321
-      </div>
-      <div className="user-msg">
-        312321
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '5', show: true}})}}>
+        5
       </div>
     </Scroll>
   )
@@ -59,7 +45,7 @@ const FriendContent = () => {
             }
             key="1"
           >
-            <div style={{height: "400px", display: "flex", flexDirection: "column", alignItems: "center",}}>
+            <div style={{height: "420px", display: "flex", flexDirection: "column", alignItems: "center", padding: "5px 0"}}>
               <MsgList />
             </div>
           </TabPane>
