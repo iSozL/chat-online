@@ -1,5 +1,6 @@
 package com.example.chatonline.Service;
 
+
 import com.example.chatonline.Dao.UserDao;
 import com.example.chatonline.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +10,17 @@ import java.sql.Connection;
 @Service("userService")
 public class UserService {
     @Autowired
-    private UserDao userDaoImpl;
+    private UserDao userDao;
 
-    public User login(Connection con,User user) throws Exception {
-        return userDaoImpl.Login(con,user);
-    }
-    public boolean register(Connection con,User user) throws Exception{
-        return userDaoImpl.Register(con,user);
 
+    public boolean register(User user) throws Exception{
+        if(userDao.Query(user.getUserId())!=null)
+            return false;
+        return userDao.Register(user);
     }
+    public User login(int id,String password){
+        return userDao.Login(id,password);
+    }
+
 
 }
