@@ -19,31 +19,7 @@ const FriendsList = () => {
   return (
     <Scroll>
       <Popover content={detail} placement="right">
-        <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
-          <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
-          <div className="msg">
-            <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
-          </div>
-        </div>
-      </Popover>
-      <Popover content={detail} placement="right">
-        <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
-          <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
-          <div className="msg">
-            <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
-          </div>
-        </div>
-      </Popover>
-      <Popover content={detail} placement="right">
-        <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
-          <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
-          <div className="msg">
-            <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
-          </div>
-        </div>
-      </Popover>
-      <Popover content={detail} placement="right">
-        <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true}})}}>
+        <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true, msgs: userMsg.msgs}})}}>
           <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
           <div className="msg">
             <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
