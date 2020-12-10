@@ -77,6 +77,7 @@ const Message = () => {
         <>
         <div className="msg-body">
           <div className="msg-header">
+            {userMsg.username}
           </div>
           <div>
             <Scroll style={{height: "48vh", width: "99%", display: "flex"}}>
@@ -120,7 +121,9 @@ const Message = () => {
           </div>
         </div>
       </> :
-        <img className="none-msg" src={require('../../../assets/imgs/msg-bg.svg')} />
+        <div style={{width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}>
+          <img className="none-msg" src={require('../../../assets/imgs/msg-bg.svg')} />
+        </div>
       }
     </div>
   )
