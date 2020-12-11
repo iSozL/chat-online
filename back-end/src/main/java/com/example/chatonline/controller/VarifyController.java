@@ -25,6 +25,4 @@ public class VarifyController {
         Object message = jwtUtil.parseJWTToken(token);
         return  JsonResult.success(message);
     }
-
-
 }

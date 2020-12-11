@@ -18,6 +18,7 @@ public class UserService {
             return false;
         return userDao.Register(user);
     }
+
     public User login(int id,String password){
         return userDao.Login(id,password);
     }

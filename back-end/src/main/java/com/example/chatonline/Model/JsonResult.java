@@ -19,7 +19,6 @@ public class JsonResult extends HashMap<String, Object> implements Serializable 
     {
 
     }
-
     public JsonResult(int code, String msg, Object data) {
         super(3);  //继承自Map，设置初始容量
         this.put("status", code); //状态码，code=1表示成功

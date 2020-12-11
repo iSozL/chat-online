@@ -10,7 +10,4 @@
     <insert id="Register" >
         insert into user(userId,nickname,password) value(#{userId},#{nickname},#{password})
     </insert>
-
-<!--    and password=#{password}-->
-
 </mapper>

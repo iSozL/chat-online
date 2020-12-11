@@ -28,7 +28,6 @@ public class JWTUtil {
 
     private final Logger logger = Logger.getLogger(JWTUtil.class.toString());
 
-
     @Value("${jwtSecret}")
     private String SECRET;
 

@@ -19,8 +19,6 @@ public class UserController {
     @Autowired
     private JWTUtil jwtUtil;
     @Autowired
-    private DBUtil dbUtil;
-    @Autowired
     private  UserService userService;
     @Autowired
     private  JsonResult jsonResult;
@@ -43,7 +41,6 @@ public class UserController {
         }
     }
 
-
     @PostMapping("/register")
     public JsonResult register(@RequestParam("nickname") String nickname,
                                 @RequestParam("password") String password) throws Exception {
@@ -58,7 +55,6 @@ public class UserController {
             user.setUserId(COMUtil.initUserId());
             flag = userService.register(user);
         }while (!flag);
-        DBUtil.closeCon(con);
         return JsonResult.success(user);
     }
 }
