@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.chatonline.Model.Message;
 import com.example.chatonline.Service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
@@ -12,7 +13,6 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
-
 
 @ServerEndpoint(value = "/websocket/{userId}")
 public class WebSocketController {

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
+import java.util.Map;
+
 @Service("userService")
 public class UserService {
     @Autowired
@@ -22,6 +24,7 @@ public class UserService {
     public User login(int id,String password){
         return userDao.Login(id,password);
     }
+    public User Query(int id) {return userDao.Query(id);}
 
 
 }

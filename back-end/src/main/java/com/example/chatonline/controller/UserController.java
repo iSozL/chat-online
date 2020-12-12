@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
+import java.util.Map;
 
 @RestController
 public class UserController {
@@ -40,7 +41,6 @@ public class UserController {
             return jsonResult.fail("登陆失败");
         }
     }
-
     @PostMapping("/register")
     public JsonResult register(@RequestParam("nickname") String nickname,
                                 @RequestParam("password") String password) throws Exception {
@@ -50,13 +50,23 @@ public class UserController {
         Boolean flag=false;
         user.setNickname(nickname);
         user.setPassword(password);
-        Connection con =DBUtil.getCon();
         do {
             user.setUserId(COMUtil.initUserId());
             flag = userService.register(user);
         }while (!flag);
         return JsonResult.success(user);
     }
+    @PostMapping("/find")
+    public JsonResult find(@RequestParam("userId") String userId)
+    {
+        int id = Integer.parseInt(userId);
+        User data = userService.Query(id);
+        if(data!=null)
+            return  JsonResult.success(data);
+        else
+            return JsonResult.fail("未查询到该用户");
+    }
+
 }
 
 
