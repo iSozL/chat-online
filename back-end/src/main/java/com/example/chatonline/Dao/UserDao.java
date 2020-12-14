@@ -21,5 +21,4 @@ public interface UserDao {
     public ArrayList<String> ShowGroup(String id);
     public boolean AddFriend(Message message,String note,String groupname);
 
-
 }

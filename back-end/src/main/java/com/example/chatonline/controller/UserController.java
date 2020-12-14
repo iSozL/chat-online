@@ -3,6 +3,7 @@ package com.example.chatonline.controller;
 import com.example.chatonline.Model.JsonResult;
 import com.example.chatonline.Model.Message;
 import com.example.chatonline.Model.User;
+import com.example.chatonline.Service.MessageService;
 import com.example.chatonline.Service.UserService;
 import com.example.chatonline.Util.COMUtil;
 import com.example.chatonline.Util.DBUtil;
@@ -25,6 +26,8 @@ public class UserController {
     private  UserService userService;
     @Autowired
     private  JsonResult jsonResult;
+    @Autowired
+    private MessageService messageService;
 
     @PostMapping("/login")
     public JsonResult login2(@RequestParam("userId") String userId,
@@ -92,13 +95,14 @@ public class UserController {
         message.setSendid(userId);
         message.setReciveid(friendId);
         message.setMessagetext(vinfo);
+        //删除之前的验证消息
+        messageService.DelMessage(message);
         if(userService.AddFriend(message,note,groupname))
-        {
             return JsonResult.success("发送成功");
-        }
         else
             return JsonResult.fail("发送失败");
     }
+
 
 
 }
