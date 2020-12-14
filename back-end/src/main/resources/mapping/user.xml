@@ -24,6 +24,4 @@
     <insert id="AddFriend">
         insert into friendmessage() value(#{message.sendid},#{message.reciveid},#{message.messagetext},0,#{groupname},#{note})
     </insert>
-
-
 </mapper>

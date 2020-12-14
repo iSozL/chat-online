@@ -15,5 +15,10 @@ public interface MessageDao {
     void InsertMessage(Message message);
     //查询聊天记录
     List<Message> QueryMessage(Message message);
+    //检查是否存在某一验证消息
+    public boolean FindMessage(Message message);
+    //删除某一验证消息
+    public boolean DelMessage(Message message);
+
 
 }

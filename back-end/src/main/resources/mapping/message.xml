@@ -6,4 +6,10 @@
         insert into message(sendid,reciveid,sendtime,messagetext,texttype)
         value(#{sendid},#{reciveid},#{sendtime},#{messagetext},${texttype})
     </insert>
+    <select id="FindMessage" resultType="boolean">
+        select count(*) from friendmessage where sendId = #{sendid} and reciveId=#{reciveid}
+    </select>
+    <delete id="DelMessage">
+        delete  from friendmessage where sendId=#{sendid} and reciveId=#{reciveid}
+    </delete>
 </mapper>
