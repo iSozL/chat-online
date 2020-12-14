@@ -23,8 +23,9 @@ public class VarifyController {
     public JsonResult varity(@RequestParam("token") String token)
     {
         Object message = jwtUtil.parseJWTToken(token);
-        return  JsonResult.success(message);
+        if(message!=null)
+            return  JsonResult.success(message);
+        else
+            return  JsonResult.fail("token已失效");
     }
-
-
 }

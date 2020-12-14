@@ -4,13 +4,26 @@
     <select id="Login" resultType="com.example.chatonline.Model.User">
         select * from user where userId = #{id} and password=#{password}
     </select>
-    <select id="Query" resultType="com.example.chatonline.Model.User">
-        select * from user where userId = #{id}
+    <select id="QueryUser" resultType="com.example.chatonline.Model.User">
+        select userId,sex from user where userId = #{id}
     </select>
     <insert id="Register" >
         insert into user(userId,nickname,password) value(#{userId},#{nickname},#{password})
     </insert>
+    <select id="FindGroupFriends" resultType="com.example.chatonline.Model.User">
+        select *
+        from user
+        where userId in (select * from FriendRelation where userId = #{id} and groupname = #{groupname})
+    </select>
+    <select id="ShowGroup" resultType="String">
+        select groupname from friendgroup where userId = #{id}
+    </select>
+    <select id="FindFriend" resultType="com.example.chatonline.Model.User">
+        select userId,sex from friendrelation where userId = #{id}
+    </select>
+    <insert id="AddFriend">
+        insert into friendmessage() value(#{message.sendid},#{message.reciveid},#{message.messagetext},0,#{groupname},#{note})
+    </insert>
 
-<!--    and password=#{password}-->
 
 </mapper>
