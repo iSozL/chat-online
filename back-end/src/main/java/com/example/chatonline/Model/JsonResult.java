@@ -22,7 +22,7 @@ public class JsonResult extends HashMap<String, Object> implements Serializable 
     public JsonResult(int code, String msg, Object data) {
         super(3);  //继承自Map，设置初始容量
         this.put("status", code); //状态码，code=1表示成功
-        this.put("msg", msg);   //提示消息
+        this.put("message", msg);   //提示消息
         this.put("data", data); //数据体
     }
 
@@ -35,7 +35,7 @@ public class JsonResult extends HashMap<String, Object> implements Serializable 
 
     //快速返回请求成功
     public static JsonResult success(Object data) {
-        return new JsonResult(SUCCESS, "ok", data);
+        return new JsonResult(SUCCESS, "success", data);
     }
 
     //快速返回请求失败
