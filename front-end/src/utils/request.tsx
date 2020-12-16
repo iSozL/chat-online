@@ -2,7 +2,7 @@ import axios from 'axios';
 import { message } from 'antd';
 
 const request = axios.create({
-  timeout: 10000
+  timeout: 1000000
 })
 
 const getToken = () => `passport ${window.localStorage.getItem("token")}` || ""
