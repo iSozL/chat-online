@@ -272,9 +272,6 @@ public class UserController {
         else
             return JsonResult.fail("发送失败");
     }
-
-
-
 }
 
 
