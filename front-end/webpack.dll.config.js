@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const smp = new SpeedMeasurePlugin()
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const webpack = require('webpack')
 module.exports = smp.wrap(
   {
     entry: './src/index.tsx',
@@ -78,17 +78,17 @@ module.exports = smp.wrap(
       new HtmlWebpackPlugin({
         template: './dist/index.html'
       }),
-      new ProgressBarPlugin()
+      new ProgressBarPlugin(),
+      new webpack.DllPlugin({
+        context: __dirname,
+        name: "_dll_[name]_libary",
+        path: path.join(__dirname, 'manifest.json')
+      })
     ],
-    optimization: {
-      minimizer: [
-        new UglifyJsPlugin()
-      ]
+    devServer: {
+      contentBase: path.join(__dirname, "dist"),
+      historyApiFallback: true,
+      hot: true
     },
-    // devServer: {
-    //   contentBase: path.join(__dirname, "dist"),
-    //   historyApiFallback: true,
-    //   hot: true
-    // },
   }
 )

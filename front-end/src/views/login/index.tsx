@@ -1,7 +1,9 @@
 import React, { ReactElement, useState } from 'react';
 import './index.less'
-import { Form, Input, Button, Row, Col, Tooltip, Select, Cascader, AutoComplete, Checkbox } from 'antd';
+import { Form, Input, Button, Row, Col, Tooltip, Select, Cascader, AutoComplete, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import request from '../../utils/request';
+import { useHistory } from 'react-router-dom'
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 
@@ -28,6 +30,7 @@ const Square: React.FC =() => {
 
 
 const LoginBox = (props: Iprops) => {
+  let history = useHistory()
   const { setLogin } = props
   const layout = {
     labelCol: { span: 6 },
@@ -36,12 +39,24 @@ const LoginBox = (props: Iprops) => {
   const tailLayout = {
     wrapperCol: { offset: 6, span: 16 },
   };
+  const onFinish = async (value: any) => {
+    const { data } = await request.post('http://101.132.134.186:8080/login', {
+      userId: value.username,
+      password: value.password
+    })
+    if (data.status) {
+      message.success(data.message)
+      history.push("/")
+    } else {
+      message.error(data.message)
+    }
+  }
   return(
     <Form
       name="normal_login"
       className="login-form"
       initialValues={{ remember: true }}
-      // onFinish={onFinish}
+      onFinish={onFinish}
     >
       <Form.Item
         name="username"
@@ -79,6 +94,7 @@ const LoginBox = (props: Iprops) => {
 }
 
 const RegisterBox = (props: Iprops) => {
+  let history = useHistory()
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
@@ -106,26 +122,20 @@ const RegisterBox = (props: Iprops) => {
 
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-  };
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
+  const onFinish = async (value: any) => {
+    const { data } = await request.post('http://101.132.134.186:8080/register', {
+      nickname: value.username,
+      password: value.password
+    })
+    if (data.status) {
+      message.success(data.message)
+      history.push("/")
+    } else {
+      message.error(data.message)
+    }
+  }
 
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-
-  const websiteOptions = autoCompleteResult.map(website => ({
-    label: website,
-    value: website,
-  }));
-
 
   const { setLogin } = props
   return (
@@ -140,22 +150,19 @@ const RegisterBox = (props: Iprops) => {
       scrollToFirstError
     >
       <Form.Item
-        name="email"
-        label="邮箱"
-        rules={[
-          {
-            type: 'email',
-            message: '请输入有效邮箱',
-          },
-          {
-            required: true,
-            message: '请输入邮箱',
-          },
-        ]}
+        name="nickname"
+        label={
+          <span>
+            昵称&nbsp;
+            <Tooltip title="你想要别人称呼你为?">
+              <QuestionCircleOutlined />
+            </Tooltip>
+          </span>
+        }
+        rules={[{ required: true, message: '请输入昵称!', whitespace: true }]}
       >
         <Input />
       </Form.Item>
-
       <Form.Item
         name="password"
         label="密码"
@@ -191,29 +198,6 @@ const RegisterBox = (props: Iprops) => {
         ]}
       >
         <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        name="nickname"
-        label={
-          <span>
-            昵称&nbsp;
-            <Tooltip title="你想要别人称呼你为?">
-              <QuestionCircleOutlined />
-            </Tooltip>
-          </span>
-        }
-        rules={[{ required: true, message: '请输入昵称!', whitespace: true }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        name="phone"
-        label="电话号码"
-        rules={[{ required: true, message: '请输入电话号码!' }]}
-      >
-        <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
