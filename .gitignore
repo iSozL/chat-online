@@ -33,6 +33,6 @@ node_modules/
 yarn-error.log*
 dist/
 */front-end/src/*.css
-*.min.css
+*/front-end/src/*.min.css
 
 .vscode/
