@@ -32,7 +32,7 @@ build/
 node_modules/
 yarn-error.log*
 dist/
-*.css
+*/front-end/src/*.css
 *.min.css
 
 .vscode/
