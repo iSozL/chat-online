@@ -12,7 +12,7 @@ if (!window.WebSocket) {
   window.WebSocket = window.MozWebSocket;
 }
 if (window.WebSocket) {
-  socket = new WebSocket("ws://localhost:8081/ws");
+  socket = new WebSocket("ws://47.102.214.67:8080/ws");
 } else {
   alert("你的浏览器不支持 WebSocket！");
 }
