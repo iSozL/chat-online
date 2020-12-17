@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import {
   HashRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
 
 import Login from './views/login/index';
@@ -18,12 +19,24 @@ const __wpk = new wpkReporter({
 
 __wpk.installAll()
 
+const Routers = [
+  { path: "/", name: "home", component: Main },
+]
 const Index:React.FC = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/" component={Login} exact></Route>
-        <Route path="/home" component={Main}></Route>
+        <Route path="/login" component={Login} />
+        {
+          Routers.map((item, index) => {
+            return (
+              <Route key={index} path={item.path} exact render = { 
+                (props: any) =>(window.localStorage.getItem("userInfo") ? <item.component {...props} /> : <Redirect to="/login" push />)
+                } 
+              />
+            )
+          })
+        }
       </Switch>
     </Router>
   )

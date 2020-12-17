@@ -45,11 +45,10 @@ const LoginBox = (props: Iprops) => {
       userId: value.username,
       password: value.password
     })
-    if (data.status) {
+    if (data.code) {
       message.success(data.message)
-      console.log(data.data)
       window.localStorage.setItem("userInfo", JSON.stringify(data.data))
-      history.push("/home")
+      history.push("/")
     } else {
       message.error(data.message)
     }
@@ -126,16 +125,15 @@ const RegisterBox = (props: Iprops) => {
   const [form] = Form.useForm();
 
   const onFinish = async (value: any) => {
-    console.log(value)
     const { data } = await request.post('http://101.132.134.186:8080/register', {
       nickname: value.nickname,
       password: value.password
     })
-    if (data.status) {
+    if (data.code) {
       message.success(data.message)
       console.log(data.data)
       window.localStorage.setItem("userInfo", data.data)
-      history.push("/home")
+      history.push("/")
       alert(`注意请记住您的账号${data.data}, 用于登录！`)
     } else {
       message.error(data.message)
@@ -224,10 +222,10 @@ const RegisterBox = (props: Iprops) => {
 }
 
 const Login: React.FC = () => {
-  if (info) {
-    let history = useHistory()
-    history.push("/home")
-  }
+  // if (info) {
+  //   let history = useHistory()
+  //   history.push("/home")
+  // }
   const [isLogin, setLogin] = useState<boolean>(true)
 
   return (

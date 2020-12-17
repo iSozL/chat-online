@@ -6,6 +6,8 @@ import { Container } from './store/index'
 import AddFriend from './addFriend/index'
 import { Popover } from "antd"; 
 import Setting from './setting/index'
+import { useHistory } from 'react-router-dom'
+
 const Main: React.FC = () => {
   const [select, setSelect] = useState<string>("me")
   const menu = (
