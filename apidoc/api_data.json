@@ -205,6 +205,301 @@
     "groupTitle": "好友"
   },
   {
+    "type": "post",
+    "url": "handlemessage",
+    "title": "处理验证消息",
+    "description": "<p>处理验证消息接口</p>",
+    "group": "消息",
+    "name": "处理验证消息",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "sendId",
+            "description": "<p>发送方ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "groupname",
+            "description": "<p>分组名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "note",
+            "description": "<p>备注</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回分组信息 成功的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "添加好友成功-示例:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"message\": \"success\",\n  \"data\": \"已添加\"\n  \"code\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "未能查询到分组信息-示例：",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"添加失败\",\n  \"data\":null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "groupTitle": "消息"
+  },
+  {
+    "type": "post",
+    "url": "showveritymessage",
+    "title": "显示验证消息",
+    "description": "<p>显示验证消息接口</p>",
+    "group": "消息",
+    "name": "显示验证消息",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回相关信息，成功的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "有验证消息-示例:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": [\n    {\n        \"sendid\": \"\",\n        \"reciveid\": \"\",\n        \"sendtime\": \"\",\n        \"messagetext\": \"\",\n        \"texttype\": 1 //1表示已同意\n    },\n    {\n        \"sendid\": \"\",\n        \"reciveid\": \"\",\n        \"sendtime\": \"\",\n        \"messagetext\": \"\",\n        \"texttype\": 0 //0表示尚未处理\n    },\n    {\n        \"sendid\": \"\",\n        \"reciveid\": \"\",\n        \"sendtime\": \"\",\n        \"messagetext\": \"\",\n        \"texttype\": -1 //-1表示已拒绝\n    }\n]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "无验证消息-示例：",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"暂无验证消息\",\n  \"data\":null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "groupTitle": "消息"
+  },
+  {
+    "type": "post",
+    "url": "showveritymessage",
+    "title": "预处理验证消息",
+    "description": "<p>预处理验证消息接口</p>",
+    "group": "消息",
+    "name": "预处理验证消息",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "sendId",
+            "description": "<p>发送方ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "int",
+            "optional": false,
+            "field": "type",
+            "description": "<p>1表示同意、-1表示拒绝</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回分组信息 成功的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "type=1-示例:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"message\": \"success\",\n  \"data\": [\n      {\n          \"groupname\": \"分组一\",\n          \"count_num\": 6\n      }\n  ],\n  \"code\": 1\n}",
+          "type": "json"
+        },
+        {
+          "title": "type=-1-示例:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"message\": \"已拒绝\",\n  \"data\": null,\n  \"code\": 0\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "未能查询到分组信息-示例：",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":-1,\n  \"message\": \"未能查询到分组信息\",\n  \"data\":null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "groupTitle": "消息"
+  },
+  {
     "type": "get",
     "url": "find",
     "title": "查找用户",
