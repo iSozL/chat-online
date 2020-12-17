@@ -18,6 +18,10 @@
     <select id="ShowGroup" resultType="com.example.chatonline.Model.Group">
         select groupname,count_num from friendgroup where userId = #{id}
     </select>
+    <insert id="CreatGroup">
+        insert into friendgroup(userId,groupname,count_num)
+        value (#{id},#{groupname},0);
+    </insert>
     <select id="FindFriend" resultType="com.example.chatonline.Model.User">
         select userId,sex,nickname from friendrelation where userId = #{id}
     </select>

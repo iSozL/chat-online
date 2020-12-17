@@ -134,6 +134,8 @@ public class UserController {
             user.setUserId(COMUtil.initUserId()+"");
             flag = userService.register(user);
         }while (!flag);
+        //初始分组
+        userService.CreatGroup(user.getUserId(),"我的好友");
         return JsonResult.success(user.getUserId());
     }
 
