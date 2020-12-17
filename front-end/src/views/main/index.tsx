@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.scss'
 import FriendContent from './friendContent/index';
 import Message from './message/index'
@@ -6,11 +6,10 @@ import { Container } from './store/index'
 import AddFriend from './addFriend/index'
 import { Popover } from "antd"; 
 import Setting from './setting/index'
-
+import { useHistory } from 'react-router-dom'
 
 const Main: React.FC = () => {
   const [select, setSelect] = useState<string>("me")
-
   const menu = (
     <div className="menu">
       <div onClick={() => {setSelect("setting")}}>个人设置</div>
@@ -24,6 +23,9 @@ const Main: React.FC = () => {
         <div className="aside">
           <div className="avater">
             <img onClick={() => {setSelect("me")}} src={require('../../assets/imgs/avater.svg')} />
+          </div>
+          <div>
+            {JSON.parse(window.localStorage.getItem("userInfo")).nickname}
           </div>
           <div>
             <img className="me" onClick={() => {setSelect("add")}} src={require('../../assets/imgs/me.svg')} />

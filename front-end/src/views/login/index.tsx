@@ -6,6 +6,7 @@ import request from '../../utils/request';
 import { useHistory } from 'react-router-dom'
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
+let info: any = JSON.parse(window.localStorage.getItem("userInfo"))
 
 interface Iprops {
   setLogin: React.Dispatch<React.SetStateAction<boolean>>
@@ -44,8 +45,9 @@ const LoginBox = (props: Iprops) => {
       userId: value.username,
       password: value.password
     })
-    if (data.status) {
+    if (data.code) {
       message.success(data.message)
+      window.localStorage.setItem("userInfo", JSON.stringify(data.data))
       history.push("/")
     } else {
       message.error(data.message)
@@ -124,18 +126,19 @@ const RegisterBox = (props: Iprops) => {
 
   const onFinish = async (value: any) => {
     const { data } = await request.post('http://101.132.134.186:8080/register', {
-      nickname: value.username,
+      nickname: value.nickname,
       password: value.password
     })
-    if (data.status) {
+    if (data.code) {
       message.success(data.message)
+      console.log(data.data)
+      window.localStorage.setItem("userInfo", data.data)
       history.push("/")
+      alert(`注意请记住您的账号${data.data}, 用于登录！`)
     } else {
       message.error(data.message)
     }
   }
-
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
 
   const { setLogin } = props
   return (
@@ -219,7 +222,10 @@ const RegisterBox = (props: Iprops) => {
 }
 
 const Login: React.FC = () => {
-
+  // if (info) {
+  //   let history = useHistory()
+  //   history.push("/home")
+  // }
   const [isLogin, setLogin] = useState<boolean>(true)
 
   return (
