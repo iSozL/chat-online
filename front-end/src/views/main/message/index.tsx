@@ -6,59 +6,74 @@ import Scroll from 'react-custom-scrollbars'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
 
-let client: string;
 let socket: any;
 if (!window.WebSocket) {
   window.WebSocket = window.MozWebSocket;
 }
-if (window.WebSocket) {
-  socket = new WebSocket("ws://47.102.214.67:8080/ws");
-} else {
-  alert("你的浏览器不支持 WebSocket！");
-}
 const Message = () => {
   const { userMsg, useDispatch } = useContext(changeUserContext)
-
-  socket.onmessage = function (event: any) {
-    event = JSON.parse(event.data)
-    console.log(event)
-    if (!event.init) {
-      client = event.client
-      return
+  let info: any = JSON.parse(window.localStorage.getItem("userInfo"))
+  if (window.WebSocket) {
+    if (info && !socket) {
+      socket = new WebSocket(`ws://47.102.214.67:8080/ET_war/websocket/${info.userId}`);
     }
-    if (event.client === client) {
-      let data = {
-        message: event.message,
-        time: new Date(),
-        my: true
+  } else {
+    alert("你的浏览器不支持 WebSocket！");
+  }
+  if (socket) {
+    socket.onmessage = function (event: any) {
+      event = JSON.parse(event.data)
+      if (event.sender === info.userId) {
+        console.log(event)
+        let data = {
+          message: event.message,
+          time: new Date(),
+          my: true,
+          tag: event.receiver,
+          tag1: event.sender
+        }
+        useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
+      } else {
+        console.log(userMsg.msgs)
+        let data = {
+          message: event.message,
+          time: new Date(),
+          my: false,
+          tag: event.receiver,
+          tag1: event.sender
+        }
+        useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
       }
-      useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true, msgs: userMsg.msgs.concat(data)}})
-    } else {
-      let data = {
-        message: event.message,
-        time: new Date(),
-        my: false
-      }
-      useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true, msgs: userMsg.msgs.concat(data)}})
-    }
-  };
-  socket.onopen = function (event: any) {
-    console.log("连接开始")
-  };
-  socket.onclose = function (event: any) {
-    console.log("连接关闭")
-  };
-
-  
+    };
+    socket.onopen = function (event: any) {
+      console.log("连接开始")
+    };
+    socket.onclose = function (event: any) {
+      console.log("连接关闭")
+    };
+  }
 
   const inputs = useRef<any>()
 
   const send = (message: any) => {
+    console.log(userMsg)
     if (!window.WebSocket) {
       return;
     }
     if (socket.readyState == WebSocket.OPEN) {
-      socket.send(message);
+      let data = {
+        receiver: userMsg.userId,
+        message
+      }
+      socket.send(JSON.stringify(data));
+      let datas = {
+        message: message,
+        time: new Date(),
+        my: true,
+        tag: userMsg.userId,
+        tag1: info.userId
+      }
+      useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(datas)}})
       inputs.current.value = ""
     } else {
       alert("连接没有开启.");
@@ -83,7 +98,7 @@ const Message = () => {
             <Scroll style={{height: "48vh", width: "99%", display: "flex"}}>
               {
                 userMsg.msgs.map((item: any, index: number) => {
-                  if (!item.my) {
+                  if (!item.my && (item.tag1 === userMsg.userId)) {
                     return (
                       <div style={{padding: "10px 30px"}} key={index}>
                         <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
@@ -92,7 +107,7 @@ const Message = () => {
                         </div>
                       </div>
                     )
-                  } else {
+                  } else if (item.tag === userMsg.userId && item.tag1 === info.userId) {
                     return (
                       <div style={{padding: "10px 30px", flex: 1, textAlign: "right"}} key={index}>
                         <div className="arrow-box popper border arrow-right">

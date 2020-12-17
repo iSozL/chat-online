@@ -19,6 +19,7 @@ export const Container = (props: any) => {
   const [userMsg, useDispatch] = useReducer(reducer, {
     show: false,
     username: undefined,
+    userId: undefined,
     msgs: []
   })
   return (

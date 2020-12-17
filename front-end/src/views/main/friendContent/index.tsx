@@ -19,7 +19,7 @@ const FriendsList = () => {
   return (
     <Scroll>
       <Popover content={detail} placement="right">
-        <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true, msgs: userMsg.msgs}})}}>
+        <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', userId: '101', show: true, msgs: userMsg.msgs}})}}>
           <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
           <div className="msg">
             <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
@@ -34,11 +34,25 @@ const MsgList = () => {
   const { userMsg, useDispatch } = useContext(changeUserContext)
   return (
     <Scroll>
-      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', show: true, msgs: userMsg.msgs}})}}>
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '12', userId: '101', show: true, msgs: userMsg.msgs}})}}>
         <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
         <div className="msg">
-          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>12</div>
           <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
+        </div>
+      </div>
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: 'sansiuchuang1', userId: '32292370', show: true, msgs: userMsg.msgs}})}}>
+        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+        <div className="msg">
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>sansiuchuang1</div>
+          <div style={{paddingLeft: "5px"}}>哦，还有这种事</div>
+        </div>
+      </div>
+      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: 'blackdog', userId: '10255976', show: true, msgs: userMsg.msgs}})}}>
+        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+        <div className="msg">
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>blackdog</div>
+          <div style={{paddingLeft: "5px"}}>都homie</div>
         </div>
       </div>
     </Scroll>
