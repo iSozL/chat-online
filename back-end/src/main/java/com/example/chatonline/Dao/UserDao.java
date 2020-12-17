@@ -1,5 +1,6 @@
 package com.example.chatonline.Dao;
 
+import com.example.chatonline.Model.Group;
 import com.example.chatonline.Model.Message;
 import com.example.chatonline.Model.User;
 import com.sun.org.apache.xpath.internal.objects.XObject;
@@ -18,7 +19,8 @@ public interface UserDao {
     public Boolean Register(User user);
     public ArrayList<User> FindGroupFriends(String id,String groupname);
     public User FindFriend(String id);
-    public ArrayList<String> ShowGroup(String id);
-    public boolean AddFriend(Message message,String note,String groupname);
+    public ArrayList<Group> ShowGroup(String id);
+    public boolean AddGroupNum(String id,String groupname);
+    public boolean AddFriend(String userId,String friendId,String note,String groupname);
 
 }

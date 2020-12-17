@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class Group {
     private String groupname;
-    private int count;
+    private int count_num;
 }
