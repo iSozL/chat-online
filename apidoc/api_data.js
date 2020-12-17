@@ -2,8 +2,8 @@ define({ "api": [
   {
     "type": "post",
     "url": "addfriend",
-    "title": "添加好友",
-    "description": "<p>添加好友接口</p>",
+    "title": "发送添加好友请求",
+    "description": "<p>添加好友请求接口</p>",
     "group": "好友",
     "name": "添加好友",
     "version": "0.1.0",
@@ -77,7 +77,7 @@ define({ "api": [
       "examples": [
         {
           "title": "预添加成功-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\"\n  \"data\": \"添加成功\"\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\"\n  \"data\": 发送成功\"\n}",
           "type": "json"
         }
       ]
@@ -104,7 +104,7 @@ define({ "api": [
       "examples": [
         {
           "title": "预添加失败-示例：",
-          "content": " HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"添加失败\"\n  \"data\":null\n}",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"发送失败\"\n  \"data\":null\n}",
           "type": "json"
         }
       ]
@@ -205,7 +205,7 @@ define({ "api": [
     "groupTitle": "好友"
   },
   {
-    "type": "post",
+    "type": "get",
     "url": "find",
     "title": "查找用户",
     "description": "<p>查找用户接口</p>",

@@ -21,7 +21,4 @@
     <select id="FindFriend" resultType="com.example.chatonline.Model.User">
         select userId,sex,nickname from friendrelation where userId = #{id}
     </select>
-    <insert id="AddFriend">
-        insert into friendmessage() value(#{message.sendid},#{message.reciveid},#{message.messagetext},0,#{groupname},#{note})
-    </insert>
 </mapper>

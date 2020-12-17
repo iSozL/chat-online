@@ -13,21 +13,19 @@ public class MessageService {
     @Autowired
     private MessageDao messageDao;
 
-    public void InsertMessage(Message message){
-        messageDao.InsertMessage(message);
-    }
+    public void InsertMessage(Message message){ messageDao.InsertMessage(message); }
+    public List<Message> LookTwoUserMsg(Message message){ return messageDao.QueryMessage(message); }
 
-    public List<Message> LookTwoUserMsg(Message message){
-        return messageDao.QueryMessage(message);
-    }
     //查询是否存在验证消息
-    public boolean FindMessage(Message message)
+    public boolean FindVerifyMessage(Message message)
     {
-        return messageDao.FindMessage(message);
+        return messageDao.FindVerifyMessage(message);
     }
     //删除验证消息
-    public boolean DelMessage(Message message){
-        return messageDao.DelMessage(message);
+    public boolean DelVerifyMessage(Message message){
+        return messageDao.DelVerifyMessage(message);
     }
+    //添加验证消息
+    public boolean  AddVerifyMessage(Message message,String note,String groupname) { return messageDao.AddVerifyMessage(message, note, groupname); }
 
 }
