@@ -20,6 +20,7 @@ public interface UserDao {
     public ArrayList<User> FindGroupFriends(String id,String groupname);
     public User FindFriend(String id);
     public ArrayList<Group> ShowGroup(String id);
+    public boolean CreatGroup(String id,String groupname);
     public boolean AddGroupNum(String id,String groupname);
     public boolean AddFriend(String userId,String friendId,String note,String groupname);
 

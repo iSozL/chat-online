@@ -41,7 +41,9 @@ public class UserService {
     {
         return userDao.ShowGroup(id);
     }
-    //
+    //新建分组
+    public boolean CreatGroup(String id,String groupname){return userDao.CreatGroup(id, groupname);}
+    //分组人数+1
     public boolean AddGroupNum(String id,String groupname){return userDao.AddGroupNum(id, groupname);}
     //添加好友
     public boolean AddFriend(String userId,String friendId,String note,String groupname) {return userDao.AddFriend(userId, friendId, note, groupname);}
