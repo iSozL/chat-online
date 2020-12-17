@@ -15,10 +15,18 @@
         from user
         where userId in (select * from FriendRelation where userId = #{id} and groupname = #{groupname})
     </select>
-    <select id="ShowGroup" resultType="String">
-        select groupname from friendgroup where userId = #{id}
+    <select id="ShowGroup" resultType="com.example.chatonline.Model.Group">
+        select groupname,count_num from friendgroup where userId = #{id}
     </select>
     <select id="FindFriend" resultType="com.example.chatonline.Model.User">
         select userId,sex,nickname from friendrelation where userId = #{id}
     </select>
+    <insert id="AddFriend">
+        insert into friendrelation(userId,friendId,groupname,note) value (#{userId},#{friendId},#{groupname},#{note})
+    </insert>
+    <update id="AddGroupNum">
+        update friendgroup
+        set count_num=count_num+1
+        where userId=#{id} and groupname=#{groupname}
+    </update>
 </mapper>

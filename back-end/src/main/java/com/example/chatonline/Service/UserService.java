@@ -2,6 +2,7 @@ package com.example.chatonline.Service;
 
 
 import com.example.chatonline.Dao.UserDao;
+import com.example.chatonline.Model.Group;
 import com.example.chatonline.Model.Message;
 import com.example.chatonline.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +34,16 @@ public class UserService {
     {
         return userDao.FindFriend(id);
     }
-    //查询好友分组
+    //查询某一分组下所有好友
     public ArrayList<User> FindGroupFriends(String id,String groupname) { return userDao.FindGroupFriends(id, groupname); }
     //查询分组
-    public ArrayList<String> ShowGroup(String id)
+    public ArrayList<Group> ShowGroup(String id)
     {
         return userDao.ShowGroup(id);
     }
+    //
+    public boolean AddGroupNum(String id,String groupname){return userDao.AddGroupNum(id, groupname);}
+    //添加好友
+    public boolean AddFriend(String userId,String friendId,String note,String groupname) {return userDao.AddFriend(userId, friendId, note, groupname);}
+
 }

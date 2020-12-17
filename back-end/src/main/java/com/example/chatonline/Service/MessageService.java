@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 @Service("messageService")
 public class MessageService {
 
@@ -16,8 +19,8 @@ public class MessageService {
     public void InsertMessage(Message message){ messageDao.InsertMessage(message); }
     public List<Message> LookTwoUserMsg(Message message){ return messageDao.QueryMessage(message); }
 
-    //查询是否存在验证消息
-    public boolean FindVerifyMessage(Message message)
+    //查询某一未处理验证消息
+    public Map<String,Object> FindVerifyMessage(Message message)
     {
         return messageDao.FindVerifyMessage(message);
     }
@@ -27,5 +30,8 @@ public class MessageService {
     }
     //添加验证消息
     public boolean  AddVerifyMessage(Message message,String note,String groupname) { return messageDao.AddVerifyMessage(message, note, groupname); }
-
+    //显示验证消息
+    public ArrayList<Message> ShowVerifyMessage(String reciveId) {return messageDao.ShowVerifyMessage(reciveId);}
+    //处理验证消息
+    public boolean HandleVerifyMessage(int type,String userId,String reciveId){return messageDao.HandleVerifyMessage(type, userId, reciveId);}
 }

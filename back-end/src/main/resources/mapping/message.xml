@@ -7,13 +7,21 @@
         value(#{sendid},#{reciveid},#{sendtime},#{messagetext},${texttype})
     </insert>
 
-    <select id="FindVerifyMessage" resultType="boolean">
-        select count(*) from veritymessage where sendId = #{sendid} and reciveId=#{reciveid}
+    <select id="FindVerifyMessage" resultType="map">
+        select groupname,note from veritymessage where sendId = #{sendid} and reciveId=#{reciveid} and messagetype=0
     </select>
     <delete id="DelVerifyMessage">
-        delete  from veritymessage where sendId=#{sendid} and reciveId=#{reciveid}
+        delete  from veritymessage where sendId=#{sendid} and reciveId=#{reciveid} and messagetype=0
     </delete>
     <insert id="AddVerifyMessage">
-        insert into veritymessage() value(#{message.sendid},#{message.reciveid},#{message.messagetext},0,#{groupname},#{note})
+        insert into veritymessage() value(#{message.sendid},#{message.reciveid},#{message.sendtime},#{message.messagetext},0,#{groupname},#{note})
     </insert>
+    <select id="ShowVerifyMessage" resultType="com.example.chatonline.Model.Message">
+        select sendId,reciveId,sendtime,message messagetext,messagetype texttype from veritymessage where reciveId=#{reciveId}
+    </select>
+    <update id="HandleVerifyMessage">
+        update veritymessage
+        set messagetype=#{type}
+        where sendId=#{userId} and reciveId=#{reciveId} and messagetype=0
+    </update>
 </mapper>
