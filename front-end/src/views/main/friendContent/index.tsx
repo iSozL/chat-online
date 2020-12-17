@@ -5,7 +5,6 @@ import Scroll from 'react-custom-scrollbars';
 import { changeUserContext, CHANGE_USER } from '../store/index'
 
 const { TabPane } = Tabs;
-
 const detail = (
   <div>
     <div>孙笑川</div>
@@ -30,36 +29,68 @@ const FriendsList = () => {
   )
 }
 
-const MsgList = () => {
+const MsgList = (props: any) => {
+  let unreads = props.unread
+  let setRead = props.setRead
   const { userMsg, useDispatch } = useContext(changeUserContext)
+  const deleteRead = (userId: string) => {
+    if (unreads.indexOf(userId) !== -1) {
+      return unreads.filter((item: string) => {
+        return item !== userId
+      })
+    }
+  }
   return (
     <Scroll>
-      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '12', userId: '101', show: true, msgs: userMsg.msgs}})}}>
+      <div className="user-msg" onClick={() => {setRead(deleteRead("101"));useDispatch({type: CHANGE_USER, state:{username: '12', userId: '101', show: true, msgs: userMsg.msgs}})}}>
         <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
         <div className="msg">
-          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>12</div>
+          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>
+            12
+          </div>
           <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
         </div>
+        {
+          unreads && unreads.indexOf("101") > -1 ? 
+          <div className="has-msg">
+            .
+          </div> :
+          <div></div>
+        }
       </div>
-      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: 'sansiuchuang1', userId: '32292370', show: true, msgs: userMsg.msgs}})}}>
+      <div className="user-msg" onClick={() => {setRead(deleteRead("322923701"));useDispatch({type: CHANGE_USER, state:{username: 'sansiuchuang1', userId: '32292370', show: true, msgs: userMsg.msgs}})}}>
         <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
         <div className="msg">
           <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>sansiuchuang1</div>
           <div style={{paddingLeft: "5px"}}>哦，还有这种事</div>
         </div>
+        {
+          unreads && unreads.indexOf("32292370") > -1 ? 
+          <div className="has-msg">
+            .
+          </div> :
+          <div></div>
+        }
       </div>
-      <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: 'blackdog', userId: '10255976', show: true, msgs: userMsg.msgs}})}}>
+      <div className="user-msg" onClick={() => {setRead(deleteRead("10255976"));useDispatch({type: CHANGE_USER, state:{username: 'blackdog', userId: '10255976', show: true, msgs: userMsg.msgs}})}}>
         <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
         <div className="msg">
           <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>blackdog</div>
           <div style={{paddingLeft: "5px"}}>都homie</div>
+          {
+             unreads && unreads.indexOf("10255976") > -1 ? 
+            <div className="has-msg">
+              .
+            </div> :
+            <div></div>
+          }
         </div>
       </div>
     </Scroll>
   )
 }
 
-const FriendContent = () => {
+const FriendContent = (props: any) => {
   return (
     <div className="friend-container">
       <div className="unread">
@@ -76,7 +107,7 @@ const FriendContent = () => {
             key="1"
           >
             <div style={{height: "420px", display: "flex", flexDirection: "column", alignItems: "center", padding: "5px 0"}}>
-              <MsgList />
+              <MsgList unread={props.unread} setRead={props.setRead} />
             </div>
           </TabPane>
           <TabPane
