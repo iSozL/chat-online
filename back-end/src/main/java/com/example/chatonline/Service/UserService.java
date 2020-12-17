@@ -40,6 +40,4 @@ public class UserService {
     {
         return userDao.ShowGroup(id);
     }
-    //添加好友
-    public boolean  AddFriend(Message message,String note,String groupname) { return userDao.AddFriend(message, note, groupname); }
 }

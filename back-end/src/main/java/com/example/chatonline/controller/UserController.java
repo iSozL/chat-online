@@ -16,9 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Connection;
 import java.util.ArrayList;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 public class UserController {
     @Autowired
     private JWTUtil jwtUtil;
@@ -61,11 +64,14 @@ public class UserController {
      *     }
      *
      */
+    @CrossOrigin
     @PostMapping("/login")
-    public JsonResult login2(@RequestParam("userId") String userId,
-                             @RequestParam("password") String password,
-                             HttpServletRequest request,
+//    @ResponseBody
+    public JsonResult login2(@RequestBody String Json,
                              HttpServletResponse response) throws Exception {
+        Map<String,Object> map = (Map)JSON.parse(Json);
+        String userId = (String) map.get("userId");
+        String password = (String) map.get("password");
         User user = userService.login(userId,password);
         if (user != null) {
             String token = jwtUtil.creatJwtToken(userId,password);
@@ -108,9 +114,12 @@ public class UserController {
      *     }
      *
      */
+    @CrossOrigin
     @PostMapping("/register")
-    public JsonResult register(@RequestParam("nickname") String nickname,
-                                @RequestParam("password") String password) throws Exception {
+    public JsonResult register(@RequestBody String Json) throws Exception {
+        Map<String,Object> map = (Map)JSON.parse(Json);
+        String nickname= (String) map.get("nickname");
+        String password = (String) map.get("password");
         if(nickname.equals("")||password.equals(""))
             return JsonResult.fail("注册失败");
         User user = new User();
@@ -126,7 +135,7 @@ public class UserController {
 
 
     /**
-     * @api {post} find 查找用户
+     * @api {get} find 查找用户
      * @apiDescription  查找用户接口
      * @apiGroup 用户
      * @apiName 查找用户
@@ -158,7 +167,8 @@ public class UserController {
      *     }
      *
      */
-    @PostMapping("/find")
+    @CrossOrigin
+    @GetMapping("/find")
     public JsonResult find(@RequestParam("userId") String userId)
     {
         User data = userService.Query(userId);
@@ -167,7 +177,6 @@ public class UserController {
         else
             return JsonResult.fail("未查询到该用户");
     }
-
     /**
      * @api {post} PreAddfriend 预添加好友
      * @apiDescription  预添加好友接口
@@ -205,10 +214,13 @@ public class UserController {
      *       "data":null
      *      }
      */
+    @CrossOrigin
     @PostMapping("/PreAddfriend")
-    public JsonResult FinishFriendInfo(@RequestParam("userId") String userId,
-                                       @RequestParam("friendId") String friendId)
+    public JsonResult FinishFriendInfo(@RequestBody String Json)
     {
+        Map<String,Object> map = (Map)JSON.parse(Json);
+        String userId= (String) map.get("userId");
+        String friendId = (String) map.get("friendId");
         if(userService.FindFriend(friendId)!=null)
         {
             return JsonResult.fail("该用户已在好友列表中");
@@ -223,8 +235,8 @@ public class UserController {
     }
 
     /**
-     * @api {post} addfriend 添加好友
-     * @apiDescription  添加好友接口
+     * @api {post} addfriend 发送添加好友请求
+     * @apiDescription  添加好友请求接口
      * @apiGroup 好友
      * @apiName 添加好友
      * @apiversion 0.1.0
@@ -244,7 +256,7 @@ public class UserController {
      *     {
      *       "code":1,
      *       "message": "success"
-     *       "data": "添加成功"
+     *       "data": 发送成功"
      *     }
      * @apiError {int} status 响应状态码
      * @apiError {String} message 响应描述
@@ -252,22 +264,24 @@ public class UserController {
      *      HTTP/1.1 200 OK
      *     {
      *       "code":1,
-     *       "message": "添加失败"
+     *       "message": "发送失败"
      *       "data":null
      *     }
      */
+    @CrossOrigin
     @PostMapping("/addfriend")
-    public JsonResult add(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,
-                            @RequestParam("message") String vinfo,@RequestParam("groupname") String groupname,
-                          @RequestParam("note") String note)
+    public JsonResult add(@RequestBody String Json)
     {
+        Map<String,Object> map = (Map)JSON.parse(Json);
+        String groupname = (String) map.get("groupname");
+        String note = (String) map.get("note");
         Message message =new Message();
-        message.setSendid(userId);
-        message.setReciveid(friendId);
-        message.setMessagetext(vinfo);
+        message.setSendid((String) map.get("userId"));
+        message.setReciveid((String) map.get("friendId"));
+        message.setMessagetext((String) map.get("message"));
         //删除之前的验证消息
-        messageService.DelMessage(message);
-        if(userService.AddFriend(message,note,groupname))
+        messageService.DelVerifyMessage(message);
+        if(messageService.AddVerifyMessage(message,note,groupname))
             return JsonResult.success("发送成功");
         else
             return JsonResult.fail("发送失败");
