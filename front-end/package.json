@@ -1,12 +1,14 @@
 {
   "name": "chat-online",
+  "sideEffects": false,
   "version": "1.0.0",
   "description": "在线聊天",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --content-base ./dist",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "dll": "webpack --config webpack.dll.config.js --mode=development"
   },
   "author": "isozl",
   "license": "ISC",
@@ -20,6 +22,8 @@
     "@types/node": "^13.9.1",
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
+    "@types/react-redux": "^7.1.11",
+    "@types/redux": "^3.6.0",
     "antd": "^4.8.2",
     "axios": "^0.21.0",
     "babel-core": "^6.26.3",
@@ -29,19 +33,27 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^3.4.2",
+    "emoji-mart": "^3.0.0",
     "file-loader": "^6.0.0",
+    "happypack": "^5.0.1",
     "html-webpack-plugin": "^3.2.0",
+    "less": "^3.12.2",
     "less-loader": "^5.0.0",
     "node-sass": "^4.13.1",
+    "os": "^0.1.1",
+    "progress-bar-webpack-plugin": "^2.1.0",
     "react": "^16.13.0",
+    "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.13.1",
+    "react-redux": "^7.2.2",
     "react-router-dom": "^5.2.0",
+    "react-scrollbars-custom": "^4.0.25",
+    "redux": "^4.0.5",
     "sass-loader": "^8.0.2",
+    "speed-measure-webpack-plugin": "^1.3.3",
     "style-loader": "^1.1.3",
-    "url-loader": "^4.1.0"
-  },
-  "devDependencies": {
-    "webpack": "^5.10.3",
-    "webpack-cli": "^4.2.0"
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "url-loader": "^4.1.0",
+    "wpk-reporter": "^0.7.1"
   }
 }
