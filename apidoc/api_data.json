@@ -191,6 +191,91 @@
     "groupTitle": "好友"
   },
   {
+    "type": "get",
+    "url": "ShowGroup",
+    "title": "显示好友分组",
+    "description": "<p>显示好友分组接口</p>",
+    "group": "好友",
+    "name": "显示好友分组",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回相关信息，成功的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "显示好友分组-示例:",
+          "content": "HTTP/1.1 200 OK\n\"message\": \"success\",\n\"data\": [\n    {\n        \"groupname\": \"分组一\",\n        \"count_num\": 6\n    },\n    {\n        \"groupname\": \"分组二\",\n        \"count_num\": 6\n    }\n],\n\"code\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "分组信息为空-示例：",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":-1,\n  \"message\": \"未能查询到分组信息\",\n  \"data\":null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController2.java",
+    "groupTitle": "好友"
+  },
+  {
     "type": "post",
     "url": "addfriend",
     "title": "发送添加好友请求",
