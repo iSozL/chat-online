@@ -77,7 +77,7 @@ define({ "api": [
       "examples": [
         {
           "title": "预添加成功-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\"\n  \"data\": \"发送成功\"\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": \"发送成功\"\n}",
           "type": "json"
         }
       ]
@@ -104,7 +104,7 @@ define({ "api": [
       "examples": [
         {
           "title": "预添加失败-示例：",
-          "content": " HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"发送失败\"\n  \"data\":null\n}",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"发送失败\",\n  \"data\":null\n}",
           "type": "json"
         }
       ]
@@ -169,7 +169,7 @@ define({ "api": [
       "examples": [
         {
           "title": "预添加成功-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\"\n  \"data\": [group1,group2...]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": [group1,group2...]\n}",
           "type": "json"
         }
       ]
@@ -196,7 +196,7 @@ define({ "api": [
       "examples": [
         {
           "title": "预添加失败-示例：",
-          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"该用户已在好友列表中\"\n  \"data\":null\n}\n\n HTTP/1.1 200 OK\n{\n  \"code\":-1,\n  \"message\": \"未能查询到分组信息\"\n  \"data\":null\n }",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"该用户已在好友列表中\",\n  \"data\":null\n}\n\n HTTP/1.1 200 OK\n{\n  \"code\":-1,\n  \"message\": \"未能查询到分组信息\",\n  \"data\":null\n }",
           "type": "json"
         }
       ]
@@ -275,7 +275,7 @@ define({ "api": [
       "examples": [
         {
           "title": "添加好友成功-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"message\": \"success\",\n  \"data\": \"已添加\"\n  \"code\": 1\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"message\": \"success\",\n  \"data\": \"已添加\",\n  \"code\": 1\n}",
           "type": "json"
         }
       ]
@@ -360,7 +360,7 @@ define({ "api": [
       "examples": [
         {
           "title": "消息列表显示成功-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\"\n  \"data\": [\n    {\n        \"messagetxt\": \"\",\n        \"friendId\": \"\",\n        \"nickname\": \"\",\n        \"sendtime\": \"2020-12-03T09:46:01.000+00:00\"\n    }]\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": [\n    {\n        \"messagetxt\": \"\",\n        \"friendId\": \"\",\n        \"nickname\": \"\",\n        \"sendtime\": \"2020-12-03T09:46:01.000+00:00\"\n    }]\n}",
           "type": "json"
         }
       ]
@@ -387,7 +387,7 @@ define({ "api": [
       "examples": [
         {
           "title": "消息列表为空-示例：",
-          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"消息列表为空\"\n  \"data\":null\n}",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"消息列表为空\",\n  \"data\":null\n}",
           "type": "json"
         }
       ]
@@ -544,7 +544,7 @@ define({ "api": [
       "examples": [
         {
           "title": "type=1-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"message\": \"success\",\n  \"data\": [\n      {\n          \"groupname\": \"分组一\",\n          \"count_num\": 6\n      }\n  ],\n  \"code\": 1\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\": 1,\n  \"message\": \"success\",\n  \"data\": [\n      {\n          \"groupname\": \"分组一\",\n          \"count_num\": 6\n      }\n  ],\n\n}",
           "type": "json"
         },
         {
@@ -634,7 +634,7 @@ define({ "api": [
       "examples": [
         {
           "title": "查找成功-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\"\n  \"data\": {\n\n  }\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": {\n\n  }\n}",
           "type": "json"
         }
       ]
@@ -661,7 +661,7 @@ define({ "api": [
       "examples": [
         {
           "title": "查找失败-示例：",
-          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"未查询到该用户\"\n  \"data\":null\n}",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"未查询到该用户\",\n  \"data\":null\n}",
           "type": "json"
         }
       ]
@@ -726,7 +726,7 @@ define({ "api": [
       "examples": [
         {
           "title": "登录成功-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\"\n  \"data\": userId\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": userId\n}",
           "type": "json"
         }
       ]
@@ -753,7 +753,7 @@ define({ "api": [
       "examples": [
         {
           "title": "登录失败-示例：",
-          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"注册失败\"\n  \"data\":null\n}",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"注册失败\",\n  \"data\":null\n}",
           "type": "json"
         }
       ]
@@ -818,7 +818,7 @@ define({ "api": [
       "examples": [
         {
           "title": "登录成功-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\"\n  \"data\":{}\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\":{}\n}",
           "type": "json"
         }
       ]
@@ -845,7 +845,7 @@ define({ "api": [
       "examples": [
         {
           "title": "登录失败-示例：",
-          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"登录失败\"\n  \"data\":null\n}",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"登录失败\",\n  \"data\":null\n}",
           "type": "json"
         }
       ]

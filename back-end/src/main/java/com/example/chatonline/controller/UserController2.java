@@ -41,7 +41,7 @@ public class UserController2 {
      *     HTTP/1.1 200 OK
      *     {
      *       "code":1,
-     *       "message": "success"
+     *       "message": "success",
      *       "data": [
      *         {
      *             "messagetxt": "",
@@ -56,7 +56,7 @@ public class UserController2 {
      *      HTTP/1.1 200 OK
      *     {
      *       "code":0,
-     *       "message": "消息列表为空"
+     *       "message": "消息列表为空",
      *       "data":null
      *     }
      */
