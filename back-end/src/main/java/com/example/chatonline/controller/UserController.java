@@ -257,7 +257,7 @@ public class UserController {
      *     {
      *       "code":1,
      *       "message": "success"
-     *       "data": 发送成功"
+     *       "data": "发送成功"
      *     }
      * @apiError {int} status 响应状态码
      * @apiError {String} message 响应描述
