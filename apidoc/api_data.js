@@ -1,6 +1,197 @@
 define({ "api": [
   {
     "type": "post",
+    "url": "groupfriends",
+    "title": "好友列表",
+    "description": "<p>好友列表接口</p>",
+    "group": "好友",
+    "name": "好友列表",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户Id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "groupName",
+            "description": "<p>分组名</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回分组内的好友信息，成功的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "查询成功-示例:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": 好友列表,\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "查询失败-示例：",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"未查询到该用户好友信息\",\n  \"data\":null,\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController3.java",
+    "groupTitle": "好友"
+  },
+  {
+    "type": "post",
+    "url": "groupMove",
+    "title": "好友移动",
+    "description": "<p>好友移动接口</p>",
+    "group": "好友",
+    "name": "好友移动",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户Id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "preGroupName",
+            "description": "<p>移动前分组名</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "postGroupName",
+            "description": "<p>移动后分组名</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回信息，成功的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "移动成功-示例:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": \"移动好友分组成功\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "移动失败-示例：",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"好友分组移动失败\"\n  \"data\":null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController3.java",
+    "groupTitle": "好友"
+  },
+  {
+    "type": "post",
     "url": "addfriend",
     "title": "发送添加好友请求",
     "description": "<p>添加好友请求接口</p>",

@@ -134,4 +134,11 @@ public class UserController2 {
             return JsonResult.fail("消息列表为空");
         }
     }
+
+
+    public JsonResult ShowGroup()
+    {
+        return null;
+    }
+
 }
