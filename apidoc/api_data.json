@@ -77,7 +77,7 @@
       "examples": [
         {
           "title": "预添加成功-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\"\n  \"data\": 发送成功\"\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\"\n  \"data\": \"发送成功\"\n}",
           "type": "json"
         }
       ]
@@ -308,6 +308,91 @@
       ]
     },
     "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "groupTitle": "消息"
+  },
+  {
+    "type": "get",
+    "url": "addfriend",
+    "title": "消息列表",
+    "description": "<p>显示消息列表接口</p>",
+    "group": "消息",
+    "name": "显示消息列表",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回相关信息，成功的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "消息列表显示成功-示例:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\"\n  \"data\": [\n    {\n        \"messagetxt\": \"\",\n        \"friendId\": \"\",\n        \"nickname\": \"\",\n        \"sendtime\": \"2020-12-03T09:46:01.000+00:00\"\n    }]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "消息列表为空-示例：",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"消息列表为空\"\n  \"data\":null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController2.java",
     "groupTitle": "消息"
   },
   {

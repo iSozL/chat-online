@@ -27,5 +27,9 @@ public interface MessageDao {
     public ArrayList<Message> ShowVerifyMessage(String reciveId);
     //处理验证消息
     public boolean HandleVerifyMessage(int type,String userId,String reciveId);
+    //显示最新发送消息列表
+    public ArrayList<Map<String,Object>> ShowsendLastMessage(String userId);
+    //显示最新接受消息列表
+    public ArrayList<Map<String,Object>> ShowreciveLastMessage(String userId);
 
 }
