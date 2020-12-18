@@ -1,11 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './index.scss'
 import { Tabs, Popover, Modal, Button, Form, Select, Input, message } from 'antd';
 import Scroll from 'react-custom-scrollbars';
 import { changeUserContext, CHANGE_USER } from '../store/index'
 import request from '../../../utils/request'
-const {Option} = Select
 
+const {Option} = Select
+let info = JSON.parse(window.localStorage.getItem("userInfo"))
 const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 16 },
@@ -39,59 +40,50 @@ const MsgList = (props: any) => {
   let unreads = props.unread
   let setRead = props.setRead
   const { userMsg, useDispatch } = useContext(changeUserContext)
+  const [msgList, setList] = useState<object[]>()
   const deleteRead = (userId: string) => {
-    if (unreads.indexOf(userId) !== -1) {
+    if (unreads && unreads.indexOf(userId) !== -1) {
       return unreads.filter((item: string) => {
         return item !== userId
       })
     }
   }
+  useEffect(() => {
+    async function getMsgList() {
+      await request.get(`http://101.132.134.186:8080/ShowFriendLastMessage?userId=${info.userId}`).then(value => {
+        if (value.data.code) {
+          setList(value.data.data)
+        }
+      })
+    }
+    getMsgList()
+  }, [])
   return (
     <Scroll>
-      <div className="user-msg" onClick={() => {setRead(deleteRead("101"));useDispatch({type: CHANGE_USER, state:{username: '12', userId: '101', show: true, msgs: userMsg.msgs}})}}>
-        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
-        <div className="msg">
-          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>
-            12
-          </div>
-          <div style={{paddingLeft: "5px"}}>我说你妈妈死了</div>
-        </div>
-        {
-          unreads && unreads.indexOf("101") > -1 ? 
-          <div className="has-msg">
-            .
-          </div> :
-          <div></div>
-        }
-      </div>
-      <div className="user-msg" onClick={() => {setRead(deleteRead("322923701"));useDispatch({type: CHANGE_USER, state:{username: 'sansiuchuang1', userId: '32292370', show: true, msgs: userMsg.msgs}})}}>
-        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
-        <div className="msg">
-          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>sansiuchuang1</div>
-          <div style={{paddingLeft: "5px"}}>哦，还有这种事</div>
-        </div>
-        {
-          unreads && unreads.indexOf("32292370") > -1 ? 
-          <div className="has-msg">
-            .
-          </div> :
-          <div></div>
-        }
-      </div>
-      <div className="user-msg" onClick={() => {setRead(deleteRead("10255976"));useDispatch({type: CHANGE_USER, state:{username: 'blackdog', userId: '10255976', show: true, msgs: userMsg.msgs}})}}>
-        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
-        <div className="msg">
-          <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>blackdog</div>
-          <div style={{paddingLeft: "5px"}}>都homie</div>
-          {
-             unreads && unreads.indexOf("10255976") > -1 ? 
-            <div className="has-msg">
-              .
-            </div> :
-            <div></div>
-          }
-        </div>
-      </div>
+      {
+        msgList && (msgList instanceof Array) ? 
+        msgList.map((item: any, index: number) => {
+          return (
+            <div key={index} className="user-msg" onClick={() => {setRead(deleteRead(item.friendId));useDispatch({type: CHANGE_USER, state:{username: item.nickname, userId: item.friendId, show: true, msgs: userMsg.msgs}})}}>
+              <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+              <div className="msg">
+                <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>
+                  {item.nickname}
+                </div>
+                <div style={{paddingLeft: "5px"}}>{item.messagetxt}</div>
+              </div>
+              {
+                unreads && unreads.indexOf(item.friendId) > -1 ? 
+                <div className="has-msg">
+                  .
+                </div> :
+                <div></div>
+              }
+            </div>
+          )
+        })
+        : ""
+      }
     </Scroll>
   )
 }
@@ -100,7 +92,6 @@ const FriendContent = (props: any) => {
   const [visible, setVisible] = useState(false);
   const [visible1, setVisible1] = useState(false);
   const [curId, setId] = useState()
-  let info = JSON.parse(window.localStorage.getItem("userInfo"))
   console.log(info.groups)
   const send = async (value: any) => {
     let datas = {
