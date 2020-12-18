@@ -312,7 +312,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "addfriend",
+    "url": "ShowFriendLastMessage",
     "title": "消息列表",
     "description": "<p>显示消息列表接口</p>",
     "group": "消息",
