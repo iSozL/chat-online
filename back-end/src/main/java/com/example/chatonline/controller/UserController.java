@@ -7,18 +7,13 @@ import com.example.chatonline.Model.User;
 import com.example.chatonline.Service.MessageService;
 import com.example.chatonline.Service.UserService;
 import com.example.chatonline.Util.COMUtil;
-import com.example.chatonline.Util.DBUtil;
 import com.example.chatonline.Util.JWTUtil;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Connection;
 import java.util.ArrayList;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 
 import java.util.Date;
 import java.util.Map;
@@ -208,7 +203,7 @@ public class UserController {
      * @apiErrorExample {json} 预添加失败-示例：
      *      HTTP/1.1 200 OK
      *     {
-     *       "code":1,
+     *       "code":0,
      *       "message": "该用户已在好友列表中"
      *       "data":null
      *     }
@@ -227,7 +222,7 @@ public class UserController {
         Map<String,Object> map = (Map)JSON.parse(Json);
         String userId= (String) map.get("userId");
         String friendId = (String) map.get("friendId");
-        if(userService.FindFriend(friendId)!=null)
+        if(userService.FindRelation(userId,friendId))
         {
             return JsonResult.fail("该用户已在好友列表中");
         }
