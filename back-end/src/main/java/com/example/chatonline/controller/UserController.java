@@ -48,7 +48,7 @@ public class UserController {
      *     HTTP/1.1 200 OK
      *     {
      *       "code":1,
-     *       "message": "success"
+     *       "message": "success",
      *       "data":{}
      *     }
      * @apiError {int} status 响应状态码
@@ -57,7 +57,7 @@ public class UserController {
      *      HTTP/1.1 200 OK
      *     {
      *       "code":0,
-     *       "message": "登录失败"
+     *       "message": "登录失败",
      *       "data":null
      *     }
      *
@@ -99,7 +99,7 @@ public class UserController {
      *     HTTP/1.1 200 OK
      *     {
      *       "code":1,
-     *       "message": "success"
+     *       "message": "success",
      *       "data": userId
      *     }
      * @apiError {int} status 响应状态码
@@ -108,7 +108,7 @@ public class UserController {
      *      HTTP/1.1 200 OK
      *     {
      *       "code":0,
-     *       "message": "注册失败"
+     *       "message": "注册失败",
      *       "data":null
      *     }
      *
@@ -152,7 +152,7 @@ public class UserController {
      *     HTTP/1.1 200 OK
      *     {
      *       "code":1,
-     *       "message": "success"
+     *       "message": "success",
      *       "data": {
      *
      *       }
@@ -163,7 +163,7 @@ public class UserController {
      *      HTTP/1.1 200 OK
      *     {
      *       "code":0,
-     *       "message": "未查询到该用户"
+     *       "message": "未查询到该用户",
      *       "data":null
      *     }
      *
@@ -195,7 +195,7 @@ public class UserController {
      *     HTTP/1.1 200 OK
      *     {
      *       "code":1,
-     *       "message": "success"
+     *       "message": "success",
      *       "data": [group1,group2...]
      *     }
      * @apiError {int} status 响应状态码
@@ -204,14 +204,14 @@ public class UserController {
      *      HTTP/1.1 200 OK
      *     {
      *       "code":0,
-     *       "message": "该用户已在好友列表中"
+     *       "message": "该用户已在好友列表中",
      *       "data":null
      *     }
      *
      *      HTTP/1.1 200 OK
      *     {
      *       "code":-1,
-     *       "message": "未能查询到分组信息"
+     *       "message": "未能查询到分组信息",
      *       "data":null
      *      }
      */
@@ -256,7 +256,7 @@ public class UserController {
      *     HTTP/1.1 200 OK
      *     {
      *       "code":1,
-     *       "message": "success"
+     *       "message": "success",
      *       "data": "发送成功"
      *     }
      * @apiError {int} status 响应状态码
@@ -265,7 +265,7 @@ public class UserController {
      *      HTTP/1.1 200 OK
      *     {
      *       "code":1,
-     *       "message": "发送失败"
+     *       "message": "发送失败",
      *       "data":null
      *     }
      */
@@ -375,6 +375,7 @@ public class UserController {
      * @apiSuccessExample {json} type=1-示例:
      *     HTTP/1.1 200 OK
      *     {
+     *       "code": 1,
      *       "message": "success",
      *       "data": [
      *           {
@@ -382,7 +383,7 @@ public class UserController {
      *               "count_num": 6
      *           }
      *       ],
-     *       "code": 1
+     *
      *     }
      * @apiSuccessExample {json} type=-1-示例:
      *     HTTP/1.1 200 OK
@@ -450,7 +451,7 @@ public class UserController {
      *     HTTP/1.1 200 OK
      *     {
      *       "message": "success",
-     *       "data": "已添加"
+     *       "data": "已添加",
      *       "code": 1
      *     }
      * @apiError {int} status 响应状态码

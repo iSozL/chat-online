@@ -1,6 +1,7 @@
 package com.example.chatonline.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.chatonline.Model.Group;
 import com.example.chatonline.Model.JsonResult;
 import com.example.chatonline.Model.Message;
 import com.example.chatonline.Model.User;
@@ -41,7 +42,7 @@ public class UserController2 {
      *     HTTP/1.1 200 OK
      *     {
      *       "code":1,
-     *       "message": "success"
+     *       "message": "success",
      *       "data": [
      *         {
      *             "messagetxt": "",
@@ -56,7 +57,7 @@ public class UserController2 {
      *      HTTP/1.1 200 OK
      *     {
      *       "code":0,
-     *       "message": "消息列表为空"
+     *       "message": "消息列表为空",
      *       "data":null
      *     }
      */
@@ -134,4 +135,57 @@ public class UserController2 {
             return JsonResult.fail("消息列表为空");
         }
     }
+
+    /**
+     *
+     * @api {get} ShowGroup 显示好友分组
+     * @apiDescription  显示好友分组接口
+     * @apiGroup 好友
+     * @apiName 显示好友分组
+     * @apiversion 0.1.0
+     *
+     * @apiParam {String} userId 用户ID
+     *
+     * @apiSuccess {int} status 响应状态码
+     * @apiSuccess {String} message 响应描述
+     * @apiSuccess {String} data 返回相关信息，成功的时候才存在
+     *
+     * @apiSuccessExample {json} 显示好友分组-示例:
+     *     HTTP/1.1 200 OK
+     *     "message": "success",
+     *     "data": [
+     *         {
+     *             "groupname": "分组一",
+     *             "count_num": 6
+     *         },
+     *         {
+     *             "groupname": "分组二",
+     *             "count_num": 6
+     *         }
+     *     ],
+     *     "code": 1
+     *     }
+     * @apiError {int} status 响应状态码
+     * @apiError {String} message 响应描述
+     * @apiErrorExample {json} 分组信息为空-示例：
+     *      HTTP/1.1 200 OK
+     *     {
+     *       "code":-1,
+     *       "message": "未能查询到分组信息",
+     *       "data":null
+     *     }
+     */
+    @GetMapping("/ShowGroup")
+    @CrossOrigin
+    public JsonResult ShowGroup(@RequestParam("userId") String userId)
+    {
+        ArrayList<Group> groupinfo = userService.ShowGroup(userId);
+        if(groupinfo!=null)
+        {
+            return JsonResult.success(groupinfo);
+        }
+        else
+            return JsonResult.error("未能查询到分组信息",null);
+    }
+
 }
