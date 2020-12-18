@@ -62,7 +62,7 @@ const Home: React.FC = () => {
       console.log("连接关闭")
     };
   }
-  const [select, setSelect] = useState<string>("me")
+  const [select, setSelect] = useState<string>("add")
   const menu = (
     <div className="menu">
       <div onClick={() => {setSelect("setting")}}>个人设置</div>
