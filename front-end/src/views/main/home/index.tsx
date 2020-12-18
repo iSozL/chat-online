@@ -12,9 +12,14 @@ import request from '../../../utils/request'
 
 let socket: any
 const Home: React.FC = () => {
+  const history = useHistory()
   const { userMsg, useDispatch } = useContext(changeUserContext)
   const [adds, setAdd] = useState<object[]>()
   const [isRead, setRead] = useState<string[]>([])
+  const logout = () => {
+    window.localStorage.clear()
+    history.push("login")
+  }
   let info: any = JSON.parse(window.localStorage.getItem("userInfo"))
   if (window.WebSocket) {
     if (info && !socket) {
@@ -69,7 +74,7 @@ const Home: React.FC = () => {
   const menu = (
     <div className="menu">
       <div onClick={() => {setSelect("setting")}}>个人设置</div>
-      <div>退出登录</div>
+      <div onClick={logout}>退出登录</div>
     </div>
   )
 
