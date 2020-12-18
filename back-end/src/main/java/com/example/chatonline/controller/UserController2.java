@@ -25,7 +25,7 @@ public class UserController2 {
     private MessageService messageService;
     /**
      *
-     * @api {get} addfriend 消息列表
+     * @api {get} ShowFriendLastMessage 消息列表
      * @apiDescription  显示消息列表接口
      * @apiGroup 消息
      * @apiName 显示消息列表
