@@ -20,7 +20,7 @@ export const Container = (props: any) => {
     show: false,
     username: undefined,
     userId: undefined,
-    msgs: []
+    msgs: [],
   })
   return (
     <changeUserContext.Provider value={{userMsg, useDispatch}}>

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import {changeUserContext, CHANGE_USER} from '../store/index'
 import './index.scss'
 import { Button, Popover } from 'antd'
@@ -6,57 +6,57 @@ import Scroll from 'react-custom-scrollbars'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
 
-let socket: any;
 if (!window.WebSocket) {
   window.WebSocket = window.MozWebSocket;
 }
-const Message = () => {
+const Message = (props: any) => {
+  let socket = props.socket
   const { userMsg, useDispatch } = useContext(changeUserContext)
+  console.log(userMsg.msgs,'message')
   let info: any = JSON.parse(window.localStorage.getItem("userInfo"))
-  if (window.WebSocket) {
-    if (info && !socket) {
-      socket = new WebSocket(`ws://47.102.214.67:8080/ET_war/websocket/${info.userId}`);
-    }
-  } else {
-    alert("你的浏览器不支持 WebSocket！");
-  }
-  if (socket) {
-    socket.onmessage = function (event: any) {
-      event = JSON.parse(event.data)
-      if (event.sender === info.userId) {
-        console.log(event)
-        let data = {
-          message: event.message,
-          time: new Date(),
-          my: true,
-          tag: event.receiver,
-          tag1: event.sender
-        }
-        useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
-      } else {
-        console.log(userMsg.msgs)
-        let data = {
-          message: event.message,
-          time: new Date(),
-          my: false,
-          tag: event.receiver,
-          tag1: event.sender
-        }
-        useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
-      }
-    };
-    socket.onopen = function (event: any) {
-      console.log("连接开始")
-    };
-    socket.onclose = function (event: any) {
-      console.log("连接关闭")
-    };
-  }
+  // if (window.WebSocket) {
+  //   if (info && !socket) {
+  //     socket = new WebSocket(`ws://47.102.214.67:8080/ET_war/websocket/${info.userId}`);
+  //   }
+  // } else {
+  //   alert("你的浏览器不支持 WebSocket！");
+  // }
+  // if (socket) {
+  //   socket.onmessage = function (event: any) {
+  //     event = JSON.parse(event.data)
+  //     if (event.sender === info.userId) {
+  //       console.log(event)
+  //       let data = {
+  //         message: event.message,
+  //         time: new Date(),
+  //         my: true,
+  //         tag: event.receiver,
+  //         tag1: event.sender
+  //       }
+  //       useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
+  //     } else {
+  //       console.log(userMsg.msgs)
+  //       let data = {
+  //         message: event.message,
+  //         time: new Date(),
+  //         my: false,
+  //         tag: event.receiver,
+  //         tag1: event.sender
+  //       }
+  //       useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
+  //     }
+  //   };
+  //   socket.onopen = function (event: any) {
+  //     console.log("连接开始")
+  //   };
+  //   socket.onclose = function (event: any) {
+  //     console.log("连接关闭")
+  //   };
+  // }
 
   const inputs = useRef<any>()
 
   const send = (message: any) => {
-    console.log(userMsg)
     if (!window.WebSocket) {
       return;
     }
