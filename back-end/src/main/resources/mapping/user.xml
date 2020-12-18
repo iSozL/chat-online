@@ -22,8 +22,8 @@
         insert into friendgroup(userId,groupname,count_num)
         value (#{id},#{groupname},0);
     </insert>
-    <select id="FindFriend" resultType="com.example.chatonline.Model.User">
-        select userId,sex,nickname from friendrelation where userId = #{id}
+    <select id="FindRelation" resultType="boolean">
+        select count(*) from friendrelation where userId = #{userId} and friendId=#{friendId}
     </select>
     <insert id="AddFriend">
         insert into friendrelation(userId,friendId,groupname,note) value (#{userId},#{friendId},#{groupname},#{note})

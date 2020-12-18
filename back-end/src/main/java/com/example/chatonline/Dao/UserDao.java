@@ -18,7 +18,7 @@ public interface UserDao {
     public User QueryUser(String  id);
     public Boolean Register(User user);
     public ArrayList<User> FindGroupFriends(String id,String groupname);
-    public User FindFriend(String id);
+    public Boolean FindRelation(String userId,String friendId);
     public ArrayList<Group> ShowGroup(String id);
     public boolean CreatGroup(String id,String groupname);
     public boolean AddGroupNum(String id,String groupname);

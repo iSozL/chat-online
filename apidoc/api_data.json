@@ -196,7 +196,7 @@
       "examples": [
         {
           "title": "预添加失败-示例：",
-          "content": " HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"该用户已在好友列表中\"\n  \"data\":null\n}\n\n HTTP/1.1 200 OK\n{\n  \"code\":-1,\n  \"message\": \"未能查询到分组信息\"\n  \"data\":null\n }",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"该用户已在好友列表中\"\n  \"data\":null\n}\n\n HTTP/1.1 200 OK\n{\n  \"code\":-1,\n  \"message\": \"未能查询到分组信息\"\n  \"data\":null\n }",
           "type": "json"
         }
       ]
