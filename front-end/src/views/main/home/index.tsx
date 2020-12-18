@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useLayoutEffect } from 'react';
 import './index.scss'
 import FriendContent from '../friendContent/index';
 import Message from '../message/index'
@@ -8,10 +8,12 @@ import { Popover } from "antd";
 import Setting from '../setting/index'
 import { useHistory } from 'react-router-dom'
 import {changeUserContext, CHANGE_USER} from '../store/index'
+import request from '../../../utils/request'
 
 let socket: any
 const Home: React.FC = () => {
   const { userMsg, useDispatch } = useContext(changeUserContext)
+  const [adds, setAdd] = useState<object[]>()
   const [isRead, setRead] = useState<string[]>([])
   let info: any = JSON.parse(window.localStorage.getItem("userInfo"))
   if (window.WebSocket) {
@@ -62,13 +64,28 @@ const Home: React.FC = () => {
       console.log("连接关闭")
     };
   }
-  const [select, setSelect] = useState<string>("add")
+  
+  const [select, setSelect] = useState<string>("me")
   const menu = (
     <div className="menu">
       <div onClick={() => {setSelect("setting")}}>个人设置</div>
       <div>退出登录</div>
     </div>
   )
+
+  useEffect(() => {
+    const fetchAdds = async () => {
+      await request.post(`http://101.132.134.186:8080/showveritymessage`, {
+        userId: info.userId
+      }).then(value => {
+        if (value.data.code) {
+          console.log(value.data.data)
+          setAdd(value.data.data)
+        }
+      })
+    }
+    fetchAdds()
+  }, [])
 
   return (
     <div className="main">
@@ -94,7 +111,7 @@ const Home: React.FC = () => {
                 case "me":
                   return (
                     <>
-                      <FriendContent unread={isRead} setRead={setRead} />
+                      <FriendContent unread={isRead} setRead={setRead} adds={adds} />
                       <Message socket={socket} />
                     </>
                   )
