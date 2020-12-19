@@ -82,8 +82,8 @@ define({ "api": [
       },
       "examples": [
         {
-          "title": "查询失败-示例：",
-          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"未查询到该用户好友信息\",\n  \"data\":null,\n}",
+          "title": "查询错误-示例：",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":-1,\n  \"message\": \"未查询到该用户好友信息\",\n  \"data\":null,\n}",
           "type": "json"
         }
       ]
