@@ -47,5 +47,6 @@ public class UserService {
     public boolean AddGroupNum(String id,String groupname){return userDao.AddGroupNum(id, groupname);}
     //添加好友
     public boolean AddFriend(String userId,String friendId,String note,String groupname) {return userDao.AddFriend(userId, friendId, note, groupname);}
-
+    //好友移动
+    public boolean groupMove(String userId,String friendId,String preGroupname,String postGroupname){ return userDao.groupMove(userId,friendId,preGroupname,postGroupname);}
 }
