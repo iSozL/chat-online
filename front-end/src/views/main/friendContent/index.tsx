@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './index.scss'
-import { Tabs, Popover, Modal, Button, Form, Select, Input, message } from 'antd';
+import { Tabs, Popover, Modal, Button, Form, Select, Input, message, Menu } from 'antd';
 import Scroll from 'react-custom-scrollbars';
 import { changeUserContext, CHANGE_USER } from '../store/index'
 import request from '../../../utils/request'
 
-const {Option} = Select
-let info = JSON.parse(window.localStorage.getItem("userInfo"))
+const { SubMenu } = Menu
+const { Option } = Select
 const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 16 },
@@ -21,22 +21,71 @@ const detail = (
 )
 
 const FriendsList = () => {
+  let info = JSON.parse(window.localStorage.getItem("userInfo"))
+  let groups = info.groups
+  const [friendList, setList] = useState<object[]>([])
+  useEffect(() => {
+    async function getFriendList() {
+      await request.get(`http://101.132.134.186:8080/GroupFriends?userId=${info.userId}`).then(value => {
+        if (value.data.code) {
+          for (let i in value.data.data) {
+            for (let j in groups) {
+              if (value.data.data[i].groupname === groups[j].groupname) {
+                typeof groups[j].list === "object" ? groups[j].list.push(value.data.data[i]) : groups[j].list = [value.data.data[i]]
+              }
+            }
+            console.log(value.data.data[i].groupname)
+          }
+          setList(groups)
+          console.log(groups)
+        } else {
+          message.error(value.data.message)
+        }
+      })
+    }
+    getFriendList()
+  }, [])
   const { userMsg, useDispatch } = useContext(changeUserContext)
   return (
     <Scroll>
-      <Popover content={detail} placement="right">
-        <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: '孙笑川', userId: '101', show: true, msgs: userMsg.msgs}})}}>
-          <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
-          <div className="msg">
-            <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>孙笑川</div>
-          </div>
-        </div>
-      </Popover>
+      <Menu
+        // onClick={this.handleClick}
+        style={{ width: 256 }}
+        defaultSelectedKeys={['0']}
+        mode="inline"
+      >
+        {
+          friendList.map((item: any, index: number) => {
+            return (
+              <SubMenu key={index} title={item.groupname} popupClassName="menu-item">
+                {
+                  typeof item.list === "object" ? 
+                  item.list.map((i: any, index: number) => {
+                    return (
+                      <div key={index}>
+                        <Popover content={detail} placement="right">
+                          <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: i.nickname, userId: i.userId, show: true, msgs: userMsg.msgs}})}}>
+                            <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+                            <div className="msg">
+                              <div style={{padding: "5px 0 0 5px", fontSize: "18px", lineHeight: "1.5"}}>{i.nickname}</div>
+                            </div>
+                          </div>
+                        </Popover>
+                      </div>
+                    )
+                  }) : ""
+                }
+              </SubMenu>
+            )
+          })
+        }
+      </Menu>
     </Scroll>
   )
 }
 
 const MsgList = (props: any) => {
+  let info = JSON.parse(window.localStorage.getItem("userInfo"))
   let unreads = props.unread
   let setRead = props.setRead
   const { userMsg, useDispatch } = useContext(changeUserContext)
@@ -89,10 +138,10 @@ const MsgList = (props: any) => {
 }
 
 const FriendContent = (props: any) => {
+  let info = JSON.parse(window.localStorage.getItem("userInfo"))
   const [visible, setVisible] = useState(false);
   const [visible1, setVisible1] = useState(false);
   const [curId, setId] = useState()
-  console.log(info.groups)
   const send = async (value: any) => {
     let datas = {
       userId: info.userId,
@@ -122,7 +171,7 @@ const FriendContent = (props: any) => {
           <Form.Item name="groupname" label="选择列表">
             <Select style={{ width: 120 }}>
               {
-                info.groups && typeof info.groups === "object" ? info.groups.map((item: any, index: number) => {
+                (info.groups && (info.groups instanceof Array)) ? info.groups.map((item: any, index: number) => {
                   return (
                     <Option value={item.groupname} key={index}>
                       {item.groupname}
