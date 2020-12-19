@@ -25,14 +25,18 @@
     <select id="FindRelation" resultType="boolean">
         select count(*) from friendrelation where userId = #{userId} and friendId=#{friendId}
     </select>
-    <insert id="AddFriend">
-        insert into friendrelation(userId,friendId,groupname,note) value (#{userId},#{friendId},#{groupname},#{note})
-    </insert>
-    <update id="AddGroupNum">
-        update friendgroup
-        set count_num=count_num+1
-        where userId=#{id} and groupname=#{groupname}
-    </update>
+<!--    <insert id="AddFriend">-->
+<!--        insert into friendrelation(userId,friendId,groupname,note) value (#{userId},#{friendId},#{groupname},#{note})-->
+<!--    </insert>-->
+<!--    <update id="AddGroupNum">-->
+<!--        update friendgroup-->
+<!--        set count_num=count_num+1-->
+<!--        where userId=#{id} and groupname=#{groupname}-->
+<!--    </update>-->
+    <select id="AddFriend"  resultType="Integer" statementType="CALLABLE">
+        call Addfriend(#{userId},#{friendId},#{groupnameA},#{groupnameB},#{noteA},#{noteB},#{flag,mode=OUT,jdbcType=INTEGER})
+    </select>
+
     <update id="groupMove">
         update friendrelation
         set groupname=#{postGroupname}

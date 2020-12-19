@@ -480,29 +480,30 @@ public class UserController {
         //获取发送方的备注和分组信息
         map = messageService.FindVerifyMessage(message);
         System.out.println((String)map.get("groupname"));
-        boolean flag=false;
 
-        do {
-            //修改验证消息表
-            flag = messageService.HandleVerifyMessage(1, sendId, userId);
-        } while (!flag);
 
-        do {
-            //添加好友关系
-            flag=userService.AddFriend(userId, sendId, note, groupname);
-        } while (!flag);
-        do {
-            //添加好友关系
-            flag=userService.AddFriend(sendId, userId, (String) map.get("note"), (String) map.get("groupname"));
-        } while (!flag);
-        userService.AddGroupNum(sendId,(String) map.get("groupname"));
-        userService.AddGroupNum(userId,groupname);
-
-        if (flag) {
+        int flag;
+        flag=userService.AddFriend(userId,sendId,note,groupname,(String) map.get("note"),(String) map.get("groupname"));
+        if (flag==1) {
             return  JsonResult.success("已添加");
         } else {
             return JsonResult.fail("添加失败");
         }
+//        do {
+//            //修改验证消息表
+//            flag = messageService.HandleVerifyMessage(1, sendId, userId);
+//        } while (!flag);
+//
+//        do {
+//            //添加好友关系
+//            flag=userService.AddFriend(userId, sendId, note, groupname);
+//        } while (!flag);
+//        do {
+//            //添加好友关系
+//            flag=userService.AddFriend(sendId, userId, (String) map.get("note"), (String) map.get("groupname"));
+//        } while (!flag);
+//        userService.AddGroupNum(sendId,(String) map.get("groupname"));
+//        userService.AddGroupNum(userId,groupname);
 
     }
 
