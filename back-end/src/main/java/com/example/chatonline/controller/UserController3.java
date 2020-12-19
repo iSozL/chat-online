@@ -79,7 +79,6 @@ public class UserController3 {
      * @apiversion 0.1.0
      *
      * @apiParam {String} userId 用户Id
-     * @apiParam {String} groupname 分组名
      *
      * @apiSuccess {int} status 响应状态码
      * @apiSuccess {String} message 响应描述
@@ -90,7 +89,17 @@ public class UserController3 {
      *     {
      *       "code":1,
      *       "message": "success",
-     *       "data": 好友列表,
+     *       "data": {
+     *             "birthday": "2020-12-19",
+     *             "note": "test",
+     *             "address": "ncu",
+     *             "phone": "12345678910",
+     *             "signature": "笑一笑就好",  个性签名
+     *             "nickname": "和规范化",
+     *             "userId": "5",
+     *             "groupname": "分组二",
+     *             "evaluate": "起飞"         好友印象
+     *         },
      *     }
      *
      * @apiError {int} status 响应状态码
@@ -104,11 +113,11 @@ public class UserController3 {
      *       "data":null,
      *     }
      */
-    @GetMapping("/groupfriends")
+    @GetMapping("/GroupFriends")
     @CrossOrigin
-    public JsonResult groupfriends(@RequestParam("userId") String userId,@RequestParam("groupname") String groupname)
+    public JsonResult GroupFriends(@RequestParam("userId") String userId)
     {
-        ArrayList<Map<String,Object>> users = userService.FindGroupFriends(userId,groupname);
+        ArrayList<Map<String,Object>> users = userService.GroupFriends(userId);
 
         if(users!=null)
             return  JsonResult.success(users);

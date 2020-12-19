@@ -33,7 +33,7 @@ public class UserService {
         return userDao.FindRelation(id,friendId);
     }
     //查询某一分组下所有好友
-    public ArrayList<Map<String,Object>> FindGroupFriends(String userId, String groupname) { return userDao.FindGroupFriends(userId,groupname); }
+    public ArrayList<Map<String,Object>> GroupFriends(String userId) { return userDao.GroupFriends(userId); }
     //查询分组
     public ArrayList<Group> ShowGroup(String id)
     {

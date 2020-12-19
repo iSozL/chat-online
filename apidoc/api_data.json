@@ -16,13 +16,6 @@
             "optional": false,
             "field": "userId",
             "description": "<p>用户Id</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "groupname",
-            "description": "<p>分组名</p>"
           }
         ]
       }
@@ -56,7 +49,7 @@
       "examples": [
         {
           "title": "查询成功-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": 好友列表,\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": {\n        \"birthday\": \"2020-12-19\",\n        \"note\": \"test\",\n        \"address\": \"ncu\",\n        \"phone\": \"12345678910\",\n        \"signature\": \"笑一笑就好\",  个性签名\n        \"nickname\": \"和规范化\",\n        \"userId\": \"5\",\n        \"groupname\": \"分组二\",\n        \"evaluate\": \"起飞\"         好友印象\n    },\n}",
           "type": "json"
         }
       ]

@@ -10,10 +10,10 @@
     <insert id="Register" >
         insert into user(userId,nickname,password) value(#{userId},#{nickname},#{password})
     </insert>
-    <select id="FindGroupFriends" resultType="map">
-        select user.nickname,user.userId,friendrelation.note
+    <select id="GroupFriends" resultType="map">
+        select user.nickname,user.userId,user.sex,user.birthday,user.address,user.phone,user.signature,friendrelation.note,friendrelation.groupname,friendrelation.evaluate
         from user,friendrelation
-        where user.userId in (select friendId from friendrelation where userId = #{userId} and groupname = #{groupname}) and friendrelation.userId = #{userId} and friendrelation.groupname = #{groupname}
+        where user.userId in (select friendId from friendrelation where userId = #{userId}) and friendrelation.userId = #{userId}
     </select>
     <select id="ShowGroup" resultType="com.example.chatonline.Model.Group">
         select groupname,count_num from friendgroup where userId = #{id}
