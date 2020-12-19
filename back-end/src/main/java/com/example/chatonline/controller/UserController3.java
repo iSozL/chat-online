@@ -57,8 +57,8 @@ public class UserController3 {
      *     }
      *
      */
-    @GetMapping("/groupMove")
     @CrossOrigin
+    @GetMapping("/groupMove")
     public JsonResult groupMove(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("preGroupname") String preGroupname,@RequestParam("postGroupname") String postGroupname)
     {
         boolean flag = false;
@@ -113,8 +113,8 @@ public class UserController3 {
      *       "data":null,
      *     }
      */
-    @GetMapping("/GroupFriends")
     @CrossOrigin
+    @GetMapping("/GroupFriends")
     public JsonResult GroupFriends(@RequestParam("userId") String userId)
     {
         ArrayList<Map<String,Object>> users = userService.GroupFriends(userId);
