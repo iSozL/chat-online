@@ -11,7 +11,7 @@
         insert into user(userId,nickname,password) value(#{userId},#{nickname},#{password})
     </insert>
     <select id="FindGroupFriends" resultType="com.example.chatonline.Model.User">
-        select *
+        select nickname,userId,note
         from user
         where userId in (select * from FriendRelation where userId = #{id} and groupname = #{groupname})
     </select>
@@ -33,4 +33,15 @@
         set count_num=count_num+1
         where userId=#{id} and groupname=#{groupname}
     </update>
+    <select id="groupMove">
+        update friendrelation
+        set groupname=#{postGroupname}
+        where userId=#{userId} and friendId=#{friendId}
+        update friendgroup
+        set count_num=count_num-1
+        where groupname=#{preGroupname}
+        update friendgroup
+        set count_num=count_num+1
+        where groupname=#{postGroupname}
+    </select>
 </mapper>

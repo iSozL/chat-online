@@ -1,22 +1,37 @@
 package com.example.chatonline.controller;
 
+import com.example.chatonline.Model.JsonResult;
+import com.example.chatonline.Model.User;
+import com.example.chatonline.Service.MessageService;
+import com.example.chatonline.Service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
 
 @RestController
 @CrossOrigin
 public class UserController3 {
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private JsonResult jsonResult;
+    @Autowired
+    private MessageService messageService;
     /**
-     * @api {post} groupMove 好友移动
+     * @api {get} groupMove 好友移动
      * @apiDescription  好友移动接口
      * @apiGroup 好友
      * @apiName 好友移动
      * @apiversion 0.1.0
      *
      * @apiParam {String} userId 用户Id
-     * @apiParam {String} preGroupName 移动前分组名
-     * @apiParam {String} postGroupName 移动后分组名
+     * @apiParam {String} friendId 好友Id
+     * @apiParam {String} preGroupname 移动前分组名
+     * @apiParam {String} postGroupname 移动后分组名
      *
      * @apiSuccess {int} status 响应状态码
      * @apiSuccess {String} message 响应描述
@@ -44,19 +59,24 @@ public class UserController3 {
      */
     @GetMapping("/groupMove")
     @CrossOrigin
-    public static void groupMove(String[] args) {
-
+    public JsonResult groupMove(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("preGroupname") String preGroupname,@RequestParam("postGroupname") String postGroupname)
+    {
+        boolean flag = userService.groupMove(userId,friendId,preGroupname,postGroupname);
+        if( flag )
+            return  JsonResult.success("移动好友分组成功");
+        else
+            return JsonResult.fail("好友分组移动失败");
     }
 
     /**
-     * @api {post} groupfriends 好友列表
+     * @api {get} groupfriends 好友列表
      * @apiDescription  好友列表接口
      * @apiGroup 好友
      * @apiName 好友列表
      * @apiversion 0.1.0
      *
      * @apiParam {String} userId 用户Id
-     * @apiParam {String} groupName 分组名
+     * @apiParam {String} groupname 分组名
      *
      * @apiSuccess {int} status 响应状态码
      * @apiSuccess {String} message 响应描述
@@ -83,8 +103,14 @@ public class UserController3 {
      */
     @GetMapping("/groupfriends")
     @CrossOrigin
-    public static void groupfriends(String[] args) {
+    public JsonResult groupfriends(@RequestParam("userId") String userId,@RequestParam("groupname") String groupname)
+    {
 
+        ArrayList<User> users = userService.FindGroupFriends(userId,groupname);
+        if(users!=null)
+            return  JsonResult.success(users);
+        else
+            return JsonResult.fail("未查询到该用户好友信息");
     }
 
 
