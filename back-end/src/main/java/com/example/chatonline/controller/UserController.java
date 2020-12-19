@@ -479,6 +479,7 @@ public class UserController {
 
         //获取发送方的备注和分组信息
         map = messageService.FindVerifyMessage(message);
+        System.out.println((String)map.get("groupname"));
         boolean flag=false;
 
         do {
