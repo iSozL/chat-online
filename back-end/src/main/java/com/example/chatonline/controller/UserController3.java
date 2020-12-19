@@ -1,7 +1,6 @@
 package com.example.chatonline.controller;
 
 import com.example.chatonline.Model.JsonResult;
-import com.example.chatonline.Model.User;
 import com.example.chatonline.Service.MessageService;
 import com.example.chatonline.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -61,7 +61,10 @@ public class UserController3 {
     @CrossOrigin
     public JsonResult groupMove(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("preGroupname") String preGroupname,@RequestParam("postGroupname") String postGroupname)
     {
-        boolean flag = userService.groupMove(userId,friendId,preGroupname,postGroupname);
+        boolean flag = false;
+        flag = userService.groupMove(userId,friendId,postGroupname);
+        flag = userService.preGroupnum(userId,preGroupname);
+        flag = userService.postGroupnum(userId,postGroupname);
         if( flag )
             return  JsonResult.success("移动好友分组成功");
         else
@@ -76,7 +79,6 @@ public class UserController3 {
      * @apiversion 0.1.0
      *
      * @apiParam {String} userId 用户Id
-     * @apiParam {String} groupname 分组名
      *
      * @apiSuccess {int} status 响应状态码
      * @apiSuccess {String} message 响应描述
@@ -87,31 +89,39 @@ public class UserController3 {
      *     {
      *       "code":1,
      *       "message": "success",
-     *       "data": 好友列表,
+     *       "data": {
+     *             "birthday": "2020-12-19",
+     *             "note": "test",
+     *             "address": "ncu",
+     *             "phone": "12345678910",
+     *             "signature": "笑一笑就好",  个性签名
+     *             "nickname": "和规范化",
+     *             "userId": "5",
+     *             "groupname": "分组二",
+     *             "evaluate": "起飞"         好友印象
+     *         },
      *     }
      *
      * @apiError {int} status 响应状态码
      * @apiError {String} message 响应描述
      *
-     * @apiErrorExample {json} 查询失败-示例：
+     * @apiErrorExample {json} 查询错误-示例：
      *      HTTP/1.1 200 OK
      *     {
-     *       "code":0,
+     *       "code":-1,
      *       "message": "未查询到该用户好友信息",
      *       "data":null,
      *     }
      */
-    @GetMapping("/groupfriends")
+    @GetMapping("/GroupFriends")
     @CrossOrigin
-    public JsonResult groupfriends(@RequestParam("userId") String userId,@RequestParam("groupname") String groupname)
+    public JsonResult GroupFriends(@RequestParam("userId") String userId)
     {
+        ArrayList<Map<String,Object>> users = userService.GroupFriends(userId);
 
-        ArrayList<User> users = userService.FindGroupFriends(userId,groupname);
         if(users!=null)
             return  JsonResult.success(users);
         else
-            return JsonResult.fail("未查询到该用户好友信息");
+            return JsonResult.error("未查询到该用户好友信息",null);
     }
-
-
 }
