@@ -12,6 +12,7 @@
     </insert>
     <select id="FindGroupFriends" resultType="com.example.chatonline.Model.User">
         select nickname,userId,note
+
         from user
         where userId in (select * from FriendRelation where userId = #{id} and groupname = #{groupname})
     </select>
