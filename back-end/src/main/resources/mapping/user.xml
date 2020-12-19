@@ -10,10 +10,10 @@
     <insert id="Register" >
         insert into user(userId,nickname,password) value(#{userId},#{nickname},#{password})
     </insert>
-    <select id="FindGroupFriends" resultType="com.example.chatonline.Model.User">
-        select nickname,userId,note
-        from user
-        where userId in (select * from FriendRelation where userId = #{id} and groupname = #{groupname})
+    <select id="FindGroupFriends" resultType="map">
+        select user.nickname,user.userId,friendrelation.note
+        from user,friendrelation
+        where user.userId in (select friendId from friendrelation where userId = #{userId} and groupname = #{groupname}) and friendrelation.userId = #{userId} and friendrelation.groupname = #{groupname}
     </select>
     <select id="ShowGroup" resultType="com.example.chatonline.Model.Group">
         select groupname,count_num from friendgroup where userId = #{id}
@@ -37,9 +37,13 @@
         update friendrelation
         set groupname=#{postGroupname}
         where userId=#{userId} and friendId=#{friendId}
+    </update>
+    <update id="preGroupnum">
         update friendgroup
         set count_num=count_num-1
         where groupname=#{preGroupname} and userId=#{userId}
+    </update>
+    <update id="postGroupnum">
         update friendgroup
         set count_num=count_num+1
         where groupname=#{postGroupname} and userId=#{userId}
