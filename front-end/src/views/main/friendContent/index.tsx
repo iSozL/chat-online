@@ -12,13 +12,37 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 const { TabPane } = Tabs;
-const detail = (
-  <div>
-    <div>孙笑川</div>
-    <div>带带大师兄</div>
-    <div>大家笑一笑就好</div>
-  </div>
-)
+const Detail = (props: any) => {
+  let msg = props.msg
+  console.log(msg)
+  const hasProperty = (property: undefined | string): string => {
+    if (!property) {
+      return ""
+    } else {
+      return String(property)
+    }
+  }
+  // const {
+  //   nickname,
+  //   note,
+  //   signature,
+  //   birthday,
+  //   evaluate,
+  //   userId,
+  //   address,
+  //   phone,
+  // } = props
+  return (
+    <div>
+      <div>昵称：{hasProperty(msg.nickname)}</div>
+      <div>账号：{hasProperty(msg.userId)}</div>
+      <div>个性签名：{hasProperty(msg.signature)}</div>
+      <div>地址：{hasProperty(msg.address)}</div>
+      <div>电话：{hasProperty(msg.phone)}</div>
+      <div>印象：{hasProperty(msg.evaluate)}</div>
+    </div>
+  )
+}
 
 const FriendsList = () => {
   let info = JSON.parse(window.localStorage.getItem("userInfo"))
@@ -63,11 +87,12 @@ const FriendsList = () => {
                   item.list.map((i: any, index: number) => {
                     return (
                       <div key={index}>
-                        <Popover content={detail} placement="right">
+                        <Popover content={<Detail msg={i} />} placement="right">
                           <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: i.nickname, userId: i.userId, show: true, msgs: userMsg.msgs}})}}>
                             <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
                             <div className="msg">
-                              <div style={{padding: "5px 0 0 5px", fontSize: "18px", lineHeight: "1.5"}}>{i.nickname}</div>
+                              <div style={{padding: "5px 0 0 5px", fontSize: "18px", lineHeight: "1.5"}}>{i.nickname}{ typeof i.note === "string" ? `(${i.note})` : "" }</div>
+                              <div style={{paddingLeft: "5px", lineHeight: "1.5"}}>{ typeof i.signature === "string" ? i.signature : ""}</div>
                             </div>
                           </div>
                         </Popover>
