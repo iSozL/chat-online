@@ -1,6 +1,6 @@
 define({ "api": [
   {
-    "type": "post",
+    "type": "get",
     "url": "groupfriends",
     "title": "好友列表",
     "description": "<p>好友列表接口</p>",
@@ -21,7 +21,7 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "groupName",
+            "field": "groupname",
             "description": "<p>分组名</p>"
           }
         ]
@@ -92,7 +92,7 @@ define({ "api": [
     "groupTitle": "好友"
   },
   {
-    "type": "post",
+    "type": "get",
     "url": "groupMove",
     "title": "好友移动",
     "description": "<p>好友移动接口</p>",
@@ -113,14 +113,21 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "preGroupName",
+            "field": "friendId",
+            "description": "<p>好友Id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "preGroupname",
             "description": "<p>移动前分组名</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "postGroupName",
+            "field": "postGroupname",
             "description": "<p>移动后分组名</p>"
           }
         ]
