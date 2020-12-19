@@ -33,15 +33,15 @@
         set count_num=count_num+1
         where userId=#{id} and groupname=#{groupname}
     </update>
-    <select id="groupMove">
+    <update id="groupMove">
         update friendrelation
         set groupname=#{postGroupname}
         where userId=#{userId} and friendId=#{friendId}
         update friendgroup
         set count_num=count_num-1
-        where groupname=#{preGroupname}
+        where groupname=#{preGroupname} and userId=#{userId}
         update friendgroup
         set count_num=count_num+1
-        where groupname=#{postGroupname}
-    </select>
+        where groupname=#{postGroupname} and userId=#{userId}
+    </update>
 </mapper>
