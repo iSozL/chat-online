@@ -44,9 +44,12 @@ public class UserService {
     //新建分组
     public boolean CreatGroup(String id,String groupname){return userDao.CreatGroup(id, groupname);}
     //分组人数+1
-    public boolean AddGroupNum(String id,String groupname){return userDao.AddGroupNum(id, groupname);}
-    //添加好友
-    public boolean AddFriend(String userId,String friendId,String note,String groupname) {return userDao.AddFriend(userId, friendId, note, groupname);}
-    //好友移动
+//    public boolean AddGroupNum(String id,String groupname){return userDao.AddGroupNum(id, groupname);}
+//    //添加好友
+//    public boolean AddFriend(String userId,String friendId,String note,String groupname) {return userDao.AddFriend(userId, friendId, note, groupname);}
+//    //好友移动
     public boolean groupMove(String userId,String friendId,String preGroupname,String postGroupname){ return userDao.groupMove(userId,friendId,preGroupname,postGroupname);}
+    public Integer AddFriend(String userId,String friendId,String noteA,String groupnameA,String noteB,String groupnameB){
+        return userDao.AddFriend(userId, friendId, noteA, groupnameA, noteB, groupnameB);
+    }
 }

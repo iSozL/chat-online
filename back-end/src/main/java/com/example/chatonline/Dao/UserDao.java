@@ -21,7 +21,9 @@ public interface UserDao {
     public Boolean FindRelation(String userId,String friendId);
     public ArrayList<Group> ShowGroup(String id);
     public boolean CreatGroup(String id,String groupname);
-    public boolean AddGroupNum(String id,String groupname);
-    public boolean AddFriend(String userId,String friendId,String note,String groupname);
+//    public boolean AddGroupNum(String id,String groupname);
+//    public boolean AddFriend(String userId,String friendId,String note,String groupname);
     public boolean groupMove(String userId,String friendId,String preGroupname,String postGroupname);
+    public Integer AddFriend(String userId,String friendId,String noteA,String groupnameA,String noteB,String groupnameB);
+
 }
