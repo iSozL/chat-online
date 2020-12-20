@@ -9,11 +9,8 @@ import java.util.Date;
 public class Message {
     private String sendid;
     private String reciveid;
-
-    @JsonFormat(timezone="GMT+8",pattern="yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern="yyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date sendtime;
     private String messagetext;
     private int texttype;
-
 }
