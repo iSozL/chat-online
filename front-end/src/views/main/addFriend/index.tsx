@@ -8,7 +8,7 @@ const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 16 },
 };
-const AddFriend = () => {
+const AddFriend = (props: any) => {
   let info = JSON.parse(window.localStorage.getItem("userInfo"))
   const [userContent, setContent] = useState<any>()
   const [visible, setVisible] = useState<boolean>(false);
@@ -51,6 +51,10 @@ const AddFriend = () => {
     if (data.code) {
       message.success(data.message)
       setVisible(false)
+      props.socket.send(JSON.stringify({
+        receiver: userContent.userId,
+        flag: 1
+      }))
     } else {
       message.error(data.message)
     }
@@ -63,9 +67,8 @@ const AddFriend = () => {
         title="添加好友"
         centered
         visible={visible}
-        // onOk={() => setVisible(false)}
-        // onCancel={() => setVisible(false)}
-        footer={null}
+        onOk={() => setVisible(false)}
+        onCancel={() => setVisible(false)}
         width={500}
       >
         <Form {...layout} onFinish={send}>

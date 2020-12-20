@@ -31,35 +31,37 @@ const Home: React.FC = () => {
   if (socket) {
     socket.onmessage = function (event: any) {
       event = JSON.parse(event.data)
-      if (event.sender === info.userId) {
-        let data = {
-          message: event.message,
-          time: new Date(),
-          my: true,
-          tag: event.receiver,
-          tag1: event.sender
-        }
-        useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
-      } else {
-        console.log(isRead, event.sender)
-        let newRead: any
-        if (isRead) {
-          newRead = isRead
+      if (!event.flag) {
+        if (event.sender === info.userId) {
+          let data = {
+            message: event.message,
+            time: new Date(),
+            my: true,
+            tag: event.receiver,
+            tag1: event.sender
+          }
+          useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
         } else {
-          newRead = []
+          console.log(isRead, event.sender)
+          let newRead: any
+          if (isRead) {
+            newRead = isRead
+          } else {
+            newRead = []
+          }
+          if (newRead.indexOf(event.sender) === -1) {
+            newRead.push(event.sender)
+          }
+          setRead(newRead)
+          let data = {
+            message: event.message,
+            time: new Date(),
+            my: false,
+            tag: event.receiver,
+            tag1: event.sender
+          }
+          useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
         }
-        if (newRead.indexOf(event.sender) === -1) {
-          newRead.push(event.sender)
-        }
-        setRead(newRead)
-        let data = {
-          message: event.message,
-          time: new Date(),
-          my: false,
-          tag: event.receiver,
-          tag1: event.sender
-        }
-        useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
       }
     };
     socket.onopen = function (event: any) {
@@ -116,14 +118,14 @@ const Home: React.FC = () => {
                 case "me":
                   return (
                     <>
-                      <FriendContent unread={isRead} setRead={setRead} adds={adds} />
+                      <FriendContent unread={isRead} setRead={setRead} adds={adds} socket={socket} />
                       <Message socket={socket} />
                     </>
                   )
                 case "add":
                   return (
                     <>
-                      <AddFriend />
+                      <AddFriend socket={socket} />
                     </>
                   )
                 case "setting":
