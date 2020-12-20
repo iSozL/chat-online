@@ -1,7 +1,7 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useState, useEffect } from 'react';
 import {changeUserContext, CHANGE_USER} from '../store/index'
 import './index.scss'
-import { Button, Popover } from 'antd'
+import { Button, Popover} from 'antd'
 import Scroll from 'react-custom-scrollbars'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
@@ -57,6 +57,9 @@ const Message = (props: any) => {
   const inputs = useRef<any>()
 
   const send = (message: any) => {
+    if (!message) {
+      
+    }
     if (!window.WebSocket) {
       return;
     }
@@ -77,6 +80,20 @@ const Message = (props: any) => {
       inputs.current.value = ""
     } else {
       alert("连接没有开启.");
+    }
+  }
+
+  // useEffect(() => {
+  //   console.log('?')
+  //   window.addEventListener("keydown", function(e) {
+  //     if(e.code === "Enter") {
+  //       send(inputs.current.value)
+  //     }
+  //   })
+  // }, []);
+  const isEnter = (e: any) => {
+    if(e.keyCode === 13) {
+      send(inputs.current.value)
     }
   }
 
@@ -129,7 +146,7 @@ const Message = (props: any) => {
             </Popover>
           </div>
           <div className="footer-body">
-            <textarea className="ant-input" ref={inputs} />
+            <textarea className="ant-input" ref={inputs} onKeyDown={(e) => {isEnter(e)}} />
             <Button style={{float: 'right', marginTop: "10px"}} type="primary" onClick={() =>send(inputs.current.value)}>发送</Button>
           </div>
           <div className="footer-bottom">
