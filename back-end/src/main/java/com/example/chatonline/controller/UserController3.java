@@ -61,15 +61,15 @@ public class UserController3 {
     @GetMapping("/groupMove")
     public JsonResult groupMove(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("preGroupname") String preGroupname,@RequestParam("postGroupname") String postGroupname)
     {
-        
-        if( userService.groupMove(userId,friendId,postGroupname) && userService.preGroupnum(userId,preGroupname) && userService.postGroupnum(userId,postGroupname))
+
+        if(userService.GroupMove(userId,friendId,postGroupname) && userService.preGroupnum(userId,preGroupname) && userService.postGroupnum(userId,postGroupname))
             return  JsonResult.success("移动好友分组成功");
         else
             return JsonResult.fail("好友分组移动失败");
     }
 
     /**
-     * @api {get} groupfriends 好友列表
+     * @api {get} GroupFriends 好友列表
      * @apiDescription  好友列表接口
      * @apiGroup 好友
      * @apiName 好友列表
@@ -120,5 +120,114 @@ public class UserController3 {
             return  JsonResult.success(users);
         else
             return JsonResult.error("未查询到该用户好友信息",null);
+    }
+
+    /**
+     * @api {get} CreatGroup 添加好友分组
+     * @apiDescription  添加好友分组接口
+     * @apiGroup 好友
+     * @apiName 添加好友分组
+     * @apiversion 0.1.0
+     *
+     * @apiParam {String} userId 用户Id
+     * @apiParam {String} groupname 分组名
+     *
+     * @apiSuccess {int} status 响应状态码
+     * @apiSuccess {String} message 响应描述
+     * @apiSuccess {String} data 返回信息，成功的时候才存在
+     *
+     * @apiSuccessExample {json} 添加成功-示例:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "code":1,
+     *       "message": "success",
+     *       "data": "添加好友分组成功"
+     *     }
+     *
+     * @apiError {int} status 响应状态码
+     * @apiError {String} message 响应描述
+     *
+     * @apiErrorExample {json} 添加失败-示例：
+     *      HTTP/1.1 200 OK
+     *     {
+     *       "code":0,
+     *       "message": "添加好友分组失败"
+     *       "data":null
+     *     }
+     *
+     */
+    @CrossOrigin
+    @GetMapping("/CreatGroup")
+    public JsonResult CreatGroup(@RequestParam("userId") String userId,@RequestParam("groupname") String groupname)
+    {
+        boolean date = userService.CreatGroup(userId,groupname);
+        if(date)
+            return  JsonResult.success("添加好友分组成功");
+        else
+            return JsonResult.fail("添加好友分组失败");
+    }
+
+    /**
+     * @api {get} DelGroup 删除好友分组
+     * @apiDescription  删除分组接口
+     * @apiGroup 好友
+     * @apiName 删除好友分组
+     * @apiversion 0.1.0
+     *
+     * @apiParam {String} userId 用户Id
+     * @apiParam {String} groupname 分组名
+     *
+     * @apiSuccess {int} status 响应状态码
+     * @apiSuccess {String} message 响应描述
+     * @apiSuccess {String} data 返回信息，成功的时候才存在
+     *
+     * @apiSuccessExample {json} 删除成功-示例:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "code":1,
+     *       "message": "success",
+     *       "data": "删除好友分组成功"
+     *     }
+     *
+     * @apiError {int} status 响应状态码
+     * @apiError {String} message 响应描述
+     *
+     * @apiErrorExample {json} 删除失败-示例1：
+     *      HTTP/1.1 200 OK
+     *     {
+     *       "code":0,
+     *       "message": "删除好友分组失败"
+     *       "data":null
+     *     }
+     * @apiErrorExample {json} 删除失败-示例2：
+     *      HTTP/1.1 200 OK
+     *     {
+     *       "code":0,
+     *       "message": "不能删除系统默认分组"
+     *       "data":null
+     *     }
+     */
+    @CrossOrigin
+    @GetMapping("/DelGroup")
+    public JsonResult DelGroup(@RequestParam("userId") String userId,@RequestParam("groupname") String groupname)
+    {
+        String defGroupname = userService.getDefGroupname(userId);
+        if (defGroupname.equals(groupname)){
+            return JsonResult.fail("不能删除系统默认分组");
+        }
+        else {
+            ArrayList<Map<String, Object>> friendIdList = userService.getFriendsId(userId, groupname);
+            for (int i = 0; i < friendIdList.size(); i++) {
+                String friendId = (String) friendIdList.get(i).get("friendId");
+                boolean flag = userService.GroupMove(userId, friendId, defGroupname);
+                if (!flag)
+                    return JsonResult.fail("删除好友分组失败");
+            }
+            boolean date = userService.DelGroup(userId, groupname);
+            if (date)
+                return JsonResult.success("删除好友分组成功");
+            else
+                return JsonResult.fail("删除好友分组失败");
+        }
     }
 }
