@@ -213,6 +213,7 @@ const FriendContent = (props: any) => {
       message.success(data.message)
       getFriendList()
       setVisible1(false)
+      setVisible(false)
       fetchAdds()
     } else {
       message.error(data.message)
@@ -236,7 +237,6 @@ const FriendContent = (props: any) => {
   if (props.socket) {
     props.socket.onmessage = function (event: any) {
       event = JSON.parse(event.data)
-      console.log(event, '发生什么事了')
       if (!event.flag) {
         if (event.sender === info.userId) {
           let data = {
@@ -269,7 +269,6 @@ const FriendContent = (props: any) => {
           useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
         }
       } else {
-        console.log('接收到好友申请')
         fetchAdds()
       }
     };
@@ -277,7 +276,7 @@ const FriendContent = (props: any) => {
       console.log("连接开始")
     };
     props.socket.onclose = function (event: any) {
-      console.log("连接关闭")
+      message.error("连接关闭")
     };
   }
   let groups = info.groups
