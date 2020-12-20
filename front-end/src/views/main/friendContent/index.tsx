@@ -74,7 +74,7 @@ const FriendsList = () => {
     <Scroll>
       <Menu
         // onClick={this.handleClick}
-        style={{ width: 256 }}
+        style={{ width: "100%" }}
         defaultSelectedKeys={['0']}
         mode="inline"
       >
@@ -275,7 +275,7 @@ const FriendContent = (props: any) => {
             }
             key="2"
           >
-            <div style={{height: "420px", display: "flex", flexDirection: "column", alignItems: "center", padding: "5px 0"}}>
+            <div style={{height: "70vh", display: "flex", flexDirection: "column", alignItems: "center", padding: "5px 0"}}>
               <FriendsList />
             </div>
           </TabPane>
