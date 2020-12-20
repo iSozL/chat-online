@@ -33,20 +33,25 @@ public class UserService {
     {
         return userDao.FindRelation(id,friendId);
     }
-    //查询某一分组下所有好友
+    //查询用户所有好友
     public ArrayList<Map<String,Object>> GroupFriends(String userId) { return userDao.GroupFriends(userId); }
     //查询分组
     public ArrayList<Group> ShowGroup(String id)
     {
         return userDao.ShowGroup(id);
     }
+    //删除分组
+    public boolean DelGroup(String userId,String groupname){return userDao.DelGroup(userId,groupname); }
+    //获得默认分组名
+    public String getDefGroupname(String userId){return userDao.getDefGroupname(userId);}
+    //获得用户某一分组下的所有好友Id
+    public ArrayList<Map<String,Object>> getFriendsId(String userId,String groupname){return userDao.getFriendsId(userId,groupname);}
     //新建分组
     public boolean CreatGroup(String id,String groupname,int type){return userDao.CreatGroup(id, groupname,type);}
     //分组人数+1
     public boolean AddGroupNum(String id,String groupname){return userDao.AddGroupNum(id, groupname);}
-    //添加好友
     //好友移动
-    public boolean groupMove(String userId,String friendId,String postGroupname){ return userDao.groupMove(userId,friendId,postGroupname);}
+    public boolean GroupMove(String userId,String friendId,String postGroupname){ return userDao.GroupMove(userId,friendId,postGroupname);}
     //分组人数减少
     public boolean preGroupnum(String userId,String preGroupname){ return userDao.preGroupnum(userId,preGroupname);}
     //分组人数增加
