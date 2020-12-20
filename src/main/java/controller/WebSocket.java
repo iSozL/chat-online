@@ -5,6 +5,8 @@ import dao.MessageDaoImpl;
 import dao.OnlineUserDao;
 import dao.OnlineUserDaoImpl;
 import net.sf.json.JSONObject;
+import service.RecentMessageDao;
+import service.RecentMessageDaoImpl;
 import utils.JsonHandle;
 
 import javax.websocket.*;
@@ -98,16 +100,44 @@ public class WebSocket {
      */
     @OnMessage
     public void onMessage(String clientData) throws IOException {
-
         JsonHandle jsonHandle = new JsonHandle(clientData);
-        String receiver = jsonHandle.getReceiver();
-        String message = jsonHandle.getMessage();
+        int flag=jsonHandle.getFlag();
 
-        String now = getNowTime();
-        MessageDao messageDao = new MessageDaoImpl();
-        messageDao.storingData(userName, receiver, now, message, 0);//存储消息至数据库，默认为未读
+        //发送的是消息
+        if(flag==0) {
+            String receiver = jsonHandle.getReceiver();
+            String message = jsonHandle.getMessage();
 
-        sendToUser(receiver, message, now);//发送给接收方
+            String now = getNowTime();
+            MessageDao messageDao = new MessageDaoImpl();
+            messageDao.storingData(userName, receiver, now, message, 0);//存储消息至数据库，默认为未读
+
+            sendToUser(receiver, message, now);//发送给接收方
+
+
+            //最新消息列表
+            RecentMessageDao recentMessageDao=new RecentMessageDaoImpl();
+            if(recentMessageDao.isExists(userName,receiver))
+            {
+                recentMessageDao.updateMessage(userName,receiver,now,message);
+            }
+            else
+            {
+                recentMessageDao.storingMessage(userName,receiver,now,message);
+            }
+        }
+        //发送的是好友申请
+        else{
+            String receiver = jsonHandle.getReceiver();
+            for (WebSocket item : webSocketMap.values()) {
+                if (item.userName.equals(receiver)) {
+                    JSONObject jsonObject = new JSONObject();//对消息进行封装
+                    jsonObject.put("flag", "1");
+                    String data = jsonObject.toString();
+                    item.session.getAsyncRemote().sendText(data);//异步发送
+                }
+            }
+        }
     }
 
     /**
