@@ -31,36 +31,16 @@ public class Message {
         return sender;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
     public String getReceiver() {
         return receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
     }
 
     public Date getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
-    }
-
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public int getStatus() {
-        return status;
     }
 
     public void setStatus(int status) {
