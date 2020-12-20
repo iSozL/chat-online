@@ -92,8 +92,8 @@ const Message = (props: any) => {
   //   })
   // }, []);
   const isEnter = (e: any) => {
-    e.preventDefault()
     if(e.keyCode === 13) {
+      e.preventDefault()
       send(inputs.current.value)
     }
   }
