@@ -8,7 +8,7 @@ const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 16 },
 };
-const AddFriend = () => {
+const AddFriend = (props: any) => {
   let info = JSON.parse(window.localStorage.getItem("userInfo"))
   const [userContent, setContent] = useState<any>()
   const [visible, setVisible] = useState<boolean>(false);
@@ -51,6 +51,11 @@ const AddFriend = () => {
     if (data.code) {
       message.success(data.message)
       setVisible(false)
+      console.log(props.socket)
+      props.socket.send(JSON.stringify({
+        receiver: userContent.userId,
+        flag: 1
+      }))
     } else {
       message.error(data.message)
     }
@@ -63,9 +68,8 @@ const AddFriend = () => {
         title="添加好友"
         centered
         visible={visible}
-        // onOk={() => setVisible(false)}
-        // onCancel={() => setVisible(false)}
-        footer={null}
+        onOk={() => setVisible(false)}
+        onCancel={() => setVisible(false)}
         width={500}
       >
         <Form {...layout} onFinish={send}>
@@ -99,12 +103,14 @@ const AddFriend = () => {
         {
           userContent ? 
           <div className="add-msg">
-            <img style={{width: "70px", paddingLeft: "10px"}} src={require('../../../assets/imgs/avater.svg')} />
-            <div style={{height: "50px", paddingLeft: "10px"}}>
-              <div>昵称：{userContent.nickname}</div>
-              <div>性别：{userContent.sex}</div>
+            <div className="add-msg-item">
+              <img style={{width: "70px", paddingLeft: "10px"}} src={require('../../../assets/imgs/avater.svg')} />
+              <div style={{height: "50px", paddingLeft: "10px"}}>
+                <div>昵称：{userContent.nickname}</div>
+                <div>性别：{userContent.sex}</div>
+              </div>
             </div>
-            <div style={{marginLeft: "10%"}}>
+            <div style={{marginRight: "10%"}}>
               <Button type="primary" onClick={preAdd}>添加好友</Button>
             </div>
           </div> :

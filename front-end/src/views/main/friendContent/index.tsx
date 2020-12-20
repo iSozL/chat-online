@@ -14,7 +14,7 @@ const layout = {
 const { TabPane } = Tabs;
 const Detail = (props: any) => {
   let msg = props.msg
-  console.log(msg)
+
   const hasProperty = (property: undefined | string): string => {
     if (!property) {
       return ""
@@ -22,16 +22,7 @@ const Detail = (props: any) => {
       return String(property)
     }
   }
-  // const {
-  //   nickname,
-  //   note,
-  //   signature,
-  //   birthday,
-  //   evaluate,
-  //   userId,
-  //   address,
-  //   phone,
-  // } = props
+
   return (
     <div>
       <div>昵称：{hasProperty(msg.nickname)}</div>
@@ -44,70 +35,67 @@ const Detail = (props: any) => {
   )
 }
 
-const FriendsList = () => {
-  let info = JSON.parse(window.localStorage.getItem("userInfo"))
-  let groups = info.groups
-  const [friendList, setList] = useState<object[]>([])
-  useEffect(() => {
-    async function getFriendList() {
-      await request.get(`http://101.132.134.186:8080/GroupFriends?userId=${info.userId}`).then(value => {
-        if (value.data.code) {
-          for (let i in value.data.data) {
-            for (let j in groups) {
-              if (value.data.data[i].groupname === groups[j].groupname) {
-                typeof groups[j].list === "object" ? groups[j].list.push(value.data.data[i]) : groups[j].list = [value.data.data[i]]
-              }
-            }
-            console.log(value.data.data[i].groupname)
-          }
-          setList(groups)
-          console.log(groups)
-        } else {
-          message.error(value.data.message)
-        }
-      })
-    }
-    getFriendList()
-  }, [])
-  const { userMsg, useDispatch } = useContext(changeUserContext)
-  return (
-    <Scroll>
-      <Menu
-        // onClick={this.handleClick}
-        style={{ width: 256 }}
-        defaultSelectedKeys={['0']}
-        mode="inline"
-      >
-        {
-          friendList.map((item: any, index: number) => {
-            return (
-              <SubMenu key={index} title={item.groupname} popupClassName="menu-item">
-                {
-                  typeof item.list === "object" ? 
-                  item.list.map((i: any, index: number) => {
-                    return (
-                      <div key={index}>
-                        <Popover content={<Detail msg={i} />} placement="right">
-                          <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: i.nickname, userId: i.userId, show: true, msgs: userMsg.msgs}})}}>
-                            <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
-                            <div className="msg">
-                              <div style={{padding: "5px 0 0 5px", fontSize: "18px", lineHeight: "1.5"}}>{i.nickname}{ typeof i.note === "string" ? `(${i.note})` : "" }</div>
-                              <div style={{paddingLeft: "5px", lineHeight: "1.5"}}>{ typeof i.signature === "string" ? i.signature : ""}</div>
-                            </div>
-                          </div>
-                        </Popover>
-                      </div>
-                    )
-                  }) : ""
-                }
-              </SubMenu>
-            )
-          })
-        }
-      </Menu>
-    </Scroll>
-  )
-}
+// const FriendsList = () => {
+//   let info = JSON.parse(window.localStorage.getItem("userInfo"))
+//   let groups = info.groups
+//   const [friendList, setList] = useState<object[]>([])
+//   useEffect(() => {
+//     async function getFriendList() {
+//       await request.get(`http://101.132.134.186:8080/GroupFriends?userId=${info.userId}`).then(value => {
+//         if (value.data.code) {
+//           for (let i in value.data.data) {
+//             for (let j in groups) {
+//               if (value.data.data[i].groupname === groups[j].groupname) {
+//                 typeof groups[j].list === "object" ? groups[j].list.push(value.data.data[i]) : groups[j].list = [value.data.data[i]]
+//               }
+//             }
+//           }
+//           setList(groups)
+//         } else {
+//           message.error(value.data.message)
+//         }
+//       })
+//     }
+//     getFriendList()
+//   }, [])
+
+//   return (
+//     <Scroll>
+//       <Menu
+//         style={{ width: "100%" }}
+//         defaultSelectedKeys={['0']}
+//         mode="inline"
+//       >
+//         {
+//           friendList.map((item: any, index: number) => {
+//             return (
+//               <SubMenu key={index} title={item.groupname} popupClassName="menu-item">
+//                 {
+//                   typeof item.list === "object" ? 
+//                   item.list.map((i: any, index: number) => {
+//                     return (
+//                       <div key={index}>
+//                         <Popover content={<Detail msg={i} />} placement="right">
+//                           <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: i.nickname, userId: i.userId, show: true, msgs: userMsg.msgs}})}}>
+//                             <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+//                             <div className="msg">
+//                               <div style={{padding: "5px 0 0 5px", fontSize: "18px", lineHeight: "1.5"}}>{i.nickname}{ typeof i.note === "string" ? `(${i.note})` : "" }</div>
+//                               <div style={{paddingLeft: "5px", lineHeight: "1.5"}}>{ typeof i.signature === "string" ? i.signature : ""}</div>
+//                             </div>
+//                           </div>
+//                         </Popover>
+//                       </div>
+//                     )
+//                   }) : ""
+//                 }
+//               </SubMenu>
+//             )
+//           })
+//         }
+//       </Menu>
+//     </Scroll>
+//   )
+// }
 
 const MsgList = (props: any) => {
   let info = JSON.parse(window.localStorage.getItem("userInfo"))
@@ -163,7 +151,51 @@ const MsgList = (props: any) => {
 }
 
 const FriendContent = (props: any) => {
+
+  const [invate, setInvate] = useState<object[]>()
+
+  const { userMsg, useDispatch } = useContext(changeUserContext)
+  async function getFriendList() {
+    await request.get(`http://101.132.134.186:8080/GroupFriends?userId=${info.userId}`).then(value => {
+      if (value.data.code) {
+        for (let i in value.data.data) {
+          for (let j in groups) {
+            if (value.data.data[i].groupname === groups[j].groupname) {
+              typeof groups[j].list === "object" ? groups[j].list.push(value.data.data[i]) : groups[j].list = [value.data.data[i]]
+            }
+          }
+        }
+        setList(groups)
+      } else {
+        message.error(value.data.message)
+      }
+    })
+  }
   let info = JSON.parse(window.localStorage.getItem("userInfo"))
+  let adds
+  // const selectAdds = async () => {
+  //   if (typeof invate === 'object') {
+  //     adds = invate.filter((item: object) => {
+  //       return item.texttype === 0
+  //     })
+  //     console.log('?')
+  //     if (typeof adds === 'object' && adds.length > 0) {
+  //       setAdd(true)
+  //     }
+  //   }
+  // }
+  // selectAdds()
+  const fetchAdds = async () => {
+    await request.post(`http://101.132.134.186:8080/showveritymessage`, {
+      userId: info.userId
+    }).then(async (value) => {
+      if (value.data.code) {
+        if (value.data.data) {
+          setInvate(value.data.data)
+        }
+      }
+    })
+  }
   const [visible, setVisible] = useState(false);
   const [visible1, setVisible1] = useState(false);
   const [curId, setId] = useState()
@@ -179,11 +211,82 @@ const FriendContent = (props: any) => {
 
     if (data.code) {
       message.success(data.message)
+      getFriendList()
       setVisible1(false)
+      fetchAdds()
     } else {
       message.error(data.message)
     }
   }
+
+  if (typeof invate === 'object') {
+    adds = invate.filter((item: object) => {
+      return item.texttype === 0
+    })
+  }
+
+  // props.socket.onmessage = function(event: any) {
+  //   event = JSON.parse(event.data)
+  //   if (event.flag) {
+  //     fetchAdds()
+  //   }
+  // }
+
+  const [isRead, setRead] = useState<string[]>([])
+  if (props.socket) {
+    props.socket.onmessage = function (event: any) {
+      event = JSON.parse(event.data)
+      console.log(event, '发生什么事了')
+      if (!event.flag) {
+        if (event.sender === info.userId) {
+          let data = {
+            message: event.message,
+            time: new Date(),
+            my: true,
+            tag: event.receiver,
+            tag1: event.sender
+          }
+          useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
+        } else {
+          console.log(isRead, event.sender)
+          let newRead: any
+          if (isRead) {
+            newRead = isRead
+          } else {
+            newRead = []
+          }
+          if (newRead.indexOf(event.sender) === -1) {
+            newRead.push(event.sender)
+          }
+          setRead(newRead)
+          let data = {
+            message: event.message,
+            time: new Date(),
+            my: false,
+            tag: event.receiver,
+            tag1: event.sender
+          }
+          useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
+        }
+      } else {
+        console.log('接收到好友申请')
+        fetchAdds()
+      }
+    };
+    props.socket.onopen = function (event: any) {
+      console.log("连接开始")
+    };
+    props.socket.onclose = function (event: any) {
+      console.log("连接关闭")
+    };
+  }
+  let groups = info.groups
+  const [friendList, setList] = useState<object[]>([])
+  useEffect(() => {
+    getFriendList(),
+    fetchAdds()
+  }, [])
+
   return (
     <div className="friend-container">
       <Modal
@@ -225,8 +328,8 @@ const FriendContent = (props: any) => {
       >
         <Scroll style={{height: "200px"}}>
           {
-            typeof props.adds === 'object' ?
-            props.adds.map((item: any, index: number) => {
+            typeof adds === 'object' ?
+            adds.map((item: any, index: number) => {
               return (
                 <div className="req" key={index}>
                   <img style={{width: "70px", paddingLeft: "10px"}} src={require('../../../assets/imgs/avater.svg')} />
@@ -249,9 +352,15 @@ const FriendContent = (props: any) => {
       </Modal>
       <div className="unread">
         <img style={{width: "20px"}} src={require('../../../assets/imgs/smile.svg')} />
-        {
-          typeof props.adds === 'object' ? <div onClick={() => {setVisible(true)}}>有好友申请</div> : ""
-        }
+          <div onClick={() => {setVisible(true)}}>
+            好友申请
+            {
+              typeof adds === 'object' && adds.length > 0 ? 
+              <span style={{display: "inline-block", width: "10px", height: "10px", background: "red", borderRadius: "50%", marginLeft: "5px"}}>
+              </span> :
+              ""
+            }
+          </div>
       </div>
       <div className="content">
         <Tabs defaultActiveKey="1">
@@ -264,7 +373,7 @@ const FriendContent = (props: any) => {
             key="1"
           >
             <div style={{height: "420px", display: "flex", flexDirection: "column", alignItems: "center", padding: "5px 0"}}>
-              <MsgList unread={props.unread} setRead={props.setRead} />
+              <MsgList unread={isRead} setRead={setRead} />
             </div>
           </TabPane>
           <TabPane
@@ -275,8 +384,41 @@ const FriendContent = (props: any) => {
             }
             key="2"
           >
-            <div style={{height: "420px", display: "flex", flexDirection: "column", alignItems: "center", padding: "5px 0"}}>
-              <FriendsList />
+            <div style={{height: "70vh", display: "flex", flexDirection: "column", alignItems: "center", padding: "5px 0"}}>
+              <Scroll>
+                <Menu
+                  style={{ width: "100%" }}
+                  defaultSelectedKeys={['0']}
+                  mode="inline"
+                >
+                  {
+                    friendList.map((item: any, index: number) => {
+                      return (
+                        <SubMenu key={index} title={item.groupname} popupClassName="menu-item">
+                          {
+                            typeof item.list === "object" ? 
+                            item.list.map((i: any, index: number) => {
+                              return (
+                                <div key={index}>
+                                  <Popover content={<Detail msg={i} />} placement="right">
+                                    <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: i.nickname, userId: i.userId, show: true, msgs: userMsg.msgs}})}}>
+                                      <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+                                      <div className="msg">
+                                        <div style={{padding: "5px 0 0 5px", fontSize: "18px", lineHeight: "1.5"}}>{i.nickname}{ typeof i.note === "string" ? `(${i.note})` : "" }</div>
+                                        <div style={{paddingLeft: "5px", lineHeight: "1.5"}}>{ typeof i.signature === "string" ? i.signature : ""}</div>
+                                      </div>
+                                    </div>
+                                  </Popover>
+                                </div>
+                              )
+                            }) : ""
+                          }
+                        </SubMenu>
+                      )
+                    })
+                  }
+                </Menu>
+              </Scroll>
             </div>
           </TabPane>
         </Tabs>
