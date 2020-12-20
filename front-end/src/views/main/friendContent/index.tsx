@@ -213,6 +213,11 @@ const FriendContent = (props: any) => {
       message.success(data.message)
       getFriendList()
       setVisible1(false)
+      fetchAdds()
+      props.socket.send(JSON.stringify({
+        receiver: curId,
+        flag: 1
+      }))
     } else {
       message.error(data.message)
     }
@@ -224,13 +229,60 @@ const FriendContent = (props: any) => {
     })
   }
 
-  props.socket.onmessage = function(event: any) {
-    event = JSON.parse(event.data)
-    if (event.flag) {
-      fetchAdds()
-    }
-  }
+  // props.socket.onmessage = function(event: any) {
+  //   event = JSON.parse(event.data)
+  //   if (event.flag) {
+  //     fetchAdds()
+  //   }
+  // }
 
+  const [add, setAdd] = useState<object[]>()
+  const [isRead, setRead] = useState<string[]>([])
+  if (props.socket) {
+    props.socket.onmessage = function (event: any) {
+      event = JSON.parse(event.data)
+      if (!event.flag) {
+        if (event.sender === info.userId) {
+          let data = {
+            message: event.message,
+            time: new Date(),
+            my: true,
+            tag: event.receiver,
+            tag1: event.sender
+          }
+          useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
+        } else {
+          console.log(isRead, event.sender)
+          let newRead: any
+          if (isRead) {
+            newRead = isRead
+          } else {
+            newRead = []
+          }
+          if (newRead.indexOf(event.sender) === -1) {
+            newRead.push(event.sender)
+          }
+          setRead(newRead)
+          let data = {
+            message: event.message,
+            time: new Date(),
+            my: false,
+            tag: event.receiver,
+            tag1: event.sender
+          }
+          useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
+        }
+      } else {
+        fetchAdds()
+      }
+    };
+    props.socket.onopen = function (event: any) {
+      console.log("连接开始")
+    };
+    props.socket.onclose = function (event: any) {
+      console.log("连接关闭")
+    };
+  }
   let groups = info.groups
   const [friendList, setList] = useState<object[]>([])
   useEffect(() => {
@@ -324,7 +376,7 @@ const FriendContent = (props: any) => {
             key="1"
           >
             <div style={{height: "420px", display: "flex", flexDirection: "column", alignItems: "center", padding: "5px 0"}}>
-              <MsgList unread={props.unread} setRead={props.setRead} />
+              <MsgList unread={isRead} setRead={setRead} />
             </div>
           </TabPane>
           <TabPane

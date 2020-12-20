@@ -28,49 +28,49 @@ const Home: React.FC = () => {
   } else {
     alert("你的浏览器不支持 WebSocket！");
   }
-  if (socket) {
-    socket.onmessage = function (event: any) {
-      event = JSON.parse(event.data)
-      if (!event.flag) {
-        if (event.sender === info.userId) {
-          let data = {
-            message: event.message,
-            time: new Date(),
-            my: true,
-            tag: event.receiver,
-            tag1: event.sender
-          }
-          useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
-        } else {
-          console.log(isRead, event.sender)
-          let newRead: any
-          if (isRead) {
-            newRead = isRead
-          } else {
-            newRead = []
-          }
-          if (newRead.indexOf(event.sender) === -1) {
-            newRead.push(event.sender)
-          }
-          setRead(newRead)
-          let data = {
-            message: event.message,
-            time: new Date(),
-            my: false,
-            tag: event.receiver,
-            tag1: event.sender
-          }
-          useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
-        }
-      }
-    };
-    socket.onopen = function (event: any) {
-      console.log("连接开始")
-    };
-    socket.onclose = function (event: any) {
-      console.log("连接关闭")
-    };
-  }
+  // if (socket) {
+  //   socket.onmessage = function (event: any) {
+  //     event = JSON.parse(event.data)
+  //     if (!event.flag) {
+  //       if (event.sender === info.userId) {
+  //         let data = {
+  //           message: event.message,
+  //           time: new Date(),
+  //           my: true,
+  //           tag: event.receiver,
+  //           tag1: event.sender
+  //         }
+  //         useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
+  //       } else {
+  //         console.log(isRead, event.sender)
+  //         let newRead: any
+  //         if (isRead) {
+  //           newRead = isRead
+  //         } else {
+  //           newRead = []
+  //         }
+  //         if (newRead.indexOf(event.sender) === -1) {
+  //           newRead.push(event.sender)
+  //         }
+  //         setRead(newRead)
+  //         let data = {
+  //           message: event.message,
+  //           time: new Date(),
+  //           my: false,
+  //           tag: event.receiver,
+  //           tag1: event.sender
+  //         }
+  //         useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
+  //       }
+  //     }
+  //   };
+  //   socket.onopen = function (event: any) {
+  //     console.log("连接开始")
+  //   };
+  //   socket.onclose = function (event: any) {
+  //     console.log("连接关闭")
+  //   };
+  // }
   
   const [select, setSelect] = useState<string>("me")
   const menu = (
