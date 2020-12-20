@@ -1,6 +1,7 @@
 package com.example.chatonline.Dao;
 
 import com.example.chatonline.Model.Group;
+import com.example.chatonline.Model.Message;
 import com.example.chatonline.Model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -23,5 +24,10 @@ public interface UserDao {
     public boolean preGroupnum(String userId,String preGroupname);
     public boolean postGroupnum(String userId,String postGroupname);
     public Integer AddFriend(String userId,String friendId,String noteA,String groupnameA,String noteB,String groupnameB);
+
+
+
+
+
 
 }

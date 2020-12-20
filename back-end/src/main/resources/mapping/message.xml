@@ -32,4 +32,10 @@
         select nickname,messagetxt,sendtime,sendId,reciveId from lastfriendmessage,user
         where reciveId=#{userId} and sendId=user.userId
     </select>
+<!--    添加好友映像-->
+    <insert id="addImage">
+        insert into image(userId,friendId,message) value(#{sendid},#{reciveid},#{messagetext})
+    </insert>
+
+
 </mapper>

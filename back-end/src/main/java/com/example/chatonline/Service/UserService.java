@@ -3,6 +3,7 @@ package com.example.chatonline.Service;
 
 import com.example.chatonline.Dao.UserDao;
 import com.example.chatonline.Model.Group;
+import com.example.chatonline.Model.Message;
 import com.example.chatonline.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,4 +58,6 @@ public class UserService {
     public Integer AddFriend(String userId,String friendId,String noteA,String groupnameA,String noteB,String groupnameB){
         return userDao.AddFriend(userId, friendId, noteA, groupnameA, noteB, groupnameB);
     }
+
+
 }

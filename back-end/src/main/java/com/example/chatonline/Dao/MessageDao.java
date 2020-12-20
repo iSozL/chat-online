@@ -32,4 +32,8 @@ public interface MessageDao {
     //显示最新接受消息列表
     public ArrayList<Map<String,Object>> ShowreciveLastMessage(String userId);
 
+    //添加好友映像
+    public boolean addImage(Message message);
+
 }
+
