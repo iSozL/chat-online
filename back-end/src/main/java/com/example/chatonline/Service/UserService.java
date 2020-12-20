@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 @Service("userService")
@@ -40,7 +41,7 @@ public class UserService {
         return userDao.ShowGroup(id);
     }
     //新建分组
-    public boolean CreatGroup(String id,String groupname){return userDao.CreatGroup(id, groupname);}
+    public boolean CreatGroup(String id,String groupname,int type){return userDao.CreatGroup(id, groupname,type);}
     //分组人数+1
     public boolean AddGroupNum(String id,String groupname){return userDao.AddGroupNum(id, groupname);}
     //添加好友
@@ -58,9 +59,16 @@ public class UserService {
         return userDao.AddFriend(userId, friendId, noteA, groupnameA, noteB, groupnameB);
     }
 
+    //编辑个人资料
+    public boolean UpdateInfo(String userId, String nickname, String sex, Date birth, String signature, String address,String phone){return userDao.UpdateInfo(userId, nickname, sex, birth, signature, address,phone);}
+    //显示个人资料
+    public User ShowInfo(String userId){return userDao.ShowInfo(userId);}
+
+
 
     public boolean DeleteRelation(String userId, String friendId){
         return userDao.DeleteRelation(userId, friendId);
     }
+
 
 }
