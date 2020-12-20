@@ -7,11 +7,11 @@
     <select id="QueryUser" resultType="com.example.chatonline.Model.User">
         select userId,sex,nickname from user where userId = #{id}
     </select>
-    <insert id="Register">
+    <insert id="Register" >
         insert into user(userId,nickname,password) value(#{userId},#{nickname},#{password})
     </insert>
     <select id="GroupFriends" resultType="map">
-        select user.nickname,user.userId,user.sex,user.birthday,user.address,user.phone,user.signature,friendrelation.note,friendrelation.groupname
+        select user.nickname,user.userId,user.sex,user.birthday,user.address,user.phone,user.signature,friendrelation.note,friendrelation.groupname,friendrelation.evaluate
         from user,friendrelation
         where user.userId in (select friendId from friendrelation where userId = #{userId}) and friendrelation.userId = #{userId} and friendrelation.friendId = user.userId
     </select>
@@ -19,8 +19,8 @@
         select groupname,count_num from friendgroup where userId = #{id}
     </select>
     <insert id="CreatGroup">
-        insert into friendgroup(userId,groupname,count_num)
-        value (#{id},#{groupname},0);
+        insert into friendgroup(userId,groupname,count_num,flag)
+        value (#{id},#{groupname},0,#{type});
     </insert>
     <delete id="DelGroup">
         delete  from friendgroup where userId = #{userId} and groupname = #{groupname}
@@ -38,18 +38,19 @@
     <select id="FindRelation" resultType="boolean">
         select count(*) from friendrelation where userId = #{userId} and friendId=#{friendId}
     </select>
-    <!--    <insert id="AddFriend">-->
-    <!--        insert into friendrelation(userId,friendId,groupname,note) value (#{userId},#{friendId},#{groupname},#{note})-->
-    <!--    </insert>-->
-    <!--    <update id="AddGroupNum">-->
-    <!--        update friendgroup-->
-    <!--        set count_num=count_num+1-->
-    <!--        where userId=#{id} and groupname=#{groupname}-->
-    <!--    </update>-->
+<!--    <insert id="AddFriend">-->
+<!--        insert into friendrelation(userId,friendId,groupname,note) value (#{userId},#{friendId},#{groupname},#{note})-->
+<!--    </insert>-->
+<!--    <update id="AddGroupNum">-->
+<!--        update friendgroup-->
+<!--        set count_num=count_num+1-->
+<!--        where userId=#{id} and groupname=#{groupname}-->
+<!--    </update>-->
     <select id="AddFriend"  resultType="Integer" statementType="CALLABLE">
         call Addfriend(#{userId},#{friendId},#{groupnameA},#{groupnameB},#{noteA},#{noteB},#{flag,mode=OUT,jdbcType=INTEGER})
     </select>
-    <update id="GroupMove">
+
+    <update id="groupMove">
         update friendrelation
         set groupname=#{postGroupname}
         where userId=#{userId} and friendId=#{friendId}
@@ -64,4 +65,18 @@
         set count_num=count_num+1
         where groupname=#{postGroupname} and userId=#{userId}
     </update>
+    <update id="UpdateInfo">
+        update user
+        set nickname=#{nickname},sex=#{sex},birthday=#{birth},address=#{address},phone=#{phone},signature=#{signature}
+        where userId=#{userId}
+    </update>
+    <select id="ShowInfo" resultType="com.example.chatonline.Model.User">
+        select nickname,sex,birthday,address,phone,signature
+        from user
+        where userId=#{userId}
+    </select>
+    <delete id="DeleteRelation">
+        DELETE FROM friendrelation WHERE userId = #{userId} AND friendId=#{friendId};
+    </delete>
+
 </mapper>

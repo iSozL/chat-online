@@ -160,7 +160,7 @@ public class UserController3 {
     @GetMapping("/CreatGroup")
     public JsonResult CreatGroup(@RequestParam("userId") String userId,@RequestParam("groupname") String groupname)
     {
-        boolean date = userService.CreatGroup(userId,groupname);
+        boolean date = userService.CreatGroup(userId,groupname,0);
         if(date)
             return  JsonResult.success("添加好友分组成功");
         else
