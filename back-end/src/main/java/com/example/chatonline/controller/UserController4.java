@@ -26,33 +26,36 @@ public class UserController4 {
 
 
     /**
-     * @api {post} addImage 发送添加好友映像请求
-     * @apiDescription  添加好友映像请求接口
+     * @api {post} addImage 发送添加好友印象请求
+     * @apiDescription  添加好友印象请求接口
      * @apiGroup 好友
-     * @apiName 添加好友映像
+     * @apiName 添加好友印象
      * @apiversion 0.1.0
      *
-     * @apiParam {String} user_id 用户ID
-     * @apiParam {String} friend_id 好友ID
-     * @apiParam {String} message 好友映像
-
+     * @apiParam {String} userId 用户ID
+     * @apiParam {String} friendId 好友ID
+     * @apiParam {String} mes 好友映像
      *
      * @apiSuccess {int} status 响应状态码
      * @apiSuccess {String} message 响应描述
      * @apiSuccess {String} data 返回相关信息，留言的时候才存在
      *
      * @apiSuccessExample {json} 留言成功-示例:
+     *    HTTP/1.1 200 OK
      *    {
-     *     "timestamp": "2020-12-20T07:28:36.404+00:00",
-     *     "status": 500,
-     *     "error": "Internal Server Error",
-     *     "message": "",
-     *     "path": "/addImage"
+     *     "message": "success",
+     *     "data": "留言成功",
+     *     "code": 1
      * }
      * @apiError {int} status 响应状态码
      * @apiError {String} message 响应描述
      * @apiErrorExample {json} 留言失败-示例：
-
+     *  HTTP/1.1 500
+     *       {
+     *            "code":0,
+     *            "message": "留言失败"
+     *          "data":null
+     *     }
      */
     @CrossOrigin
     @GetMapping("/addImage")
@@ -61,16 +64,9 @@ public class UserController4 {
         message.setSendid(userId);
         message.setReciveid(friendId);
         message.setMessagetext(mes);
-
         if (messageService.addImage(message))
             return jsonResult.success("留言成功");
         else
             return JsonResult.fail("留言失败");
     }
-
-
-
-
-
-    
 }
