@@ -13,7 +13,7 @@
     <select id="GroupFriends" resultType="map">
         select user.nickname,user.userId,user.sex,user.birthday,user.address,user.phone,user.signature,friendrelation.note,friendrelation.groupname,friendrelation.evaluate
         from user,friendrelation
-        where user.userId in (select friendId from friendrelation where userId = #{userId}) and friendrelation.userId = #{userId}
+        where user.userId in (select friendId from friendrelation where userId = #{userId}) and friendrelation.userId = #{userId} and friendrelation.friendId = user.userId
     </select>
     <select id="ShowGroup" resultType="com.example.chatonline.Model.Group">
         select groupname,count_num from friendgroup where userId = #{id}
