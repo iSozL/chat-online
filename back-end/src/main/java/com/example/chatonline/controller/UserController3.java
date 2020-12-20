@@ -61,11 +61,8 @@ public class UserController3 {
     @GetMapping("/groupMove")
     public JsonResult groupMove(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("preGroupname") String preGroupname,@RequestParam("postGroupname") String postGroupname)
     {
-        boolean flag = false;
-        flag = userService.groupMove(userId,friendId,postGroupname);
-        flag = userService.preGroupnum(userId,preGroupname);
-        flag = userService.postGroupnum(userId,postGroupname);
-        if( flag )
+        
+        if( userService.groupMove(userId,friendId,postGroupname) && userService.preGroupnum(userId,preGroupname) && userService.postGroupnum(userId,postGroupname))
             return  JsonResult.success("移动好友分组成功");
         else
             return JsonResult.fail("好友分组移动失败");
