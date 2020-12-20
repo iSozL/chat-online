@@ -131,10 +131,8 @@ const RegisterBox = (props: Iprops) => {
     })
     if (data.code) {
       message.success(data.message)
-      console.log(data.data)
-      window.localStorage.setItem("userInfo", data.data)
-      history.push("/")
       alert(`注意请记住您的账号${data.data}, 用于登录！`)
+      setLogin(true)
     } else {
       message.error(data.message)
     }

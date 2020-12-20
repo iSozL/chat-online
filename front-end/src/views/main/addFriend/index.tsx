@@ -51,6 +51,7 @@ const AddFriend = (props: any) => {
     if (data.code) {
       message.success(data.message)
       setVisible(false)
+      console.log(props.socket)
       props.socket.send(JSON.stringify({
         receiver: userContent.userId,
         flag: 1
@@ -102,12 +103,14 @@ const AddFriend = (props: any) => {
         {
           userContent ? 
           <div className="add-msg">
-            <img style={{width: "70px", paddingLeft: "10px"}} src={require('../../../assets/imgs/avater.svg')} />
-            <div style={{height: "50px", paddingLeft: "10px"}}>
-              <div>昵称：{userContent.nickname}</div>
-              <div>性别：{userContent.sex}</div>
+            <div className="add-msg-item">
+              <img style={{width: "70px", paddingLeft: "10px"}} src={require('../../../assets/imgs/avater.svg')} />
+              <div style={{height: "50px", paddingLeft: "10px"}}>
+                <div>昵称：{userContent.nickname}</div>
+                <div>性别：{userContent.sex}</div>
+              </div>
             </div>
-            <div style={{marginLeft: "10%"}}>
+            <div style={{marginRight: "10%"}}>
               <Button type="primary" onClick={preAdd}>添加好友</Button>
             </div>
           </div> :

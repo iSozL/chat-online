@@ -214,10 +214,6 @@ const FriendContent = (props: any) => {
       getFriendList()
       setVisible1(false)
       fetchAdds()
-      props.socket.send(JSON.stringify({
-        receiver: curId,
-        flag: 1
-      }))
     } else {
       message.error(data.message)
     }
@@ -236,11 +232,11 @@ const FriendContent = (props: any) => {
   //   }
   // }
 
-  const [add, setAdd] = useState<object[]>()
   const [isRead, setRead] = useState<string[]>([])
   if (props.socket) {
     props.socket.onmessage = function (event: any) {
       event = JSON.parse(event.data)
+      console.log(event, '发生什么事了')
       if (!event.flag) {
         if (event.sender === info.userId) {
           let data = {
@@ -273,6 +269,7 @@ const FriendContent = (props: any) => {
           useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
         }
       } else {
+        console.log('接收到好友申请')
         fetchAdds()
       }
     };
