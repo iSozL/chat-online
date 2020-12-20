@@ -3,7 +3,7 @@ package com.example.chatonline.Model;
 import java.util.ArrayList;
 
 public class User {
-    private  String  userId;
+    private  String userId;
     private  String password;
     private  String nickname;
     private  String sex;

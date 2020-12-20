@@ -1,3 +1,6 @@
+ul {
+  width: 100%;
+}
 .friend-container {
   display: flex;
   flex-direction: column;
@@ -105,4 +108,11 @@
   font-feature-settings: 'tnum';
   background: #fff;
   border-radius: 5px;
+}
+.ant-menu-sub.ant-menu-inline > .ant-menu-item, .ant-menu-sub.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
+  height: 60px;
+  padding: 0;
+  // line-height: 0px;
+  list-style-position: inside;
+  list-style-type: disc;
 }
