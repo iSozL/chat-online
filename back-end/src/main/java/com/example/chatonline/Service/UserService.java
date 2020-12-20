@@ -57,4 +57,10 @@ public class UserService {
     public Integer AddFriend(String userId,String friendId,String noteA,String groupnameA,String noteB,String groupnameB){
         return userDao.AddFriend(userId, friendId, noteA, groupnameA, noteB, groupnameB);
     }
+
+
+    public boolean DeleteRelation(String userId, String friendId){
+        return userDao.DeleteRelation(userId, friendId);
+    }
+
 }

@@ -52,4 +52,8 @@
         set count_num=count_num+1
         where groupname=#{postGroupname} and userId=#{userId}
     </update>
+
+    <delete id="DeleteRelation">
+        DELETE FROM friendrelation WHERE userId = #{userId} AND friendId=#{friendId};
+    </delete>
 </mapper>

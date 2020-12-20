@@ -32,4 +32,6 @@ public interface MessageDao {
     //显示最新接受消息列表
     public ArrayList<Map<String,Object>> ShowreciveLastMessage(String userId);
 
+    //删除好友所有历史消息
+    public Integer DeleteAllMessage(String userId, String friendId);
 }
