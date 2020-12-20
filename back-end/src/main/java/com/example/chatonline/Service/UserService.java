@@ -58,8 +58,17 @@ public class UserService {
     public Integer AddFriend(String userId,String friendId,String noteA,String groupnameA,String noteB,String groupnameB){
         return userDao.AddFriend(userId, friendId, noteA, groupnameA, noteB, groupnameB);
     }
+
     //编辑个人资料
     public boolean UpdateInfo(String userId, String nickname, String sex, Date birth, String signature, String address,String phone){return userDao.UpdateInfo(userId, nickname, sex, birth, signature, address,phone);}
     //显示个人资料
     public User ShowInfo(String userId){return userDao.ShowInfo(userId);}
+
+
+
+    public boolean DeleteRelation(String userId, String friendId){
+        return userDao.DeleteRelation(userId, friendId);
+    }
+
+
 }

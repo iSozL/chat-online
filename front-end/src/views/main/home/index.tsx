@@ -18,8 +18,8 @@ const Home: React.FC = () => {
   const [isRead, setRead] = useState<string[]>([])
   const logout = () => {
     window.localStorage.clear()
-    history.push("login")
     socket.close()
+    location.reload()
   }
   let info: any = JSON.parse(window.localStorage.getItem("userInfo"))
   if (window.WebSocket) {

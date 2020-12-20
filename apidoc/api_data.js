@@ -1,6 +1,98 @@
 define({ "api": [
   {
     "type": "get",
+    "url": "DeleteFriend",
+    "title": "删除好友",
+    "description": "<p>删除好友接口</p>",
+    "group": "好友",
+    "name": "删除好友",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户Id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "friendId",
+            "description": "<p>好友Id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回信息，成功的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "删除成功-示例:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": \"好友删除成功\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "删除失败-示例：",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"好友删除失败\"\n  \"data\":null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/main/java/com/example/chatonline/controller/UserController5.java",
+    "groupTitle": "好友"
+  },
+  {
+    "type": "get",
     "url": "groupfriends",
     "title": "好友列表",
     "description": "<p>好友列表接口</p>",
@@ -81,7 +173,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController3.java",
+    "filename": "src/main/java/com/example/chatonline/controller/UserController3.java",
     "groupTitle": "好友"
   },
   {
@@ -187,7 +279,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController3.java",
+    "filename": "src/main/java/com/example/chatonline/controller/UserController3.java",
     "groupTitle": "好友"
   },
   {
@@ -272,7 +364,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController2.java",
+    "filename": "src/main/java/com/example/chatonline/controller/UserController2.java",
     "groupTitle": "好友"
   },
   {
@@ -385,7 +477,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "filename": "src/main/java/com/example/chatonline/controller/UserController.java",
     "groupTitle": "好友"
   },
   {
@@ -477,7 +569,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "filename": "src/main/java/com/example/chatonline/controller/UserController.java",
     "groupTitle": "好友"
   },
   {
@@ -583,7 +675,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "filename": "src/main/java/com/example/chatonline/controller/UserController.java",
     "groupTitle": "消息"
   },
   {
@@ -668,7 +760,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController2.java",
+    "filename": "src/main/java/com/example/chatonline/controller/UserController2.java",
     "groupTitle": "消息"
   },
   {
@@ -753,7 +845,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "filename": "src/main/java/com/example/chatonline/controller/UserController.java",
     "groupTitle": "消息"
   },
   {
@@ -857,7 +949,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "filename": "src/main/java/com/example/chatonline/controller/UserController.java",
     "groupTitle": "消息"
   },
   {
@@ -1027,7 +1119,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "filename": "src/main/java/com/example/chatonline/controller/UserController.java",
     "groupTitle": "用户"
   },
   {
@@ -1239,7 +1331,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "filename": "src/main/java/com/example/chatonline/controller/UserController.java",
     "groupTitle": "登录注册"
   },
   {
@@ -1331,7 +1423,7 @@ define({ "api": [
         }
       ]
     },
-    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "filename": "src/main/java/com/example/chatonline/controller/UserController.java",
     "groupTitle": "登录注册"
   }
 ] });

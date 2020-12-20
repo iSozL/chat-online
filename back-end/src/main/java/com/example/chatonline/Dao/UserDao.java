@@ -24,7 +24,8 @@ public interface UserDao {
     public boolean preGroupnum(String userId,String preGroupname);
     public boolean postGroupnum(String userId,String postGroupname);
     public Integer AddFriend(String userId,String friendId,String noteA,String groupnameA,String noteB,String groupnameB);
+
     public boolean UpdateInfo(String userId, String nickname, String sex, Date birth, String signature, String address,String phone);
     public User ShowInfo(String userId);
-
+    public boolean DeleteRelation(String userId, String friendId);
 }
