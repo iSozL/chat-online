@@ -37,4 +37,9 @@ public class MessageService {
     //显示消息列表
     public ArrayList<Map<String,Object>> ShowsendLastMessage(String userId){ return messageDao.ShowsendLastMessage(userId); }
     public ArrayList<Map<String,Object>> ShowreciveLastMessage(String userId){ return messageDao.ShowreciveLastMessage(userId); }
+
+
+    public Integer DeleteAllMessage(String userId, String friendId){
+        return messageDao.DeleteAllMessage(userId, friendId);
+    }
 }

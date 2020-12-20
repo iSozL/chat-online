@@ -32,4 +32,10 @@
         select nickname,messagetxt,sendtime,sendId,reciveId from lastfriendmessage,user
         where reciveId=#{userId} and sendId=user.userId
     </select>
+
+
+    <select id="DeleteAllMessage" resultType="Integer" statementType="CALLABLE">
+        CALL Deletemessage(#{userId},#{friendId},#{flag,mode=OUT,jdbcType=INTEGER});
+    </select>
+
 </mapper>
