@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import {changeUserContext, CHANGE_USER} from '../store/index'
 import './index.scss'
-import { Button, Popover} from 'antd'
+import { Button, Popover, message as Msg} from 'antd'
 import Scroll from 'react-custom-scrollbars'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
@@ -55,10 +55,10 @@ const Message = (props: any) => {
   // }
 
   const inputs = useRef<any>()
-
   const send = (message: any) => {
     if (!message) {
-      
+      Msg.info("请输入内容")
+      return
     }
     if (!window.WebSocket) {
       return;
@@ -92,6 +92,7 @@ const Message = (props: any) => {
   //   })
   // }, []);
   const isEnter = (e: any) => {
+    e.preventDefault()
     if(e.keyCode === 13) {
       send(inputs.current.value)
     }
