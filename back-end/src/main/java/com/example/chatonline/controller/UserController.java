@@ -130,7 +130,7 @@ public class UserController {
             flag = userService.register(user);
         }while (!flag);
         //初始分组
-        userService.CreatGroup(user.getUserId(),"我的好友");
+        userService.CreatGroup(user.getUserId(),"我的好友",1);
         return JsonResult.success(user.getUserId());
     }
 

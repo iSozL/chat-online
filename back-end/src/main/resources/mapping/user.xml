@@ -19,9 +19,22 @@
         select groupname,count_num from friendgroup where userId = #{id}
     </select>
     <insert id="CreatGroup">
-        insert into friendgroup(userId,groupname,count_num)
-        value (#{id},#{groupname},0);
+        insert into friendgroup(userId,groupname,count_num,flag)
+        value (#{id},#{groupname},0,#{type});
     </insert>
+    <delete id="DelGroup">
+        delete  from friendgroup where userId = #{userId} and groupname = #{groupname}
+    </delete>
+    <select id="getDefGroupname" resultType="String">
+        select groupname
+        from friendgroup
+        where userId = #{userId} and flag = 1
+    </select>
+    <select id="getFriendsId" resultType="map">
+        select friendId
+        from  friendrelation
+        where userId = #{userId} and groupname = #{groupname}
+    </select>
     <select id="FindRelation" resultType="boolean">
         select count(*) from friendrelation where userId = #{userId} and friendId=#{friendId}
     </select>
@@ -36,7 +49,6 @@
     <select id="AddFriend"  resultType="Integer" statementType="CALLABLE">
         call Addfriend(#{userId},#{friendId},#{groupnameA},#{groupnameB},#{noteA},#{noteB},#{flag,mode=OUT,jdbcType=INTEGER})
     </select>
-
     <update id="groupMove">
         update friendrelation
         set groupname=#{postGroupname}
@@ -52,4 +64,17 @@
         set count_num=count_num+1
         where groupname=#{postGroupname} and userId=#{userId}
     </update>
+    <update id="UpdateInfo">
+        update user
+        set nickname=#{nickname},sex=#{sex},birthday=#{birth},address=#{address},phone=#{phone},signature=#{signature}
+        where userId=#{userId}
+    </update>
+    <select id="ShowInfo" resultType="com.example.chatonline.Model.User">
+        select nickname,sex,birthday,address,phone,signature
+        from user
+        where userId=#{userId}
+    </select>
+    <delete id="DeleteRelation">
+        DELETE FROM friendrelation WHERE userId = #{userId} AND friendId=#{friendId};
+    </delete>
 </mapper>

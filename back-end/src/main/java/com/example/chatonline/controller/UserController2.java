@@ -1,6 +1,7 @@
 package com.example.chatonline.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.example.chatonline.Config.DateConverterConfig;
 import com.example.chatonline.Model.Group;
 import com.example.chatonline.Model.JsonResult;
 import com.example.chatonline.Model.Message;
@@ -24,6 +25,8 @@ public class UserController2 {
     private JsonResult jsonResult;
     @Autowired
     private MessageService messageService;
+    @Autowired
+    private DateConverterConfig dateConverterConfig;
     /**
      *
      * @api {get} ShowFriendLastMessage 消息列表
@@ -187,5 +190,112 @@ public class UserController2 {
         else
             return JsonResult.error("未能查询到分组信息",null);
     }
+    /**
+     *
+     * @api {post} updateinfo 编辑个人资料
+     * @apiDescription  编辑个人资料接口
+     * @apiGroup 用户
+     * @apiName 编辑个人资料
+     * @apiversion 0.1.0
+     *
+     * @apiParam {String} userId 用户ID
+     * @apiParam {String} nickname 昵称
+     * @apiParam {Date} birth 生日
+     * @apiParam {String} sex 性别
+     * @apiParam {String} address 地址
+     * @apiParam {String} signature 个性签名
+     *
+     * @apiSuccess {int} status 响应状态码
+     * @apiSuccess {String} message 响应描述
+     * @apiSuccess {String} data 返回相关信息，成功的时候才存在
+     *
+     * @apiSuccessExample {json} 修改成功-示例:
+     *     HTTP/1.1 200 OK
+     *     "message": "success",
+     *     "data": ""修改成功,
+     *     "code": 1
+     *     }
+     * @apiError {int} status 响应状态码
+     * @apiError {String} message 响应描述
+     * @apiErrorExample {json} 修改失败-示例：
+     *      HTTP/1.1 200 OK
+     *     {
+     *       "code":0,
+     *       "message": "修改失败",
+     *       "data":null
+     *     }
+     */
+    @CrossOrigin
+    @PostMapping("/updateinfo")
+    public JsonResult UpdateInfo(@RequestBody  String Json)
+    {
+        Map<String,Object> map = (Map)JSON.parse(Json);
+        String userId= (String) map.get("userId");
+        String nickname = (String) map.get("nickname");
+        String sex = (String) map.get("sex");
+        String address = (String) map.get("address");
+        String signature = (String) map.get("signature");
+        String phone = (String) map.get("phone");
+        Date birth= dateConverterConfig.convert((String)map.get("birth"));
+        if(userService.UpdateInfo(userId,nickname,sex,birth,signature,address,phone))
+        {
+            return JsonResult.success("修改成功");
+        }
+        else
+        {
+            return JsonResult.fail("修改失败");
+        }
+    }
+    /**
+     *
+     * @api {get} ShowInfo 显示个人信息
+     * @apiDescription  显示个人信息接口
+     * @apiGroup 用户
+     * @apiName 显示个人信息
+     * @apiversion 0.1.0
+     *
+     * @apiParam {String} userId 用户ID
+     *
+     * @apiSuccess {int} status 响应状态码
+     * @apiSuccess {String} message 响应描述
+     * @apiSuccess {String} data 返回相关信息，成功的时候才存在
+     *
+     * @apiSuccessExample {json} 显示好友分组-示例:
+     *     HTTP/1.1 200 OK
+     *     "message": "success",
+     *     "data":{
+     *         "userId": null,
+     *         "password": null,
+     *         "nickname": "修改资料",
+     *         "sex": "男",
+     *         "groups": null,
+     *         "birthday": "2020-12-10",
+     *         "address": "南昌市",
+     *         "phone": "12345"
+     *     },
+     *     "code": 1
+     *     }
+     * @apiError {int} status 响应状态码
+     * @apiError {String} message 响应描述
+     * @apiErrorExample {json} 分组信息为空-示例：
+     *      HTTP/1.1 200 OK
+     *     {
+     *       "code":0,
+     *       "message": "显示失败",
+     *       "data":null
+     *     }
+     */
+    @CrossOrigin
+    @GetMapping("/ShowInfo")
+    public JsonResult ShowInfo(@RequestParam("userId") String userId)
+    {
+        User user=userService.ShowInfo(userId);
+        if(user!=null)
+        {
+            return JsonResult.success(user);
+        }
+        else
+            return JsonResult.fail("显示失败");
+        }
 
 }
