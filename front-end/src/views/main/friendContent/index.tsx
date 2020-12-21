@@ -40,8 +40,20 @@ const FriendContent = (props: any) => {
   const [invate, setInvate] = useState<object[]>()
 
   const { userMsg, useDispatch } = useContext(changeUserContext)
-
+  let groups: any
+  async function getGroups() {
+    await request.get(`http://101.132.134.186:8080/ShowGroup?userId=${info.userId}`).then(value => {
+      if (value.data.code) {
+        groups = value.data.data
+        let newInfo = Object.assign(info, {groups: groups})
+        window.localStorage.setItem("userInfo",JSON.stringify(newInfo))
+      } else {
+        message.error(value.data.message)
+      }
+    })
+  } 
   async function getFriendList() {
+    await getGroups()
     await request.get(`http://101.132.134.186:8080/GroupFriends?userId=${info.userId}`).then(value => {
       if (value.data.code) {
         for (let i in value.data.data) {
@@ -146,7 +158,7 @@ const FriendContent = (props: any) => {
       message.error("连接关闭")
     };
   }
-  let groups = info.groups
+  // let groups = info.groups
   const [friendList, setLists] = useState<object[]>([])
   const [tabKey, setKey] = useState<string>("1")
 
@@ -183,7 +195,7 @@ const FriendContent = (props: any) => {
     }
 
     const groupMove = async (value: any) => {
-      await request.get(`http://101.132.134.186:8080/groupMove?userId=${info.userId}&friendId=${msg.userId}&preGroupname=${msg.groupname}&postGroupname=${value.groupname}`).then(value => {
+      await request.get(`http://101.132.134.186:8080/GroupMove?userId=${info.userId}&friendId=${msg.userId}&preGroupname=${msg.groupname}&postGroupname=${value.groupname}`).then(value => {
         if (value.data.code) {
           message.success(value.data.message)
         } else {
