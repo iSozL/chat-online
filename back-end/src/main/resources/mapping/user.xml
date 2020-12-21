@@ -11,7 +11,7 @@
         insert into user(userId,nickname,password) value(#{userId},#{nickname},#{password})
     </insert>
     <select id="GroupFriends" resultType="map">
-        select user.nickname,user.userId,user.sex,user.birthday,user.address,user.phone,user.signature,friendrelation.note,friendrelation.groupname,friendrelation.evaluate
+        select user.nickname,user.userId,user.sex,user.age,user.address,user.phone,user.signature,friendrelation.note,friendrelation.groupname,friendrelation.evaluate
         from user,friendrelation
         where user.userId in (select friendId from friendrelation where userId = #{userId}) and friendrelation.userId = #{userId} and friendrelation.friendId = user.userId
     </select>
@@ -77,4 +77,7 @@
     <delete id="DeleteRelation">
         DELETE FROM friendrelation WHERE userId = #{userId} AND friendId=#{friendId};
     </delete>
+    <update id="ChangeNote">
+        update friendrelation set note = #{note} where userId = #{userId} AND friendId=#{friendId}
+    </update>
 </mapper>

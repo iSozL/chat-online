@@ -49,7 +49,7 @@ public class UserController3 {
      * @apiError {String} message 响应描述
      *
      * @apiErrorExample {json} 移动失败-示例：
-     *      HTTP/1.1 200 OK
+     *      HTTP/1.1 4xx
      *     {
      *       "code":0,
      *       "message": "好友分组移动失败"
@@ -103,7 +103,7 @@ public class UserController3 {
      * @apiError {String} message 响应描述
      *
      * @apiErrorExample {json} 查询错误-示例：
-     *      HTTP/1.1 200 OK
+     *      HTTP/1.1 4xx
      *     {
      *       "code":-1,
      *       "message": "未查询到该用户好友信息",
@@ -148,7 +148,7 @@ public class UserController3 {
      * @apiError {String} message 响应描述
      *
      * @apiErrorExample {json} 添加失败-示例：
-     *      HTTP/1.1 200 OK
+     *      HTTP/1.1 4xx
      *     {
      *       "code":0,
      *       "message": "添加好友分组失败"
@@ -193,14 +193,14 @@ public class UserController3 {
      * @apiError {String} message 响应描述
      *
      * @apiErrorExample {json} 删除失败-示例1：
-     *      HTTP/1.1 200 OK
+     *      HTTP/1.1 4xx
      *     {
      *       "code":0,
      *       "message": "删除好友分组失败"
      *       "data":null
      *     }
      * @apiErrorExample {json} 删除失败-示例2：
-     *      HTTP/1.1 200 OK
+     *      HTTP/1.1 4xx
      *     {
      *       "code":0,
      *       "message": "不能删除系统默认分组"
@@ -229,5 +229,50 @@ public class UserController3 {
             else
                 return JsonResult.fail("删除好友分组失败");
         }
+    }
+
+    /**
+     * @api {get} ChangeNote 更改好友备注
+     * @apiDescription  更改备注接口
+     * @apiGroup 好友
+     * @apiName 更改好友备注
+     * @apiversion 0.1.0
+     *
+     * @apiParam {String} userId 用户Id
+     * @apiParam {String} friendId 好友Id
+     * @apiParam {String} note 备注
+     *
+     * @apiSuccess {int} status 响应状态码
+     * @apiSuccess {String} message 响应描述
+     * @apiSuccess {String} data 返回信息，成功的时候才存在
+     *
+     * @apiSuccessExample {json} 更改成功-示例:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "code":1,
+     *       "message": "success",
+     *       "data": "更改好友备注成功"
+     *     }
+     *
+     * @apiError {int} status 响应状态码
+     * @apiError {String} message 响应描述
+     *
+     * @apiErrorExample {json} 更改失败-示例：
+     *      HTTP/1.1 4xx
+     *     {
+     *       "code":0,
+     *       "message": "更改好友备注失败"
+     *       "data":null
+     *     }
+     */
+    @CrossOrigin
+    @GetMapping("/ChangeNote")
+    public JsonResult ChangeNote(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("note") String note)
+    {
+        boolean date = userService.ChangeNote(userId,friendId,note);
+        if(date)
+            return JsonResult.success("更改好友备注成功");
+        else
+            return JsonResult.fail("更改好友备注失败");
     }
 }

@@ -72,4 +72,6 @@ public class UserService {
     public boolean DeleteRelation(String userId, String friendId){
         return userDao.DeleteRelation(userId, friendId);
     }
+    //修改好友备注
+    public boolean ChangeNote(String userId, String friendId,String note) { return userDao.ChangeNote(userId,friendId,note); }
 }
