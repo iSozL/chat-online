@@ -201,6 +201,7 @@ public class UserController2 {
      * @apiParam {int} age 年龄
      * @apiParam {String} sex 性别
      * @apiParam {String} address 地址
+     * @apiParam {String} phone 电话
      * @apiParam {String} signature 个性签名
      *
      * @apiSuccess {int} status 响应状态码
