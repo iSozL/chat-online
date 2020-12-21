@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import './index.scss'
-import { Tabs, Popover, Modal, Button, Form, Select, Input, message, Menu } from 'antd';
+import { Tabs, Popover, Modal, Button, Form, Select, Input, message, Menu, Dropdown } from 'antd';
 import Scroll from 'react-custom-scrollbars';
 import { changeUserContext, CHANGE_USER } from '../store/index'
 import request from '../../../utils/request'
@@ -166,6 +166,189 @@ const FriendContent = (props: any) => {
     })
   }
 
+  const FriendOperate = (props: any) => {
+    const { msg } = props
+    const [move, setMove] = useState<boolean>(false)
+    const [note, setNote] = useState<boolean>(false)
+    const [image, setImage] = useState<boolean>(false)
+    const deleteFriend = async () => {
+      await request.get(`http://101.132.134.186:8080/DeleteFriend?userId=${info.userId}&friendId=${msg.userId}`).then(value => {
+        if (value.data.code) {
+          message.success(value.data.message)
+        } else {
+          message.error(value.data.message)
+        }
+        getFriendList()
+      })
+    }
+
+    const groupMove = async (value: any) => {
+      await request.get(`http://101.132.134.186:8080/groupMove?userId=${info.userId}&friendId=${msg.userId}&preGroupname=${msg.groupname}&postGroupname=${value.groupname}`).then(value => {
+        if (value.data.code) {
+          message.success(value.data.message)
+        } else {
+          message.error(value.data.message)
+        }
+        setMove(false)
+        getFriendList()
+      })
+    }
+    
+    const reNote = async (value: any) => {
+      await request.get(`http://101.132.134.186:8080/ChangeNote?userId=${info.userId}&friendId=${msg.userId}&note=${value.note}`).then(value => {
+        if (value.data.code) {
+          message.success(value.data.message)
+        } else {
+          message.error(value.data.message)
+        }
+        setNote(false)
+        getFriendList()
+      })
+    }
+
+    const addImage = async (value: any) => {
+      await request.post('http://101.132.134.186:8080/addImage', {
+        userId: info.userId,
+        friendId: msg.userId,
+        mes: value.mes
+      }).then(value => {
+        if (value.data.code) {
+          message.success(value.data.message)
+        } else {
+          message.error(value.data.message)
+        }
+        getFriendList()
+      })
+    }
+
+    return (
+      <div className="ope">
+        <Modal
+          title="移动分组"
+          centered
+          visible={move}
+          onOk={() => setMove(false)}
+          onCancel={() => setMove(false)}
+          width={500}
+        >
+          <Form {...layout} onFinish={groupMove}>
+            <Form.Item name="groupname" label="选择分组">
+              <Select style={{ width: 120 }}>
+                {
+                  info.groups.map((item: any, index: number) => {
+                    return (
+                      <Option value={item.groupname} key={index}>
+                        {item.groupname}
+                      </Option>
+                    )
+                  })
+                }
+              </Select>
+            </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
+              <Button type="primary" htmlType="submit">
+                移动
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+
+        <Modal
+          title="更改备注"
+          centered
+          visible={note}
+          onOk={() => setNote(false)}
+          onCancel={() => setNote(false)}
+          width={500}
+        >
+          <Form {...layout} onFinish={reNote}>
+            <Form.Item name="note" label="更改备注">
+              <Input />
+            </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
+              <Button type="primary" htmlType="submit">
+                更改
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+        <Modal
+          title="添加印象"
+          centered
+          visible={image}
+          onOk={() => setImage(false)}
+          onCancel={() => setImage(false)}
+          width={500}
+        >
+          <Form {...layout} onFinish={addImage}>
+            <Form.Item name="mes" label="添加印象">
+              <Input />
+            </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
+              <Button type="primary" htmlType="submit">
+                添加
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+        <div onClick={deleteFriend}>删除好友</div>
+        <div onClick={() => setMove(true)}>移动分组</div>
+        <div onClick={() => setNote(true)}>更改备注</div>
+        <div onClick={() => setImage(true)}>添加印象</div>
+      </div>
+    )
+  }
+
+  const GroupOperate = (props: {name: string}) => {
+    const [add, setAdd] = useState<boolean>(false)
+    const deleteGroup = async () => {
+      await request.get(`http://101.132.134.186:8080/DelGroup?userId=${info.userId}&groupname=${props.name}`).then(value => {
+        if (value.data.code) {
+          message.success(value.data.message)
+        } else {
+          message.error(value.data.message)
+        }
+        getFriendList()
+      })
+    }
+    const createGroup = async (value: any) => {
+      await request.get(`http://101.132.134.186:8080/CreatGroup?userId=${info.userId}&groupname=${value.name}`).then(value => {
+        if (value.data.code) {
+          message.success(value.data.message)
+        } else {
+          message.error(value.data.message)
+        }
+        setAdd(false)
+        getFriendList()
+      })
+    }
+    return (
+      <div className="ope">
+        <Modal
+          title="创建分组"
+          centered
+          visible={add}
+          onOk={() => setAdd(false)}
+          onCancel={() => setAdd(false)}
+          width={500}
+        >
+          <Form {...layout} onFinish={createGroup}>
+            <Form.Item name="name" label="分组名">
+              <Input />
+            </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
+              <Button type="primary" htmlType="submit">
+                创建
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+        <div onClick={deleteGroup}>删除分组</div>
+        <div onClick={() => {setAdd(true)}}>创建分组</div>
+      </div>
+    )
+  }
+
   useEffect(() => {
     getFriendList()
     getMsgList()
@@ -316,15 +499,17 @@ const FriendContent = (props: any) => {
                             item.list.map((i: any, index: number) => {
                               return (
                                 <div key={index}>
-                                  <Popover content={<Detail msg={i} />} placement="right">
+                                  <Dropdown overlay={<FriendOperate msg={i} />} trigger={['contextMenu']} placement="topLeft">
                                     <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: i.nickname, userId: i.userId, show: userMsg.show, msgs: userMsg.msgs}});}}>
+                                    <Popover content={<Detail msg={i} />} placement="right">
                                       <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+                                    </Popover>
                                       <div className="msg">
                                         <div style={{padding: "5px 0 0 5px", fontSize: "18px", lineHeight: "1.5"}}>{i.nickname}{ typeof i.note === "string" ? `(${i.note})` : "" }</div>
                                         <div style={{paddingLeft: "5px", lineHeight: "1.5"}}>{ typeof i.signature === "string" ? i.signature : ""}</div>
                                       </div>
                                     </div>
-                                  </Popover>
+                                  </Dropdown>
                                 </div>
                               )
                             }) : ""
@@ -335,6 +520,28 @@ const FriendContent = (props: any) => {
                   }
                 </Menu>
               </Scroll>
+            </div>
+          </TabPane>
+          <TabPane
+            tab={
+              <span style={{padding: "20px 0"}} onClick={() => {setKey("3")}}>
+                分组
+              </span>
+            }
+            key="3"
+          >
+            <div style={{height: "70vh", display: "flex", flexDirection: "column", alignItems: "center", padding: "5px 0"}}>
+              {
+                friendList.map((item: any, index: number) => {
+                  return (
+                    <Dropdown key={index} overlay={<GroupOperate name={item.groupname} />} trigger={['contextMenu']} placement="topLeft">
+                      <div style={{width: "100%", height: "50px", background: "#fff", display: "flex", alignItems: "center", paddingLeft: "20px"}} key={index}>
+                        { item.groupname }
+                      </div>
+                    </Dropdown>
+                  )
+                })
+              }
             </div>
           </TabPane>
         </Tabs>

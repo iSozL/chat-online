@@ -116,3 +116,18 @@ ul {
   list-style-position: inside;
   list-style-type: disc;
 }
+.ope {
+  width: 100px;
+  height: 300px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ope > div {
+  padding: 20px;
+}
+.ope > div:hover {
+  cursor: pointer;
+  color: #1890ff
+}

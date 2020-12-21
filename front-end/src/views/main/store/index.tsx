@@ -7,7 +7,6 @@ export const CHANGE_USER = "CHANGE_USER";
 const reducer = (state: any, action: any) => {
   switch(action.type) {
     case CHANGE_USER:
-      console.log(state)
       let tmp = JSON.parse(JSON.stringify(state))
       return Object.assign(tmp, action.state)
     default:

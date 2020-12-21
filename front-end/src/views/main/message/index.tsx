@@ -20,7 +20,6 @@ const Message = (props: any) => {
     })
   }
   const { userMsg, useDispatch } = useContext(changeUserContext)
-  console.log(userMsg.msgs,'message')
   let info: any = JSON.parse(window.localStorage.getItem("userInfo"))
 
   const inputs = useRef<any>()
