@@ -68,7 +68,7 @@ public class UserController4 {
         message.setReciveid(friendId);
         message.setMessagetext(mes);
         if (messageService.addImage(message))
-            return jsonResult.success("留言成功");
+            return JsonResult.success("留言成功");
         else
             return JsonResult.fail("留言失败");
     }
