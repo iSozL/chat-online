@@ -1290,7 +1290,7 @@ define({ "api": [
       "examples": [
         {
           "title": "显示好友分组-示例:",
-          "content": "HTTP/1.1 200 OK\n\"message\": \"success\",\n\"data\":{\n    \"userId\": null,\n    \"password\": null,\n    \"nickname\": \"修改资料\",\n    \"sex\": \"男\",\n    \"groups\": null,\n    \"age\": ,\n    \"address\": \"南昌市\",\n    \"phone\": \"12345\"\n},\n\"code\": 1\n}",
+          "content": "HTTP/1.1 200 OK\n\"message\": \"success\",\n\"data\":{\n    \"userId\": null,\n    \"nickname\": \"修改资料\",\n    \"sex\": \"男\",\n    \"age\": ,\n    \"signature\":,\n    \"address\": \"南昌市\",\n    \"phone\": \"12345\"\n},\n\"code\": 1\n}",
           "type": "json"
         }
       ]

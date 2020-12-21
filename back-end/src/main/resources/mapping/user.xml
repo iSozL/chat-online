@@ -70,7 +70,7 @@
         where userId=#{userId}
     </update>
     <select id="ShowInfo" resultType="com.example.chatonline.Model.User">
-        select nickname,sex,age,address,phone,signature
+        select userId,nickname,sex,age,signature,address,phone
         from user
         where userId=#{userId}
     </select>

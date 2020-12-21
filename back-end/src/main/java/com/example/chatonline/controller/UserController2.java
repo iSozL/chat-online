@@ -73,8 +73,6 @@ public class UserController2 {
 
 
         //合并最新消息
-        System.out.println(sendmessages.size());
-        System.out.println(recivemessages.size());
         Iterator<Map<String, Object>> it = sendmessages.iterator();
         while (it.hasNext()) {
             Map<String, Object> sendmap = it.next();
@@ -265,11 +263,10 @@ public class UserController2 {
      *     "message": "success",
      *     "data":{
      *         "userId": null,
-     *         "password": null,
      *         "nickname": "修改资料",
      *         "sex": "男",
-     *         "groups": null,
      *         "age": ,
+     *         "signature":,
      *         "address": "南昌市",
      *         "phone": "12345"
      *     },
