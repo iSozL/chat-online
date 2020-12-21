@@ -95,7 +95,6 @@ public class UserController3 {
      *             "nickname": "和规范化",
      *             "userId": "5",
      *             "groupname": "分组二",
-     *             "evaluate": "起飞"         好友印象
      *         },
      *     }
      *
