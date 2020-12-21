@@ -352,3 +352,13 @@ textarea.ant-input {
   -webkit-transition: all 0.3s, height 0s;
   transition: all 0.3s, height 0s;
 }
+.history {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: #1890ff
+}
+.history:hover {
+  cursor: pointer;
+}

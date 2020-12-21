@@ -11,20 +11,12 @@ request.interceptors.request.use((config) => {
   config.headers.Authorization = getToken()
   return config
 }, (error) => {
-  message.error(
-    {
-      message: 'Error',
-      description: String(error)
-    }
-  )
+  message.error(String(error))
   return Promise.reject(error)
 })
 
 request.interceptors.response.use((res) => res, (error) => {
-  message.error({
-    message: 'Error',
-    description: String(error),
-  });
+  message.error(String(error))
   return Promise.reject(error);
 });
 

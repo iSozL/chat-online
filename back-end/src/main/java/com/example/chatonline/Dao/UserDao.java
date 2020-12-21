@@ -1,6 +1,7 @@
 package com.example.chatonline.Dao;
 
 import com.example.chatonline.Model.Group;
+import com.example.chatonline.Model.Message;
 import com.example.chatonline.Model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
