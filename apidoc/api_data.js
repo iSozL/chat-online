@@ -238,7 +238,7 @@ define({ "api": [
       "examples": [
         {
           "title": "查询成功-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": {\n        \"birthday\": \"2020-12-19\",\n        \"note\": \"test\",\n        \"address\": \"ncu\",\n        \"phone\": \"12345678910\",\n        \"signature\": \"笑一笑就好\",  个性签名\n        \"nickname\": \"和规范化\",\n        \"userId\": \"5\",\n        \"groupname\": \"分组二\",\n        \"evaluate\": \"起飞\"         好友印象\n    },\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": {\n        \"birthday\": \"2020-12-19\",\n        \"note\": \"test\",\n        \"address\": \"ncu\",\n        \"phone\": \"12345678910\",\n        \"signature\": \"笑一笑就好\",  个性签名\n        \"nickname\": \"和规范化\",\n        \"userId\": \"5\",\n        \"groupname\": \"分组二\",\n    },\n}",
           "type": "json"
         }
       ]
@@ -1166,6 +1166,96 @@ define({ "api": [
   },
   {
     "type": "Get",
+    "url": "ShowFriendImage",
+    "title": "显示好友收到的印象",
+    "description": "<p>显示好友收到的印象接口</p>",
+    "group": "消息",
+    "name": "显示好友收到的印象",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "friendId",
+            "description": "<p>好友ID</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回相关信息，成功的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "有印象权限-示例1:",
+          "content": "    HTTP/1.1 200 OK\n    {\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"4\",\n            \"message\": \"123\",\n            \"sendtime\": \"2020-12-21 11:50:03\",\n            \"flag\": 0\n        }\n    ],\n    \"code\": 1\n}",
+          "type": "json"
+        },
+        {
+          "title": "有印象权限-示例2:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"message\": \"暂无印象\",\n    \"data\": null,\n    \"code\": 0\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "无印象权限-示例：",
+          "content": "HTTP/1.1 200 OK\n{\n    \"message\": \"未获得观看好友印象权限\",\n    \"data\": null,\n    \"code\": 0\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController4.java",
+    "groupTitle": "消息"
+  },
+  {
+    "type": "Get",
     "url": "ShowImage",
     "title": "显示接收的好友印象",
     "description": "<p>显示接收的好友印象接口</p>",
@@ -1705,6 +1795,98 @@ define({ "api": [
       ]
     },
     "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController2.java",
+    "groupTitle": "用户"
+  },
+  {
+    "type": "Get",
+    "url": "ChangMark",
+    "title": "更改印象观看权限",
+    "description": "<p>更改印象观看权限接口</p>",
+    "group": "用户",
+    "name": "更改印象观看权限",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "note",
+            "description": "<p>权限标记</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回相关信息，成功的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "有好友印象-示例:",
+          "content": "    HTTP/1.1 200 OK\n    {\n    \"message\": \"success\",\n    \"data\": \"更改印象权限成功\",\n    \"code\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "无好友印象-示例：",
+          "content": "   HTTP/1.1 200 OK\n   {\n    \"message\": \"更改印象权限失败\",\n    \"data\": null,\n    \"code\": 0\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController4.java",
     "groupTitle": "用户"
   },
   {
