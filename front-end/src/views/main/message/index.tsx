@@ -2,57 +2,19 @@ import React, { useContext, useRef, useState, useEffect } from 'react';
 import {changeUserContext, CHANGE_USER} from '../store/index'
 import './index.scss'
 import { Button, Popover, message as Msg} from 'antd'
-import Scroll from 'react-custom-scrollbars'
+import Scrollbars from 'react-custom-scrollbars'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
-
+import request from '../../../utils/request'
 if (!window.WebSocket) {
   window.WebSocket = window.MozWebSocket;
 }
 const Message = (props: any) => {
   let socket = props.socket
+  let scroll = useRef<any>()
   const { userMsg, useDispatch } = useContext(changeUserContext)
   console.log(userMsg.msgs,'message')
   let info: any = JSON.parse(window.localStorage.getItem("userInfo"))
-  // if (window.WebSocket) {
-  //   if (info && !socket) {
-  //     socket = new WebSocket(`ws://47.102.214.67:8080/ET_war/websocket/${info.userId}`);
-  //   }
-  // } else {
-  //   alert("你的浏览器不支持 WebSocket！");
-  // }
-  // if (socket) {
-  //   socket.onmessage = function (event: any) {
-  //     event = JSON.parse(event.data)
-  //     if (event.sender === info.userId) {
-  //       console.log(event)
-  //       let data = {
-  //         message: event.message,
-  //         time: new Date(),
-  //         my: true,
-  //         tag: event.receiver,
-  //         tag1: event.sender
-  //       }
-  //       useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
-  //     } else {
-  //       console.log(userMsg.msgs)
-  //       let data = {
-  //         message: event.message,
-  //         time: new Date(),
-  //         my: false,
-  //         tag: event.receiver,
-  //         tag1: event.sender
-  //       }
-  //       useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
-  //     }
-  //   };
-  //   socket.onopen = function (event: any) {
-  //     console.log("连接开始")
-  //   };
-  //   socket.onclose = function (event: any) {
-  //     console.log("连接关闭")
-  //   };
-  // }
 
   const inputs = useRef<any>()
   const send = (message: any) => {
@@ -76,8 +38,11 @@ const Message = (props: any) => {
         tag: userMsg.userId,
         tag1: info.userId
       }
-      useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(datas)}})
+      useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: userMsg.msgs.concat(datas)}})
       inputs.current.value = ""
+      setTimeout(() => {
+        scroll.current.scrollToBottom()
+      }, 1)
     } else {
       alert("连接没有开启.");
     }
@@ -98,6 +63,48 @@ const Message = (props: any) => {
     }
   }
 
+  useEffect(() => {
+    if (scroll.current) {
+      setTimeout(() => {
+        scroll.current.scrollToBottom()
+      }, 1)
+    }
+  })
+  const getHistory = async () => {
+    await request.post(`http://47.102.214.67:8080/ET_war/GetChatRecord?first=${info.userId}&second=${userMsg.userId}`).then(value => {
+      let arr = value.data.map((item: any) => {
+        if (item.sender === info.userId) {
+          let data = {
+            message: item.message,
+            time: item.time,
+            my: true,
+            tag: item.receiver,
+            tag1: item.sender
+          }
+          return data
+          // useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: userMsg.msgs.concat(data)}})
+        } else {
+          let data = {
+            message: item.message,
+            time: item.time,
+            my: false,
+            tag: item.receiver,
+            tag1: item.sender
+          }
+          return data
+          // useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: userMsg.msgs.concat(data)}})
+        }
+      })
+      useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: arr}})
+      setTimeout(() => {
+        scroll.current.scrollToBottom()
+      }, 1)
+    })
+  }
+
+  // const test = (value: any) => {
+  //   console.log(scroll)
+  // }
   const emoji = (
     <div>
       <Picker onSelect={(emoji: any)=> {inputs.current.value += emoji.native}} />
@@ -112,8 +119,12 @@ const Message = (props: any) => {
           <div className="msg-header">
             {userMsg.username}
           </div>
+          <div className="history" onClick={getHistory}>
+            <img style={{width: "20px"}} src={require('../../../assets/imgs/history.svg')} />
+            查看历史聊天记录
+          </div>
           <div>
-            <Scroll style={{height: "48vh", width: "99%", display: "flex"}}>
+            <Scrollbars style={{height: "48vh", width: "99%", display: "flex"}} ref={scroll} >
               {
                 userMsg.msgs.map((item: any, index: number) => {
                   if (!item.my && (item.tag1 === userMsg.userId)) {
@@ -137,7 +148,7 @@ const Message = (props: any) => {
                   }
                 })
               }
-            </Scroll>
+            </Scrollbars>
           </div>
         </div>
         <div className="msg-footer">
