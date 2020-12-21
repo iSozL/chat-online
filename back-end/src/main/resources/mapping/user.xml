@@ -49,7 +49,7 @@
     <select id="AddFriend"  resultType="Integer" statementType="CALLABLE">
         call Addfriend(#{userId},#{friendId},#{groupnameA},#{groupnameB},#{noteA},#{noteB},#{flag,mode=OUT,jdbcType=INTEGER})
     </select>
-    <update id="groupMove">
+    <update id="GroupMove">
         update friendrelation
         set groupname=#{postGroupname}
         where userId=#{userId} and friendId=#{friendId}
