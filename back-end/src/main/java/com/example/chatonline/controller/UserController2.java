@@ -73,8 +73,6 @@ public class UserController2 {
 
 
         //合并最新消息
-        System.out.println(sendmessages.size());
-        System.out.println(recivemessages.size());
         Iterator<Map<String, Object>> it = sendmessages.iterator();
         while (it.hasNext()) {
             Map<String, Object> sendmap = it.next();
@@ -200,7 +198,7 @@ public class UserController2 {
      *
      * @apiParam {String} userId 用户ID
      * @apiParam {String} nickname 昵称
-     * @apiParam {Date} birth 生日
+     * @apiParam {int} age 年龄
      * @apiParam {String} sex 性别
      * @apiParam {String} address 地址
      * @apiParam {String} signature 个性签名
@@ -236,8 +234,8 @@ public class UserController2 {
         String address = (String) map.get("address");
         String signature = (String) map.get("signature");
         String phone = (String) map.get("phone");
-        Date birth= dateConverterConfig.convert((String)map.get("birth"));
-        if(userService.UpdateInfo(userId,nickname,sex,birth,signature,address,phone))
+        int age= (int)map.get("age");
+        if(userService.UpdateInfo(userId,nickname,sex,age,signature,address,phone))
         {
             return JsonResult.success("修改成功");
         }
@@ -265,11 +263,10 @@ public class UserController2 {
      *     "message": "success",
      *     "data":{
      *         "userId": null,
-     *         "password": null,
      *         "nickname": "修改资料",
      *         "sex": "男",
-     *         "groups": null,
-     *         "birthday": "2020-12-10",
+     *         "age": ,
+     *         "signature":,
      *         "address": "南昌市",
      *         "phone": "12345"
      *     },
