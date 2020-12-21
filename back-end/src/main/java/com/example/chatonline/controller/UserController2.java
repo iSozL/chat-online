@@ -258,7 +258,7 @@ public class UserController2 {
      * @apiSuccess {String} message 响应描述
      * @apiSuccess {String} data 返回相关信息，成功的时候才存在
      *
-     * @apiSuccessExample {json} 显示好友分组-示例:
+     * @apiSuccessExample {json} 显示个人信息-示例:
      *     HTTP/1.1 200 OK
      *     "message": "success",
      *     "data":{
@@ -274,7 +274,7 @@ public class UserController2 {
      *     }
      * @apiError {int} status 响应状态码
      * @apiError {String} message 响应描述
-     * @apiErrorExample {json} 分组信息为空-示例：
+     * @apiErrorExample {json} 个人信息为空-示例：
      *      HTTP/1.1 200 OK
      *     {
      *       "code":0,

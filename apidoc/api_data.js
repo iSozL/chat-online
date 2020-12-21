@@ -1303,10 +1303,8 @@ define({ "api": [
       },
       "examples": [
         {
-
-          "title": "显示好友分组-示例:",
-          "content": "HTTP/1.1 200 OK\n\"message\": \"success\",\n\"data\":{\n    \"userId\": null,\n    \"nickname\": \"修改资料\",\n    \"sex\": \"男\",\n    \"age\": ,\n    \"signature\":,\n    \"address\": \"南昌市\",\n    \"phone\": \"12345\"\n},\n\"code\": 1\n}",
-
+          "title": "有好友印象-示例:",
+          "content": "    HTTP/1.1 200 OK\n    {\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"123\",\n            \"sendtime\": \"2020-12-21 12:06:26\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"2020/12/21/12/06/25\",\n            \"sendtime\": \"2020-12-21 12:07:09\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"2020/12/21/12/06/25\",\n            \"sendtime\": \"2020-12-21 13:35:03\",\n            \"flag\": 0\n        }\n    ],\n    \"code\": 1\n}",
           "type": "json"
         }
       ]
@@ -1763,8 +1761,8 @@ define({ "api": [
       },
       "examples": [
         {
-          "title": "显示好友分组-示例:",
-          "content": "HTTP/1.1 200 OK\n\"message\": \"success\",\n\"data\":{\n    \"userId\": null,\n    \"password\": null,\n    \"nickname\": \"修改资料\",\n    \"sex\": \"男\",\n    \"groups\": null,\n    \"birthday\": \"2020-12-10\",\n    \"address\": \"南昌市\",\n    \"phone\": \"12345\"\n},\n\"code\": 1\n}",
+          "title": "显示个人信息-示例:",
+          "content": "HTTP/1.1 200 OK\n\"message\": \"success\",\n\"data\":{\n    \"userId\": null,\n    \"nickname\": \"修改资料\",\n    \"sex\": \"男\",\n    \"age\": ,\n    \"signature\":,\n    \"address\": \"南昌市\",\n    \"phone\": \"12345\"\n},\n\"code\": 1\n}",
           "type": "json"
         }
       ]
@@ -1790,7 +1788,7 @@ define({ "api": [
       },
       "examples": [
         {
-          "title": "分组信息为空-示例：",
+          "title": "个人信息为空-示例：",
           "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"显示失败\",\n  \"data\":null\n}",
           "type": "json"
         }
