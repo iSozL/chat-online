@@ -122,10 +122,10 @@ public class UserController4 {
             return JsonResult.fail("删除失败");
     }
     /**
-     * @api {Get} DelReceiveImage 删除自己发送的好友印象
-     * @apiDescription  删除自己发送的好友印象接口
+     * @api {Get} DelReceiveImage 删除接收的好友印象
+     * @apiDescription  删除接收的好友印象接口
      * @apiGroup 消息
-     * @apiName 删除自己发送的好友印象
+     * @apiName 删除接收的好友印象
      * @apiversion 0.1.0
      *
      * @apiParam {String} userId 用户ID
