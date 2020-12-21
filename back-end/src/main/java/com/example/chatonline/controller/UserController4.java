@@ -114,7 +114,7 @@ public class UserController4 {
         message.setSendtime(dateConverterConfig.convert(time));
         boolean i = messageService.DelImage(message);
         if (i)
-            return jsonResult.success("删除成功");
+            return JsonResult.success("删除成功");
         else
             return JsonResult.fail("删除失败");
     }
@@ -160,7 +160,7 @@ public class UserController4 {
         message.setSendtime(dateConverterConfig.convert(time));
         boolean i = messageService.DelImage(message);
         if (i)
-            return jsonResult.success("删除成功");
+            return JsonResult.success("删除成功");
         else
             return JsonResult.fail("删除失败");
     }
