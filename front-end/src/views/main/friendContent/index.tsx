@@ -14,12 +14,23 @@ const layout = {
 const { TabPane } = Tabs;
 
 const Mes = (props: any) => {
+  let info = JSON.parse(window.localStorage.getItem("userInfo"))
   const [mes, setMes] = useState<object[]>()
   async function getMes(id: string) {
     await request.get(`http://101.132.134.186:8080/ShowFriendImage?friendId=${id}`).then(async value => {
       if (value.data.code) {
         setMes(value.data.data)
         console.log(mes)
+      } else {
+        message.error(value.data.message)
+      }
+    })
+  }
+  const delMes = async (time: string) => {
+    await request.get(`http://101.132.134.186:8080/DelImage?userId=${info.userInfo}&friendId=${props.id}&time=${time}`).then(async value => {
+      if (value.data.code) {
+        getMes(props.id)
+        message.success(value.data.message)
       } else {
         message.error(value.data.message)
       }
@@ -39,7 +50,14 @@ const Mes = (props: any) => {
                 <div style={{fontSize: "18px"}}>{item.message}</div>
                 <div style={{fontSize: "14px"}}>
                   {item.sendtime}
-                  <span>删除</span>
+                  {
+                    item.userId === info.userId ? 
+                    <span onClick={() => delMes(item.time)}>删除</span> :
+                    ""
+                  }
+                </div>
+                <div style={{fontSize: "14px"}}>
+                  留言人: {item.friendId}
                 </div>
               </div>
             )
@@ -262,7 +280,7 @@ const FriendContent = (props: any) => {
     }
 
     const addImage = async (value: any) => {
-      await request.post('http://101.132.134.186:8080/addImage', {
+      await request.post('http://101.132.134.186:8080/AddImage', {
         userId: info.userId,
         friendId: msg.userId,
         mes: value.mes

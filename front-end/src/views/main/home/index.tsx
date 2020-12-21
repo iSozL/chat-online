@@ -9,6 +9,7 @@ import Setting from '../setting/index'
 import { useHistory } from 'react-router-dom'
 import {changeUserContext, CHANGE_USER} from '../store/index'
 import request from '../../../utils/request'
+import Comments from '../commets/index'
 
 let socket: any
 const Home: React.FC = () => {
@@ -64,8 +65,11 @@ const Home: React.FC = () => {
           <div>
             <img className="me" onClick={() => {setSelect("add")}} src={require('../../../assets/imgs/me.svg')} />
           </div>
+          <div>
+            <img className="comments" onClick={() => {setSelect("comments")}} src={require('../../../assets/imgs/comments.svg')} />
+          </div>
           <Popover placement="left" content={menu}>
-            <img className="me" style={{marginTop: "50vh"}} src={require('../../../assets/imgs/more.svg')} />
+            <img className="me" style={{marginTop: "40vh"}} src={require('../../../assets/imgs/more.svg')} />
           </Popover>
         </div>
         <div className="main-body">
@@ -89,6 +93,12 @@ const Home: React.FC = () => {
                   return (
                     <>
                       <Setting />
+                    </>
+                  )
+                case "comments":
+                  return (
+                    <>
+                      <Comments />
                     </>
                   )
                 default:
