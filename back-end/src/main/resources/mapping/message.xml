@@ -25,11 +25,11 @@
         where sendId=#{userId} and reciveId=#{reciveId} and messagetype=0
     </update>
     <select id="ShowsendLastMessage" resultType="map">
-        select nickname,messagetxt,sendtime,reciveId,sendId from user,lastfriendmessage,friendrelation
-        where sendId=#{userId} and reciveId=user.userId and friendrelation.userId=#{userId} and friendrelation.friendId=#{}
+        select nickname,messagetxt,sendtime,reciveId,sendId from user,lastfriendmessage
+        where sendId=#{userId} and reciveId=user.userId
     </select>
     <select id="ShowreciveLastMessage" resultType="map">
-        select nickname,messagetxt,sendtime,sendId,reciveId from lastfriendmessage,user,friendrelation
+        select nickname,messagetxt,sendtime,sendId,reciveId from lastfriendmessage,user
         where reciveId=#{userId} and sendId=user.userId
     </select>
     <select id="DeleteAllMessage" resultType="Integer" statementType="CALLABLE">
