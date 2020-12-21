@@ -132,30 +132,32 @@ const Message = (props: any) => {
             查看历史聊天记录
           </div>
           <div>
-            <Scrollbars style={{height: "48vh", width: "99%", display: "flex"}} ref={scroll} >
-              {
-                userMsg.msgs.map((item: any, index: number) => {
-                  if (!item.my && (item.tag1 === userMsg.userId)) {
-                    return (
-                      <div style={{padding: "10px 30px"}} key={index}>
-                        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
-                        <div className="arrow-box popper border arrow-left">
-                          {item.message}
+            <Scrollbars style={{height: "48vh"}} ref={scroll}>
+              <div style={{display: "flex", flexDirection: "column"}}>
+                {
+                  userMsg.msgs.map((item: any, index: number) => {
+                    if (!item.my && (item.tag1 === userMsg.userId)) {
+                      return (
+                        <div style={{padding: "10px 30px"}} key={index}>
+                          <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+                          <div className="arrow-box popper border arrow-left">
+                            {item.message}
+                          </div>
                         </div>
-                      </div>
-                    )
-                  } else if (item.tag === userMsg.userId && item.tag1 === info.userId) {
-                    return (
-                      <div style={{padding: "10px 30px", flex: 1, textAlign: "right"}} key={index}>
-                        <div className="arrow-box popper border arrow-right">
-                          {item.message}
+                      )
+                    } else if (item.tag === userMsg.userId && item.tag1 === info.userId) {
+                      return (
+                        <div style={{padding: "10px 30px", alignSelf: "flex-end"}} key={index}>
+                          <div className="arrow-box popper border arrow-right">
+                            {item.message}
+                          </div>
+                          <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
                         </div>
-                        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
-                      </div>
-                    )
-                  }
-                })
-              }
+                      )
+                    }
+                  })
+                }
+              </div>
             </Scrollbars>
           </div>
         </div>

@@ -269,7 +269,13 @@ const FriendContent = (props: any) => {
                         <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>
                           {item.nickname}
                         </div>
-                        <div style={{paddingLeft: "5px"}}>{item.messagetxt}</div>
+                        <div style={{paddingLeft: "5px"}}>
+                          {
+                            typeof item.messagetxt === "string" && item.messagetxt["length"] > 9 ? 
+                            item.messagetxt.slice(0, 8) + "..." : 
+                            item.messagetxt
+                          }
+                        </div>
                       </div>
                       {
                         isRead && isRead.indexOf(item.friendId) > -1 ? 

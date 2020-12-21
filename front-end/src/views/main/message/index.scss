@@ -56,6 +56,7 @@ $popper-background-color: #fff;
 }
 
 .arrow-box {
+  word-break: break-all;
   z-index: 5;
 	position: relative;
   background: $popper-background-color;
@@ -185,6 +186,7 @@ $popper-background-color: #fff;
       box-sizing: border-box;
       transform-origin: 0 0;
       transform: translateY(-8px) rotate(45deg);
+      // float: left;
     }
 
     &::after {
@@ -241,7 +243,7 @@ $popper-background-color: #fff;
 		width: 100%;
 		padding-left: 18px;
 		padding-right: 18px;
-		float: left;
+		// float: left;
 	}
 	
 	.row {
