@@ -275,7 +275,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "groupMove",
+    "url": "GroupMove",
     "title": "好友移动",
     "description": "<p>好友移动接口</p>",
     "group": "好友",

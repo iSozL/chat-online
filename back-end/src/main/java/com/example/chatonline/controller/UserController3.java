@@ -22,7 +22,7 @@ public class UserController3 {
     @Autowired
     private MessageService messageService;
     /**
-     * @api {get} groupMove 好友移动
+     * @api {get} GroupMove 好友移动
      * @apiDescription  好友移动接口
      * @apiGroup 好友
      * @apiName 好友移动
@@ -58,11 +58,11 @@ public class UserController3 {
      *
      */
     @CrossOrigin
-    @GetMapping("/groupMove")
-    public JsonResult groupMove(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("preGroupname") String preGroupname,@RequestParam("postGroupname") String postGroupname)
+    @GetMapping("/GroupMove")
+    public JsonResult GroupMove(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("preGroupname") String preGroupname,@RequestParam("postGroupname") String postGroupname)
     {
 
-        if(userService.GroupMove(userId,friendId,postGroupname) && userService.preGroupnum(userId,preGroupname) && userService.postGroupnum(userId,postGroupname))
+        if(userService.GroupMove(userId,friendId,postGroupname))
             return  JsonResult.success("移动好友分组成功");
         else
             return JsonResult.fail("好友分组移动失败");
