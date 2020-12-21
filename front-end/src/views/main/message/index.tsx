@@ -12,6 +12,13 @@ if (!window.WebSocket) {
 const Message = (props: any) => {
   let socket = props.socket
   let scroll = useRef<any>()
+  async function getMsgList() {
+    await request.get(`http://101.132.134.186:8080/ShowFriendLastMessage?userId=${info.userId}`).then(value => {
+      if (value.data.code) {
+        useDispatch({type: CHANGE_USER, state:{msgList: value.data.data}})
+      }
+    })
+  }
   const { userMsg, useDispatch } = useContext(changeUserContext)
   console.log(userMsg.msgs,'message')
   let info: any = JSON.parse(window.localStorage.getItem("userInfo"))
@@ -38,8 +45,9 @@ const Message = (props: any) => {
         tag: userMsg.userId,
         tag1: info.userId
       }
-      useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: userMsg.msgs.concat(datas)}})
+      useDispatch({type: CHANGE_USER, state:{msgs: userMsg.msgs.concat(datas)}})
       inputs.current.value = ""
+      getMsgList()
       setTimeout(() => {
         scroll.current.scrollToBottom()
       }, 1)

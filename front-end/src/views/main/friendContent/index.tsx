@@ -35,59 +35,6 @@ const Detail = (props: any) => {
   )
 }
 
-const MsgList = (props: any) => {
-  let info = JSON.parse(window.localStorage.getItem("userInfo"))
-  let unreads = props.unread
-  let setRead = props.setRead
-  const { userMsg, useDispatch } = useContext(changeUserContext)
-  const [msgList, setList] = useState<object[]>()
-  const deleteRead = (userId: string) => {
-    if (unreads && unreads.indexOf(userId) !== -1) {
-      return unreads.filter((item: string) => {
-        return item !== userId
-      })
-    }
-  }
-  async function getMsgList() {
-    await request.get(`http://101.132.134.186:8080/ShowFriendLastMessage?userId=${info.userId}`).then(value => {
-      if (value.data.code) {
-        setList(value.data.data)
-      }
-    })
-  }
-  useEffect(() => {
-    getMsgList()
-  }, [])
-  return (
-    <Scroll>
-      {
-        msgList && (msgList instanceof Array) ? 
-        msgList.map((item: any, index: number) => {
-          return (
-            <div key={index} className="user-msg" style={userMsg.username === item.nickname ? {backgroundColor: "rgb(224, 218, 218)"} : {}}  onClick={() => {setRead(deleteRead(item.friendId));useDispatch({type: CHANGE_USER, state:{username: item.nickname, userId: item.friendId, show: true, msgs: userMsg.msgs}})}}>
-              <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
-              <div className="msg">
-                <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>
-                  {item.nickname}
-                </div>
-                <div style={{paddingLeft: "5px"}}>{item.messagetxt}</div>
-              </div>
-              {
-                unreads && unreads.indexOf(item.friendId) > -1 ? 
-                <div className="has-msg">
-                  .
-                </div> :
-                <div></div>
-              }
-            </div>
-          )
-        })
-        : ""
-      }
-    </Scroll>
-  )
-}
-
 const FriendContent = (props: any) => {
 
   const [invate, setInvate] = useState<object[]>()
@@ -112,18 +59,6 @@ const FriendContent = (props: any) => {
   }
   let info = JSON.parse(window.localStorage.getItem("userInfo"))
   let adds
-  // const selectAdds = async () => {
-  //   if (typeof invate === 'object') {
-  //     adds = invate.filter((item: object) => {
-  //       return item.texttype === 0
-  //     })
-  //     console.log('?')
-  //     if (typeof adds === 'object' && adds.length > 0) {
-  //       setAdd(true)
-  //     }
-  //   }
-  // }
-  // selectAdds()
   const fetchAdds = async () => {
     await request.post(`http://101.132.134.186:8080/showveritymessage`, {
       userId: info.userId
@@ -164,13 +99,6 @@ const FriendContent = (props: any) => {
       return item.texttype === 0
     })
   }
-
-  // props.socket.onmessage = function(event: any) {
-  //   event = JSON.parse(event.data)
-  //   if (event.flag) {
-  //     fetchAdds()
-  //   }
-  // }
 
   const [isRead, setRead] = useState<string[]>([])
   if (props.socket) {
@@ -233,11 +161,10 @@ const FriendContent = (props: any) => {
   async function getMsgList() {
     await request.get(`http://101.132.134.186:8080/ShowFriendLastMessage?userId=${info.userId}`).then(value => {
       if (value.data.code) {
-        setList(value.data.data)
+        useDispatch({type: CHANGE_USER, state:{msgList: value.data.data}})
       }
     })
   }
-  const [reGet, setGet] = useState<boolean>(false)
 
   useEffect(() => {
     getFriendList()
@@ -333,8 +260,8 @@ const FriendContent = (props: any) => {
             <div style={{height: "420px", display: "flex", flexDirection: "column", alignItems: "center", padding: "5px 0"}}>
             <Scroll>
               {
-                msgList && (msgList instanceof Array) ? 
-                msgList.map((item: any, index: number) => {
+                userMsg.msgList && (userMsg.msgList instanceof Array) ? 
+                userMsg.msgList.map((item: any, index: number) => {
                   return (
                     <div key={index} className="user-msg" style={userMsg.username === item.nickname ? {backgroundColor: "rgb(224, 218, 218)"} : {}}  onClick={() => {setRead(deleteRead(item.friendId));useDispatch({type: CHANGE_USER, state:{username: item.nickname, userId: item.friendId, show: true, msgs: userMsg.msgs}})}}>
                       <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
