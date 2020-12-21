@@ -1761,8 +1761,8 @@ define({ "api": [
       },
       "examples": [
         {
-          "title": "显示好友分组-示例:",
-          "content": "HTTP/1.1 200 OK\n\"message\": \"success\",\n\"data\":{\n    \"userId\": null,\n    \"password\": null,\n    \"nickname\": \"修改资料\",\n    \"sex\": \"男\",\n    \"groups\": null,\n    \"birthday\": \"2020-12-10\",\n    \"address\": \"南昌市\",\n    \"phone\": \"12345\"\n},\n\"code\": 1\n}",
+          "title": "显示个人信息-示例:",
+          "content": "HTTP/1.1 200 OK\n\"message\": \"success\",\n\"data\":{\n    \"userId\": null,\n    \"nickname\": \"修改资料\",\n    \"sex\": \"男\",\n    \"age\": ,\n    \"signature\":,\n    \"address\": \"南昌市\",\n    \"phone\": \"12345\"\n},\n\"code\": 1\n}",
           "type": "json"
         }
       ]
@@ -1788,7 +1788,7 @@ define({ "api": [
       },
       "examples": [
         {
-          "title": "分组信息为空-示例：",
+          "title": "个人信息为空-示例：",
           "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"显示失败\",\n  \"data\":null\n}",
           "type": "json"
         }
@@ -2001,10 +2001,10 @@ define({ "api": [
           },
           {
             "group": "Parameter",
-            "type": "Date",
+            "type": "int",
             "optional": false,
-            "field": "birth",
-            "description": "<p>生日</p>"
+            "field": "age",
+            "description": "<p>年龄</p>"
           },
           {
             "group": "Parameter",
@@ -2019,6 +2019,13 @@ define({ "api": [
             "optional": false,
             "field": "address",
             "description": "<p>地址</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "phone",
+            "description": "<p>电话</p>"
           },
           {
             "group": "Parameter",

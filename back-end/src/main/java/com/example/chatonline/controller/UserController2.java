@@ -73,8 +73,6 @@ public class UserController2 {
 
 
         //合并最新消息
-        System.out.println(sendmessages.size());
-        System.out.println(recivemessages.size());
         Iterator<Map<String, Object>> it = sendmessages.iterator();
         while (it.hasNext()) {
             Map<String, Object> sendmap = it.next();
@@ -200,9 +198,10 @@ public class UserController2 {
      *
      * @apiParam {String} userId 用户ID
      * @apiParam {String} nickname 昵称
-     * @apiParam {Date} birth 生日
+     * @apiParam {int} age 年龄
      * @apiParam {String} sex 性别
      * @apiParam {String} address 地址
+     * @apiParam {String} phone 电话
      * @apiParam {String} signature 个性签名
      *
      * @apiSuccess {int} status 响应状态码
@@ -236,8 +235,8 @@ public class UserController2 {
         String address = (String) map.get("address");
         String signature = (String) map.get("signature");
         String phone = (String) map.get("phone");
-        Date birth= dateConverterConfig.convert((String)map.get("birth"));
-        if(userService.UpdateInfo(userId,nickname,sex,birth,signature,address,phone))
+        int age= (int)map.get("age");
+        if(userService.UpdateInfo(userId,nickname,sex,age,signature,address,phone))
         {
             return JsonResult.success("修改成功");
         }
@@ -260,16 +259,15 @@ public class UserController2 {
      * @apiSuccess {String} message 响应描述
      * @apiSuccess {String} data 返回相关信息，成功的时候才存在
      *
-     * @apiSuccessExample {json} 显示好友分组-示例:
+     * @apiSuccessExample {json} 显示个人信息-示例:
      *     HTTP/1.1 200 OK
      *     "message": "success",
      *     "data":{
      *         "userId": null,
-     *         "password": null,
      *         "nickname": "修改资料",
      *         "sex": "男",
-     *         "groups": null,
-     *         "birthday": "2020-12-10",
+     *         "age": ,
+     *         "signature":,
      *         "address": "南昌市",
      *         "phone": "12345"
      *     },
@@ -277,7 +275,7 @@ public class UserController2 {
      *     }
      * @apiError {int} status 响应状态码
      * @apiError {String} message 响应描述
-     * @apiErrorExample {json} 分组信息为空-示例：
+     * @apiErrorExample {json} 个人信息为空-示例：
      *      HTTP/1.1 200 OK
      *     {
      *       "code":0,
