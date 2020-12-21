@@ -671,105 +671,6 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "addImage",
-    "title": "发送添加好友印象请求",
-    "description": "<p>添加好友印象请求接口</p>",
-    "group": "好友",
-    "name": "添加好友印象",
-    "version": "0.1.0",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "userId",
-            "description": "<p>用户ID</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "friendId",
-            "description": "<p>好友ID</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "mes",
-            "description": "<p>好友映像</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "int",
-            "optional": false,
-            "field": "status",
-            "description": "<p>响应状态码</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "message",
-            "description": "<p>响应描述</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "data",
-            "description": "<p>返回相关信息，留言的时候才存在</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "留言成功-示例:",
-          "content": "   HTTP/1.1 200 OK\n   {\n    \"message\": \"success\",\n    \"data\": \"留言成功\",\n    \"code\": 1\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "type": "int",
-            "optional": false,
-            "field": "status",
-            "description": "<p>响应状态码</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "type": "String",
-            "optional": false,
-            "field": "message",
-            "description": "<p>响应描述</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "留言失败-示例：",
-          "content": "HTTP/1.1 500\n     {\n          \"code\":0,\n          \"message\": \"留言失败\"\n        \"data\":null\n   }",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController4.java",
-    "groupTitle": "好友"
-  },
-  {
-    "type": "post",
     "url": "PreAddfriend",
     "title": "预添加好友",
     "description": "<p>预添加好友接口</p>",
@@ -859,6 +760,204 @@ define({ "api": [
     },
     "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
     "groupTitle": "好友"
+  },
+  {
+    "type": "Get",
+    "url": "DelImage",
+    "title": "删除自己发送的好友印象",
+    "description": "<p>删除自己发送的好友印象接口</p>",
+    "group": "消息",
+    "name": "删除自己发送的好友印象",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "friendId",
+            "description": "<p>好友ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "time",
+            "description": "<p>留言时间</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回相关信息，留言的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "删除成功-示例:",
+          "content": "   HTTP/1.1 200 OK\n   {\n    \"message\": \"success\",\n    \"data\": \"删除成功\",\n    \"code\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "删除失败-示例：",
+          "content": " HTTP/1.1 200 OK\n {\n    \"message\": \"删除失败\",\n    \"data\": null,\n    \"code\": 0\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController4.java",
+    "groupTitle": "消息"
+  },
+  {
+    "type": "Get",
+    "url": "DelReceiveImage",
+    "title": "删除自己发送的好友印象",
+    "description": "<p>删除自己发送的好友印象接口</p>",
+    "group": "消息",
+    "name": "删除自己发送的好友印象",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "friendId",
+            "description": "<p>好友ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "time",
+            "description": "<p>留言时间</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回相关信息，留言的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "删除成功-示例:",
+          "content": "   HTTP/1.1 200 OK\n   {\n    \"message\": \"success\",\n    \"data\": \"删除成功\",\n    \"code\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "删除失败-示例：",
+          "content": " HTTP/1.1 200 Ok\n {\n    \"message\": \"删除失败\",\n    \"data\": null,\n    \"code\": 0\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController4.java",
+    "groupTitle": "消息"
   },
   {
     "type": "post",
@@ -964,6 +1063,91 @@ define({ "api": [
       ]
     },
     "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "groupTitle": "消息"
+  },
+  {
+    "type": "Get",
+    "url": "ShowImage",
+    "title": "显示接收的好友印象",
+    "description": "<p>显示接收的好友印象接口</p>",
+    "group": "消息",
+    "name": "显示接收的好友印象",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户ID</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回相关信息，成功的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "有好友印象-示例:",
+          "content": "    HTTP/1.1 200 OK\n    {\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"123\",\n            \"sendtime\": \"2020-12-21 12:06:26\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"2020/12/21/12/06/25\",\n            \"sendtime\": \"2020-12-21 12:07:09\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"2020/12/21/12/06/25\",\n            \"sendtime\": \"2020-12-21 13:35:03\",\n            \"flag\": 0\n        }\n    ],\n    \"code\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "无好友印象-示例：",
+          "content": "HTTP/1.1 200 OK\n{\n \"message\": \"暂无印象\",\n \"data\": null,\n \"code\": 0\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController4.java",
     "groupTitle": "消息"
   },
   {
@@ -1134,6 +1318,105 @@ define({ "api": [
       ]
     },
     "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "groupTitle": "消息"
+  },
+  {
+    "type": "Get",
+    "url": "addImage",
+    "title": "发送添加好友印象",
+    "description": "<p>添加好友印象请求接口</p>",
+    "group": "消息",
+    "name": "添加好友印象",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "friendId",
+            "description": "<p>好友ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mes",
+            "description": "<p>好友映像</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回相关信息，留言的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "留言成功-示例:",
+          "content": "   HTTP/1.1 200 OK\n   {\n    \"message\": \"success\",\n    \"data\": \"留言成功\",\n    \"code\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "留言失败-示例：",
+          "content": "HTTP/1.1 500\n     {\n          \"code\":0,\n          \"message\": \"留言失败\"\n        \"data\":null\n   }",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController4.java",
     "groupTitle": "消息"
   },
   {
