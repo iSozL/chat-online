@@ -1,10 +1,10 @@
-package service;
+package dao;
 
 import utils.DBUtil;
 
 import java.sql.*;
 
-public class RecentMessageDaoImpl implements RecentMessageDao{
+public class RecentMessageDaoImpl implements RecentMessageDao {
     @Override
     public boolean storingMessage(String sendId, String receiveId, String sendtime, String messagetxt) {
         boolean flag = false;

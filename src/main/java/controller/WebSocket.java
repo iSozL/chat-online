@@ -5,8 +5,8 @@ import dao.MessageDaoImpl;
 import dao.OnlineUserDao;
 import dao.OnlineUserDaoImpl;
 import net.sf.json.JSONObject;
-import service.RecentMessageDao;
-import service.RecentMessageDaoImpl;
+import dao.RecentMessageDao;
+import dao.RecentMessageDaoImpl;
 import utils.JsonHandle;
 
 import javax.websocket.*;
