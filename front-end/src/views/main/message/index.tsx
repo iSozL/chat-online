@@ -89,7 +89,6 @@ const Message = (props: any) => {
             tag1: item.sender
           }
           return data
-          // useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: userMsg.msgs.concat(data)}})
         } else {
           let data = {
             message: item.message,
@@ -99,7 +98,6 @@ const Message = (props: any) => {
             tag1: item.sender
           }
           return data
-          // useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: userMsg.msgs.concat(data)}})
         }
       })
       useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: arr}})
@@ -109,9 +107,6 @@ const Message = (props: any) => {
     })
   }
 
-  // const test = (value: any) => {
-  //   console.log(scroll)
-  // }
   const emoji = (
     <div>
       <Picker onSelect={(emoji: any)=> {inputs.current.value += emoji.native}} />
@@ -139,16 +134,16 @@ const Message = (props: any) => {
                       return (
                         <div style={{padding: "10px 30px"}} key={index}>
                           <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
-                          <div className="arrow-box popper border arrow-left">
-                            {item.message}
+                          <div className="arrow-box popper border arrow-left" style={{wordBreak: "break-all", wordWrap: "break-word"}}>
+                            <div style={{wordBreak: "break-all", wordWrap: "break-word"}}>{item.message}</div>
                           </div>
                         </div>
                       )
                     } else if (item.tag === userMsg.userId && item.tag1 === info.userId) {
                       return (
                         <div style={{padding: "10px 30px", alignSelf: "flex-end"}} key={index}>
-                          <div className="arrow-box popper border arrow-right">
-                            {item.message}
+                          <div className="arrow-box popper border arrow-right" style={{wordBreak: "break-all", wordWrap: "break-word"}}>
+                            <div style={{wordBreak: "break-all", wordWrap: "break-word"}}>{item.message}</div>
                           </div>
                           <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
                         </div>
