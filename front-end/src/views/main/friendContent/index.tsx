@@ -12,10 +12,49 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 const { TabPane } = Tabs;
+
+const Mes = (props: any) => {
+  const [mes, setMes] = useState<object[]>()
+  async function getMes(id: string) {
+    await request.get(`http://101.132.134.186:8080/ShowFriendImage?friendId=${id}`).then(async value => {
+      if (value.data.code) {
+        setMes(value.data.data)
+        console.log(mes)
+      } else {
+        message.error(value.data.message)
+      }
+    })
+  }
+  useEffect(() => {
+    getMes(props.id)
+  }, [])
+  return (
+    <div>
+      <Scroll style={{height: "300px", background: "#d5d8db"}}>
+        {
+          mes && (mes instanceof Array)  ? 
+          mes.map((item: any, index: number) => {
+            return (
+              <div key={index} className="user-mes">
+                <div style={{fontSize: "18px"}}>{item.message}</div>
+                <div style={{fontSize: "14px"}}>
+                  {item.sendtime}
+                  <span>删除</span>
+                </div>
+              </div>
+            )
+          })
+          :
+          "暂无好友印象"
+        }
+      </Scroll> 
+    </div>
+  )
+}
+
 const Detail = (props: any) => {
   let msg = props.msg
-
-  const hasProperty = (property: undefined | string): string => {
+  const hasProperty = (property: undefined | string | number): string | number => {
     if (!property) {
       return ""
     } else {
@@ -24,13 +63,17 @@ const Detail = (props: any) => {
   }
 
   return (
-    <div>
+    <div style={{width: "200px"}}>
       <div>昵称：{hasProperty(msg.nickname)}</div>
+      <div>性别：{hasProperty(msg.sex)}</div>
+      <div>年龄：{hasProperty(msg.age)}</div>
       <div>账号：{hasProperty(msg.userId)}</div>
       <div>个性签名：{hasProperty(msg.signature)}</div>
       <div>地址：{hasProperty(msg.address)}</div>
       <div>电话：{hasProperty(msg.phone)}</div>
-      <div>印象：{hasProperty(msg.evaluate)}</div>
+      <div>
+        印象: <Mes id={msg.userId} />
+      </div>
     </div>
   )
 }
@@ -512,7 +555,7 @@ const FriendContent = (props: any) => {
                               return (
                                 <div key={index}>
                                   <Dropdown overlay={<FriendOperate msg={i} />} trigger={['contextMenu']} placement="topLeft">
-                                    <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: i.nickname, userId: i.userId, show: userMsg.show, msgs: userMsg.msgs}});}}>
+                                    <div className="user-msg" onClick={() => {useDispatch({type: CHANGE_USER, state:{username: i.nickname, userId: i.userId, show: true, msgs: userMsg.msgs}});}}>
                                     <Popover content={<Detail msg={i} />} placement="right">
                                       <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
                                     </Popover>
