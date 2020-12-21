@@ -31,4 +31,5 @@ public interface UserDao {
     public boolean UpdateInfo(String userId, String nickname, String sex, int age, String signature, String address,String phone);
     public User ShowInfo(String userId);
     public boolean DeleteRelation(String userId, String friendId);
+    public boolean ChangeNote(String userId, String friendId,String note);
 }

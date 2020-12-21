@@ -38,4 +38,19 @@
     <insert id="addImage">
         insert into image(userId,friendId,message) value(#{sendid},#{reciveid},#{messagetext})
     </insert>
+    <delete id="DelImage">
+        delete  from image where userId=#{sendid} and friendId=#{reciveid} and sendTime=#{sendtime}
+    </delete>
+    <delete id="DelReceiveImage">
+        delete  from image where userId=#{sendid} and friendId=#{reciveid} and sendTime=#{sendtime}
+    </delete>
+    <select id="ShowImage" resultType="com.example.chatonline.Model.Image">
+        select userId,friendId,sendtime ,message from image where friendId=#{reciveId}
+    </select>
+    <update id="ChangMark">
+        update user set imageMark = #{note} where userId = #{userId}
+    </update>
+    <select id="GetImageMark" resultType="Integer">
+        select imageMark from user where userId=#{friendId}
+    </select>
 </mapper>

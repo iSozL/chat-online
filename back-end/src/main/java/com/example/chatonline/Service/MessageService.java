@@ -1,6 +1,7 @@
 package com.example.chatonline.Service;
 
 import com.example.chatonline.Dao.MessageDao;
+import com.example.chatonline.Model.Image;
 import com.example.chatonline.Model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,4 +43,20 @@ public class MessageService {
     }
     //添加好友映像
     public boolean addImage(Message message) { return messageDao.addImage(message);}
+    //删除自己发送的好友印象
+    public boolean DelImage(Message message){
+        return messageDao.DelImage(message);
+    }
+    //删除接收的好友印象
+    public boolean DelReceiveImage(Message message){
+        return messageDao.DelReceiveImage(message);
+    }
+    //显示已接收的好友印象
+    public ArrayList<Image> ShowImage(String reciveId){return messageDao.ShowImage(reciveId);}
+    //修改好友备注
+    public boolean ChangMark(String userId,String note) { return messageDao.ChangMark(userId,note); }
+    //得到所选用户权限信息
+    public Integer GetImageMark(String userId){
+        return messageDao.GetImageMark(userId);
+    }
 }
