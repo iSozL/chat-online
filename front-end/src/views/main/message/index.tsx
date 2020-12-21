@@ -2,9 +2,10 @@ import React, { useContext, useRef, useState, useEffect } from 'react';
 import {changeUserContext, CHANGE_USER} from '../store/index'
 import './index.scss'
 import { Button, Popover, message as Msg} from 'antd'
-import Scroll from 'react-custom-scrollbars'
+import { Scrollbars, scrollToBottom } from 'react-custom-scrollbars'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
+import request from '../../../utils/request'
 
 if (!window.WebSocket) {
   window.WebSocket = window.MozWebSocket;
@@ -76,7 +77,7 @@ const Message = (props: any) => {
         tag: userMsg.userId,
         tag1: info.userId
       }
-      useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(datas)}})
+      useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: userMsg.msgs.concat(datas)}})
       inputs.current.value = ""
     } else {
       alert("连接没有开启.");
@@ -98,6 +99,45 @@ const Message = (props: any) => {
     }
   }
 
+  console.log(userMsg.show)
+  const getHistory = async () => {
+    await request.post(`http://47.102.214.67:8080/ET_war/GetChatRecord?first=${info.userId}&second=${userMsg.userId}`).then(value => {
+      let send: object[] = []
+      let receive: object[] = []
+      let arr = value.data.map((item: any) => {
+        if (item.sender === info.userId) {
+          let data = {
+            message: item.message,
+            time: item.time,
+            my: true,
+            tag: item.receiver,
+            tag1: item.sender
+          }
+          return data
+          // useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: userMsg.msgs.concat(data)}})
+        } else {
+          let data = {
+            message: item.message,
+            time: item.time,
+            my: false,
+            tag: item.receiver,
+            tag1: item.sender
+          }
+          return data
+          // useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: userMsg.msgs.concat(data)}})
+        }
+      })
+      console.log(arr)
+      useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: arr}})
+      console.log(send, receive)
+    })
+  }
+
+  let { scrollToBottom } = new Scrollbars()
+  const test =() => {
+    // scrollToBottom()
+    console.log('?')
+  }
   const emoji = (
     <div>
       <Picker onSelect={(emoji: any)=> {inputs.current.value += emoji.native}} />
@@ -112,8 +152,12 @@ const Message = (props: any) => {
           <div className="msg-header">
             {userMsg.username}
           </div>
+          <div className="history" onClick={getHistory}>
+            <img style={{width: "20px"}} src={require('../../../assets/imgs/history.svg')} />
+            查看历史聊天记录
+          </div>
           <div>
-            <Scroll style={{height: "48vh", width: "99%", display: "flex"}}>
+            <Scrollbars style={{height: "48vh", width: "99%", display: "flex"}}>
               {
                 userMsg.msgs.map((item: any, index: number) => {
                   if (!item.my && (item.tag1 === userMsg.userId)) {
@@ -137,7 +181,7 @@ const Message = (props: any) => {
                   }
                 })
               }
-            </Scroll>
+            </Scrollbars>
           </div>
         </div>
         <div className="msg-footer">
