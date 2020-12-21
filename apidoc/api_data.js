@@ -2024,6 +2024,13 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
+            "field": "phone",
+            "description": "<p>电话</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
             "field": "signature",
             "description": "<p>个性签名</p>"
           }
