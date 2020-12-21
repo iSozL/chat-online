@@ -7,9 +7,7 @@ export const CHANGE_USER = "CHANGE_USER";
 const reducer = (state: any, action: any) => {
   switch(action.type) {
     case CHANGE_USER:
-      return Object.assign({}, action.state, {
-        show: true
-      })
+      return Object.assign({}, action.state)
     default:
       return state
   }

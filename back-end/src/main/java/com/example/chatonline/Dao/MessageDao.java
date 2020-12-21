@@ -1,5 +1,6 @@
 package com.example.chatonline.Dao;
 
+import com.example.chatonline.Model.Image;
 import com.example.chatonline.Model.Message;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -35,5 +36,12 @@ public interface MessageDao {
     public Integer DeleteAllMessage(String userId, String friendId);
     //添加好友映像
     public boolean addImage(Message message);
+    //删除自己发送的好友印象
+    public boolean DelImage(Message message);
+    //删除接收的的好友印象
+    public boolean DelReceiveImage(Message message);
+    //显示接受到的好友印象
+    public ArrayList<Image> ShowImage(String reciveId);
+
 }
 
