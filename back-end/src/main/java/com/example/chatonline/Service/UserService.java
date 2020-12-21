@@ -65,7 +65,7 @@ public class UserService {
         return userDao.AddFriend(userId, friendId, noteA, groupnameA, noteB, groupnameB);
     }
     //编辑个人资料
-    public boolean UpdateInfo(String userId, String nickname, String sex, Date birth, String signature, String address,String phone){return userDao.UpdateInfo(userId, nickname, sex, birth, signature, address,phone);}
+    public boolean UpdateInfo(String userId, String nickname, String sex, int age, String signature, String address,String phone){return userDao.UpdateInfo(userId, nickname, sex, age, signature, address,phone);}
     //显示个人资料
     public User ShowInfo(String userId){return userDao.ShowInfo(userId);}
     //删除好友关系

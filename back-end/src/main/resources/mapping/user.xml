@@ -11,7 +11,7 @@
         insert into user(userId,nickname,password) value(#{userId},#{nickname},#{password})
     </insert>
     <select id="GroupFriends" resultType="map">
-        select user.nickname,user.userId,user.sex,user.birthday,user.address,user.phone,user.signature,friendrelation.note,friendrelation.groupname,friendrelation.evaluate
+        select user.nickname,user.userId,user.sex,user.age,user.address,user.phone,user.signature,friendrelation.note,friendrelation.groupname,friendrelation.evaluate
         from user,friendrelation
         where user.userId in (select friendId from friendrelation where userId = #{userId}) and friendrelation.userId = #{userId} and friendrelation.friendId = user.userId
     </select>
@@ -66,11 +66,11 @@
     </update>
     <update id="UpdateInfo">
         update user
-        set nickname=#{nickname},sex=#{sex},birthday=#{birth},address=#{address},phone=#{phone},signature=#{signature}
+        set nickname=#{nickname},sex=#{sex},age=#{age},address=#{address},phone=#{phone},signature=#{signature}
         where userId=#{userId}
     </update>
     <select id="ShowInfo" resultType="com.example.chatonline.Model.User">
-        select nickname,sex,birthday,address,phone,signature
+        select nickname,sex,age,address,phone,signature
         from user
         where userId=#{userId}
     </select>
