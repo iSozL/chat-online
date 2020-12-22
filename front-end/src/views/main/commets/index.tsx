@@ -26,7 +26,7 @@ const Comments = () => {
     })
   }
   async function onChange(value: boolean) {
-    let note = String(Number(value))
+    let note = String(Number(!value))
     await request.get(`http://101.132.134.186:8080/ChangMark?userId=${info.userId}&note=${note}`).then(async value => {
       if (value.data.code) {
         message.success(value.data.message)
