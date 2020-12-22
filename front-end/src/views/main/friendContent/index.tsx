@@ -24,7 +24,7 @@ const Mes = (props: any) => {
       if (value.data.code) {
         setMes(value.data.data)
       } else {
-        message.error(value.data.message)
+        // message.error(value.data.message)
       }
     })
   }
@@ -167,6 +167,7 @@ const FriendContent = (props: any) => {
   const [visible1, setVisible1] = useState(false);
   const [curId, setId] = useState()
   const send = async (value: any) => {
+    console.log(value)
     let datas = {
       userId: info.userId,
       sendId: curId,
@@ -328,7 +329,7 @@ const FriendContent = (props: any) => {
           onCancel={() => setMove(false)}
           width={500}
         >
-          <Form {...layout} onFinish={groupMove}>
+          <Form {...layout} onFinish={groupMove} initialValues={{groupname: "我的好友"}}>
             <Form.Item name="groupname" label="选择分组">
               <Select style={{ width: 120 }}>
                 {
@@ -440,7 +441,7 @@ const FriendContent = (props: any) => {
         onOk={() => {setVisible1(false)}}
         onCancel={() => {setVisible1(false)}}
       >
-        <Form {...layout} onFinish={send}>
+        <Form {...layout} onFinish={send} initialValues={{groupname: "我的好友"}}>
           <Form.Item name="groupname" label="选择列表">
             <Select style={{ width: 120 }}>
               {

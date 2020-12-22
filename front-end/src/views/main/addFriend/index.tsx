@@ -72,7 +72,7 @@ const AddFriend = (props: any) => {
         onCancel={() => setVisible(false)}
         width={500}
       >
-        <Form {...layout} onFinish={send}>
+        <Form {...layout} onFinish={send} initialValues={{groupname: "我的好友"}}>
           <Form.Item name="groupname" label="选择列表">
             <Select style={{ width: 120 }} onChange={select}>
               {
