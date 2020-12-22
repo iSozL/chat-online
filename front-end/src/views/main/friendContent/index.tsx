@@ -7,12 +7,12 @@ import request from '../../../utils/request'
 
 const { SubMenu } = Menu
 const { Option } = Select
+const { Search } = Input
 const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 16 },
 };
 const { TabPane } = Tabs;
-
 const Mes = (props: any) => {
   let info = JSON.parse(window.localStorage.getItem("userInfo"))
   const [mes, setMes] = useState<object[]>()
@@ -20,14 +20,23 @@ const Mes = (props: any) => {
     await request.get(`http://101.132.134.186:8080/ShowFriendImage?friendId=${id}`).then(async value => {
       if (value.data.code) {
         setMes(value.data.data)
-        console.log(mes)
+      } else {
+        message.error(value.data.message)
+      }
+    })
+  }
+  const addImage = async (value: any) => {
+    await request.get(`http://101.132.134.186:8080/addImage?userId=${info.userId}&friendId=${props.id}&mes=${value}`).then(value => {
+      if (value.data.code) {
+        getMes(props.id)
+        message.success(value.data.message)
       } else {
         message.error(value.data.message)
       }
     })
   }
   const delMes = async (time: string) => {
-    await request.get(`http://101.132.134.186:8080/DelImage?userId=${info.userInfo}&friendId=${props.id}&time=${time}`).then(async value => {
+    await request.get(`http://101.132.134.186:8080/DelImage?userId=${info.userId}&friendId=${props.id}&time=${time}`).then(async value => {
       if (value.data.code) {
         getMes(props.id)
         message.success(value.data.message)
@@ -40,32 +49,40 @@ const Mes = (props: any) => {
     getMes(props.id)
   }, [])
   return (
-    <div style={{background: "#d5d8db", opacity: "0.5", borderRadius: "5px"}}>
-      <Scroll style={{height: "300px"}}>
-        {
-          mes && (mes instanceof Array)  ? 
-          mes.map((item: any, index: number) => {
-            return (
-              <div key={index} className="user-mes">
-                <div style={{fontSize: "18px"}}>{item.message}</div>
-                <div style={{fontSize: "14px"}}>
-                  {item.sendtime}
-                  {
-                    item.userId === info.userId ? 
-                    <span onClick={() => delMes(item.time)}>删除</span> :
-                    ""
-                  }
+    <div>
+      <div style={{background: "#d5d8db", opacity: "0.5", borderRadius: "5px", marginBottom: "10px"}}>
+        <Scroll style={{height: "300px"}}>
+          {
+            mes && (mes instanceof Array)  ? 
+            mes.map((item: any, index: number) => {
+              return (
+                <div key={index} className="user-mes">
+                  <div style={{fontSize: "16px"}}>{item.message}</div>
+                  <div style={{fontSize: "14px"}}>
+                    {item.sendtime}
+                    {
+                      item.userId === info.userId ? 
+                      <span onClick={() => delMes(item.sendtime)}>删除</span> :
+                      ""
+                    }
+                  </div>
+                  <div style={{fontSize: "14px"}}>
+                    留言人 ID: {item.userId}
+                  </div>
                 </div>
-                <div style={{fontSize: "14px"}}>
-                  留言人 ID: {item.userId}
-                </div>
-              </div>
-            )
-          })
-          :
-          "暂无好友印象"
-        }
-      </Scroll> 
+              )
+            })
+            :
+            "暂无好友印象"
+          }
+        </Scroll>
+      </div>
+      <Search
+        placeholder="请输入文字"
+        enterButton="添加印象"
+        size="middle"
+        onSearch={addImage}
+      />
     </div>
   )
 }
@@ -245,7 +262,6 @@ const FriendContent = (props: any) => {
     const { msg } = props
     const [move, setMove] = useState<boolean>(false)
     const [note, setNote] = useState<boolean>(false)
-    const [image, setImage] = useState<boolean>(false)
     const deleteFriend = async () => {
       await request.get(`http://101.132.134.186:8080/DeleteFriend?userId=${info.userId}&friendId=${msg.userId}`).then(async (value) => {
         if (value.data.code) {
@@ -277,21 +293,6 @@ const FriendContent = (props: any) => {
           message.error(value.data.message)
         }
         setNote(false)
-        getFriendList()
-      })
-    }
-
-    const addImage = async (value: any) => {
-      await request.post('http://101.132.134.186:8080/AddImage', {
-        userId: info.userId,
-        friendId: msg.userId,
-        mes: value.mes
-      }).then(value => {
-        if (value.data.code) {
-          message.success(value.data.message)
-        } else {
-          message.error(value.data.message)
-        }
         getFriendList()
       })
     }
@@ -347,29 +348,9 @@ const FriendContent = (props: any) => {
             </Form.Item>
           </Form>
         </Modal>
-        <Modal
-          title="添加印象"
-          centered
-          visible={image}
-          onOk={() => setImage(false)}
-          onCancel={() => setImage(false)}
-          width={500}
-        >
-          <Form {...layout} onFinish={addImage}>
-            <Form.Item name="mes" label="添加印象">
-              <Input />
-            </Form.Item>
-            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
-              <Button type="primary" htmlType="submit">
-                添加
-              </Button>
-            </Form.Item>
-          </Form>
-        </Modal>
         <div onClick={deleteFriend}>删除好友</div>
         <div onClick={() => setMove(true)}>移动分组</div>
         <div onClick={() => setNote(true)}>更改备注</div>
-        <div onClick={() => setImage(true)}>添加印象</div>
       </div>
     )
   }
