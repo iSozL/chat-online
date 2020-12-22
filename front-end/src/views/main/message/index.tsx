@@ -15,6 +15,8 @@ const Message = (props: any) => {
   async function getMsgList() {
     await request.get(`http://101.132.134.186:8080/ShowFriendLastMessage?userId=${info.userId}`).then(value => {
       if (value.data.code) {
+        console.log(value.data.data)
+        console.log(userMsg.msgs)
         useDispatch({type: CHANGE_USER, state:{msgList: value.data.data}})
       }
     })
@@ -46,7 +48,9 @@ const Message = (props: any) => {
       }
       useDispatch({type: CHANGE_USER, state:{msgs: userMsg.msgs.concat(datas)}})
       inputs.current.value = ""
-      getMsgList()
+      setTimeout(() => {
+        getMsgList()
+      }, 100)
       setTimeout(() => {
         scroll.current.scrollToBottom()
       }, 1)

@@ -178,7 +178,9 @@ const FriendContent = (props: any) => {
     props.socket.onmessage = function (event: any) {
       event = JSON.parse(event.data)
       if (!event.flag) {
-        getMsgList()
+        setTimeout(() => {
+          getMsgList()
+        }, 100)
         if (event.sender === info.userId) {
           let data = {
             message: event.message,
@@ -245,13 +247,13 @@ const FriendContent = (props: any) => {
     const [note, setNote] = useState<boolean>(false)
     const [image, setImage] = useState<boolean>(false)
     const deleteFriend = async () => {
-      await request.get(`http://101.132.134.186:8080/DeleteFriend?userId=${info.userId}&friendId=${msg.userId}`).then(value => {
+      await request.get(`http://101.132.134.186:8080/DeleteFriend?userId=${info.userId}&friendId=${msg.userId}`).then(async (value) => {
         if (value.data.code) {
           message.success(value.data.message)
         } else {
           message.error(value.data.message)
         }
-        getFriendList()
+        await getFriendList()
       })
     }
 
