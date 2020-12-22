@@ -24,10 +24,10 @@ const AddFriend = (props: any) => {
     if(data.code) {
       console.log(typeof(data.data[0].groupname))
       setGroup(data.data)
+      setVisible(true)
     } else {
       message.error(data.message)
     }
-    setVisible(true)
   }
   const onSearch = async (value: string) => {
     const {data} = await request.get(`http://101.132.134.186:8080/find?userId=${value}`)

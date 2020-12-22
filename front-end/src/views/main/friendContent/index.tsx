@@ -187,6 +187,21 @@ const FriendContent = (props: any) => {
     }
   }
 
+
+  const refuse = async (value: string, time: string) => {
+    const {data} = await request.post(`http://101.132.134.186:8080/refuseadd`, {
+      userId: info.userId,
+      sendId: value,
+      sendtime: time
+    })
+    if (data.code) {
+      message.success(data.message)
+      fetchAdds()
+    } else {
+      message.error(data.message)
+    }
+  }
+
   if (typeof invate === 'object') {
     adds = invate.filter((item: object) => {
       return item.texttype === 0
@@ -469,7 +484,7 @@ const FriendContent = (props: any) => {
                     <Button type="primary" onClick={() => {setVisible1(true); setId(item.sendid)}}>接受</Button>
                   </div>
                   <div style={{marginLeft: "10px"}}>
-                    <Button type="primary" danger>拒绝</Button>
+                    <Button type="primary" danger onClick={() => {refuse(item.sendid, item.sendtime)}}>拒绝</Button>
                   </div>
                 </div>
               )
