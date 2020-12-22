@@ -18,7 +18,7 @@ ul {
   width: 90%;
   height: 8%;
   border-radius: 5px;
-  background-color: #f0f1f1;
+  background: #f0f1f1;
   img {
     margin-right: 10px;
   }
@@ -115,4 +115,37 @@ ul {
   // line-height: 0px;
   list-style-position: inside;
   list-style-type: disc;
+}
+.ope {
+  width: 100px;
+  height: 300px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ope > div {
+  padding: 20px;
+}
+.ope > div:hover {
+  cursor: pointer;
+  color: #1890ff
+}
+.user-mes {
+  width: 100%;
+  height: 80px;
+  border: 1px solid #cccccc;
+  // display: flex;
+  // justify-content: center;
+  padding: 5px 0 5px 20px;
+  opacity: 1;
+  color: black;
+}
+.delete {
+  display: inline-block;
+  margin-left: 50px;
+  color: #1178d8
+}
+.delete:hover {
+  cursor: pointer;
 }
