@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './index.scss'
-import {message, Popconfirm} from 'antd'
+import {message, Popconfirm, Switch} from 'antd'
 import request from '../../../utils/request'
 import Scroll from 'react-custom-scrollbars'
 const Comments = () => {
@@ -19,7 +19,17 @@ const Comments = () => {
     await request.get(`http://101.132.134.186:8080/DelReceiveImage?userId=${info.userId}&friendId=${msg.userId}&time=${msg.sendtime}`).then(async value => {
       if (value.data.code) {
         message.success(value.data.message)
-        console.log(value.data.data)
+        getMes()
+      } else {
+        message.error(value.data.message)
+      }
+    })
+  }
+  async function onChange(value: boolean) {
+    let note = String(Number(value))
+    await request.get(`http://101.132.134.186:8080/ChangMark?userId=${info.userId}&note=${note}`).then(async value => {
+      if (value.data.code) {
+        message.success(value.data.message)
       } else {
         message.error(value.data.message)
       }
@@ -60,6 +70,9 @@ const Comments = () => {
             }
           </div>
         </Scroll>
+        <div style={{position: "fixed", alignItems: "flex-end", top: "70px"}}>
+          对好友可见？<Switch defaultChecked onChange={onChange} />
+        </div>
       </div>
     </div>
   )

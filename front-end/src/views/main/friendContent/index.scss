@@ -141,3 +141,11 @@ ul {
   opacity: 1;
   color: black;
 }
+.delete {
+  display: inline-block;
+  margin-left: 50px;
+  color: #1178d8
+}
+.delete:hover {
+  cursor: pointer;
+}

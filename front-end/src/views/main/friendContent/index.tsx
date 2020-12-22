@@ -60,14 +60,14 @@ const Mes = (props: any) => {
                   <div style={{fontSize: "16px"}}>{item.message}</div>
                   <div style={{fontSize: "14px"}}>
                     {item.sendtime}
-                    {
-                      item.userId === info.userId ? 
-                      <span onClick={() => delMes(item.sendtime)}>删除</span> :
-                      ""
-                    }
                   </div>
                   <div style={{fontSize: "14px"}}>
                     留言人 ID: {item.userId}
+                    {
+                      item.userId === info.userId ? 
+                      <span className="delete" onClick={() => delMes(item.sendtime)}>删除</span> :
+                      ""
+                    }
                   </div>
                 </div>
               )
