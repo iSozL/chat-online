@@ -129,7 +129,7 @@ const Message = (props: any) => {
             {userMsg.username}
           </div>
           <div className="history" onClick={getHistory}>
-            <img style={{width: "20px"}} src={require('../../../assets/imgs/history.svg')} />
+            <img style={{width: "20px", height: "20px"}} src={require('../../../assets/imgs/history.svg')} />
             查看历史聊天记录
           </div>
           <div>
