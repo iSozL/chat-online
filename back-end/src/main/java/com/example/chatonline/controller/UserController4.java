@@ -63,10 +63,10 @@ public class UserController4 {
     @CrossOrigin
     @GetMapping("/addImage")
     public JsonResult AddImage(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("mes") String mes){
-        Message message = new Message();
-        message.setSendid(userId);
-        message.setReciveid(friendId);
-        message.setMessagetext(mes);
+        Image message = new Image();
+        message.setUserId(userId);
+        message.setFriendId(friendId);
+        message.setMessage(mes);
         if (messageService.addImage(message))
             return JsonResult.success("留言成功");
         else
@@ -107,9 +107,9 @@ public class UserController4 {
     @CrossOrigin
     @GetMapping("/DelImage")
     public JsonResult DelImage(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("time") String time){
-        Message message = new Message();
-        message.setSendid(userId);
-        message.setReciveid(friendId);
+        Image message = new Image();
+        message.setUserId(userId);
+        message.setFriendId(friendId);
         //Date date=dateConverterConfig.convert(sendtime);
         message.setSendtime(dateConverterConfig.convert(time));
         boolean i = messageService.DelImage(message);
@@ -153,9 +153,9 @@ public class UserController4 {
     @CrossOrigin
     @GetMapping("/DelReceiveImage")
     public JsonResult DelReceiveImage(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("time") String time){
-        Message message = new Message();
-        message.setSendid(friendId);
-        message.setReciveid(userId);
+        Image message = new Image();
+        message.setUserId(friendId);
+        message.setFriendId(userId);
         //Date date=dateConverterConfig.convert(sendtime);
         message.setSendtime(dateConverterConfig.convert(time));
         boolean i = messageService.DelImage(message);
@@ -174,12 +174,14 @@ public class UserController4 {
      * @apiParam {String} userId 用户ID
      *
      * @apiSuccess {int} status 响应状态码
+     * @apiSuccess {int} imageMark 权限信息
      * @apiSuccess {String} message 响应描述
      * @apiSuccess {String} data 返回相关信息，成功的时候才存在
      *
      * @apiSuccessExample {json} 有好友印象-示例:
      *     HTTP/1.1 200 OK
      *     {
+     *     "code": 1,
      *     "message": "success",
      *     "data": [
      *         {
@@ -197,24 +199,60 @@ public class UserController4 {
      *             "flag": 0
      *         },
      *         {
-     *             "userId": "0",
+     *             "userId": "85561384",
      *             "friendId": "101",
-     *             "message": "2020/12/21/12/06/25",
-     *             "sendtime": "2020-12-21 13:35:03",
+     *             "message": "你好",
+     *             "sendtime": "2020-12-22 12:01:23",
+     *             "flag": 0
+     *         },
+     *         {
+     *             "userId": "85561384",
+     *             "friendId": "101",
+     *             "message": "1",
+     *             "sendtime": "2020-12-22 12:08:15",
+     *             "flag": 0
+     *         },
+     *         {
+     *             "userId": "85561384",
+     *             "friendId": "101",
+     *             "message": "11",
+     *             "sendtime": "2020-12-22 12:08:16",
+     *             "flag": 0
+     *         },
+     *         {
+     *             "userId": "85561384",
+     *             "friendId": "101",
+     *             "message": "111",
+     *             "sendtime": "2020-12-22 12:08:17",
+     *             "flag": 0
+     *         },
+     *         {
+     *             "userId": "85561384",
+     *             "friendId": "101",
+     *             "message": "111",
+     *             "sendtime": "2020-12-22 12:08:18",
+     *             "flag": 0
+     *         },
+     *         {
+     *             "userId": "85561384",
+     *             "friendId": "101",
+     *             "message": "111",
+     *             "sendtime": "2020-12-22 12:08:20",
      *             "flag": 0
      *         }
      *     ],
-     *     "code": 1
+     *     "imageMark": 0
      * }
      * @apiError {int} status 响应状态码
      * @apiError {String} message 响应描述
      * @apiErrorExample {json} 无好友印象-示例：
      *    HTTP/1.1 200 OK
      *    {
+     *     "code": 0,
      *     "message": "暂无印象",
      *     "data": null,
-     *     "code": 0
-     *    }
+     *     "imageMark": 1
+     * }
      */
     @CrossOrigin
     @GetMapping("/ShowImage")
@@ -223,12 +261,13 @@ public class UserController4 {
 
         String receiveId = userId;
         ArrayList<Image> images = messageService.ShowImage(receiveId);
+        int imageMark = messageService.GetImageMark(userId);
         if(images.size()!=0)
         {
-            return JsonResult.success(images);
+            return JsonResult.success(images).put("imageMark",imageMark);
         }
         else
-            return JsonResult.fail("暂无印象");
+            return JsonResult.fail("暂无印象").put("imageMark",imageMark);
     }
     /**
      * @api {Get} ChangMark 更改印象观看权限
@@ -333,6 +372,7 @@ public class UserController4 {
        else
            return JsonResult.fail("未获得观看好友印象权限");
     }
+
 
 }
 

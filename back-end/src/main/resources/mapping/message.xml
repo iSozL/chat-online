@@ -24,6 +24,15 @@
         set messagetype=#{type}
         where sendId=#{userId} and reciveId=#{reciveId} and messagetype=0
     </update>
+    <update id="Refuseadd">
+        update veritymessage
+        set messagetype=-1
+        where reciveId=#{userId} and sendId=#{sendId} and sendtime=#{sendtime}
+    </update>
+    <delete id="DeleteVerifyMessage">
+        delete from veritymessage
+        where reciveId=#{userId} and sendId=#{sendId} and sendtime=#{sendtime}
+    </delete>
     <select id="ShowsendLastMessage" resultType="map">
         select nickname,messagetxt,sendtime,reciveId,sendId from user,lastfriendmessage
         where sendId=#{userId} and reciveId=user.userId
@@ -36,10 +45,10 @@
         CALL Deletemessage(#{userId},#{friendId},#{flag,mode=OUT,jdbcType=INTEGER});
     </select>
     <insert id="addImage">
-        insert into image(userId,friendId,message) value(#{sendid},#{reciveid},#{messagetext})
+        insert into image(userId,friendId,message) value(#{userId},#{friendId},#{message})
     </insert>
     <delete id="DelImage">
-        delete  from image where userId=#{sendid} and friendId=#{reciveid} and sendTime=#{sendtime}
+        delete  from image where userId=#{userId} and friendId=#{friendId} and sendTime=#{sendtime}
     </delete>
     <delete id="DelReceiveImage">
         delete  from image where userId=#{sendid} and friendId=#{reciveid} and sendTime=#{sendtime}
