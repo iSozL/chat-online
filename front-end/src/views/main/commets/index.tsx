@@ -43,7 +43,7 @@ const Comments = () => {
                     </div>
                     <div>{item.sendtime}</div>
                     <div style={{display: "flex", justifyContent: "space-between"}}>
-                      <span>{item.userId}</span>
+                      <span>留言人 ID：{item.userId}</span>
                       <Popconfirm
                         title="确认删除这条留言吗?"
                         onConfirm={() => confirmDel(item)}

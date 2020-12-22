@@ -40,8 +40,8 @@ const Mes = (props: any) => {
     getMes(props.id)
   }, [])
   return (
-    <div>
-      <Scroll style={{height: "300px", background: "#d5d8db"}}>
+    <div style={{background: "#d5d8db", opacity: "0.5", borderRadius: "5px"}}>
+      <Scroll style={{height: "300px"}}>
         {
           mes && (mes instanceof Array)  ? 
           mes.map((item: any, index: number) => {
@@ -57,7 +57,7 @@ const Mes = (props: any) => {
                   }
                 </div>
                 <div style={{fontSize: "14px"}}>
-                  留言人: {item.friendId}
+                  留言人 ID: {item.userId}
                 </div>
               </div>
             )
@@ -81,7 +81,7 @@ const Detail = (props: any) => {
   }
 
   return (
-    <div style={{width: "200px"}}>
+    <div style={{width: "300px"}}>
       <div>昵称：{hasProperty(msg.nickname)}</div>
       <div>性别：{hasProperty(msg.sex)}</div>
       <div>年龄：{hasProperty(msg.age)}</div>

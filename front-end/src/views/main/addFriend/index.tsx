@@ -63,7 +63,7 @@ const AddFriend = (props: any) => {
 
   return (
     <div className="search-container">
-      <Search placeholder="请输入查找的昵称" onSearch={onSearch} style={{width: 600}} />
+      <Search placeholder="请输入查找的 ID" onSearch={onSearch} style={{width: 600}} />
       <Modal
         title="添加好友"
         centered
