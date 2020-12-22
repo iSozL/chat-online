@@ -283,6 +283,9 @@ const FriendContent = (props: any) => {
     const deleteFriend = async () => {
       await request.get(`http://101.132.134.186:8080/DeleteFriend?userId=${info.userId}&friendId=${msg.userId}`).then(async (value) => {
         if (value.data.code) {
+          if (msg.userId === userMsg.userId) {
+            useDispatch({type: CHANGE_USER, state:{show: false}})
+          }
           message.success(value.data.message)
         } else {
           message.error(value.data.message)
