@@ -9,6 +9,9 @@ import request from '../../../utils/request'
 if (!window.WebSocket) {
   window.WebSocket = window.MozWebSocket;
 }
+const blackStyle = {
+  background: "#0000009e",
+}
 const Message = (props: any) => {
   let socket = props.socket
   let scroll = useRef<any>()
@@ -117,12 +120,12 @@ const Message = (props: any) => {
     </div>
   )
   return (
-    <div className="msg-container">
+    <div className="msg-container" style={userMsg.black ? {background: "rgb(0 0 0 / 0%)"} : {}}>
       {
         userMsg.show ? 
         <>
         <div className="msg-body">
-          <div className="msg-header">
+          <div className="msg-header" style={ userMsg.black ? {background: "rgb(0 0 0 / 20%)"} : {}}>
             {userMsg.username}
           </div>
           <div className="history" onClick={getHistory}>
@@ -166,7 +169,7 @@ const Message = (props: any) => {
             </Popover>
           </div>
           <div className="footer-body">
-            <textarea className="ant-input" ref={inputs} onKeyDown={(e) => {isEnter(e)}} />
+            <textarea className="ant-input" ref={inputs} onKeyDown={(e) => {isEnter(e)}} style={userMsg.black ? {background: "rgb(0 0 0 / 0%)"} : {}} />
             <Button style={{float: 'right', marginTop: "10px"}} type="primary" onClick={() =>send(inputs.current.value)}>发送</Button>
           </div>
           <div className="footer-bottom">

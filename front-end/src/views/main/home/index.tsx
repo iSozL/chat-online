@@ -4,13 +4,15 @@ import FriendContent from '../friendContent/index';
 import Message from '../message/index'
 import { Container } from '../store/index'
 import AddFriend from '../addFriend/index'
-import { Popover } from "antd"; 
+import { Popover, Switch } from "antd"; 
 import Setting from '../setting/index'
 import { useHistory } from 'react-router-dom'
 import {changeUserContext, CHANGE_USER} from '../store/index'
 import request from '../../../utils/request'
 import Comments from '../commets/index'
-
+const blackStyle = {
+  background: "#0000009e",
+}
 let socket: any
 const Home: React.FC = () => {
   const history = useHistory()
@@ -39,6 +41,10 @@ const Home: React.FC = () => {
     </div>
   )
 
+  const changeBlack = (value: boolean) => {
+    useDispatch({type: CHANGE_USER, state:{black: value}})
+  }
+  
   useEffect(() => {
     const fetchAdds = async () => {
       await request.post(`http://101.132.134.186:8080/showveritymessage`, {
@@ -54,8 +60,8 @@ const Home: React.FC = () => {
 
   return (
     <div className="main">
-      <div className="main-container">
-        <div className="aside">
+      <div className="main-container" style={userMsg.black ? {borderRadius: 0} : {}}>
+        <div className="aside" style={userMsg.black ? blackStyle : {}}>
           <div className="avater">
             <img onClick={() => {setSelect("me")}} src={require('../../../assets/imgs/avater.svg')} />
           </div>
@@ -68,11 +74,17 @@ const Home: React.FC = () => {
           <div>
             <img className="comments" onClick={() => {setSelect("comments")}} src={require('../../../assets/imgs/comments.svg')} />
           </div>
+          <div style={{marginTop: "50px"}}>
+            <Switch onChange={changeBlack} />
+          </div>
+          <div>
+            黑夜
+          </div>
           <Popover placement="left" content={menu}>
-            <img className="me" style={{marginTop: "40vh"}} src={require('../../../assets/imgs/more.svg')} />
+            <img className="me" style={{marginTop: "20vh"}} src={require('../../../assets/imgs/more.svg')} />
           </Popover>
         </div>
-        <div className="main-body">
+        <div className="main-body" style={userMsg.black ? blackStyle : {}}>
           {
             (() => {
               switch(select) {

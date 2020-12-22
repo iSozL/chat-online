@@ -21,7 +21,8 @@ export const Container = (props: any) => {
     userId: "",
     msgs: [],
     msgList: [],
-    curMes: ""
+    curMes: "",
+    black: false
   })
   return (
     <changeUserContext.Provider value={{userMsg, useDispatch}}>

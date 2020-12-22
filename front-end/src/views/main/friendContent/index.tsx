@@ -12,6 +12,9 @@ const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 16 },
 };
+const blackStyle = {
+  background: "#0000009e",
+}
 const { TabPane } = Tabs;
 const Mes = (props: any) => {
   let info = JSON.parse(window.localStorage.getItem("userInfo"))
@@ -412,7 +415,7 @@ const FriendContent = (props: any) => {
   }, [])
 
   return (
-    <div className="friend-container">
+    <div className="friend-container" style={userMsg.black ? {background: "rgb(0 0 0 / 0%)"} : {}}>
       <Modal
         title="设置信息"
         visible={visible1}
@@ -474,7 +477,7 @@ const FriendContent = (props: any) => {
           }
         </Scroll>
       </Modal>
-      <div className="unread">
+      <div className="unread" style={userMsg.black ? {background: "rgb(0 0 0 / 20%)"} : {}}>
         <img style={{width: "20px"}} src={require('../../../assets/imgs/smile.svg')} />
           <div onClick={() => {setVisible(true)}}>
             好友申请
@@ -486,7 +489,7 @@ const FriendContent = (props: any) => {
             }
           </div>
       </div>
-      <div className="content">
+      <div className="content" style={userMsg.black ? {background: "rgb(0 0 0 / 20%)"} : {}}>
         <Tabs defaultActiveKey="1" activeKey={tabKey}>
           <TabPane
             tab={
