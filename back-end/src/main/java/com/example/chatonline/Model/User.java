@@ -17,6 +17,7 @@ public class User {
     private int age;
     private String address;
     private String phone;
+    private String signature;
 
 
 }
