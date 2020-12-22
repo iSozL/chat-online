@@ -36,10 +36,10 @@
         CALL Deletemessage(#{userId},#{friendId},#{flag,mode=OUT,jdbcType=INTEGER});
     </select>
     <insert id="addImage">
-        insert into image(userId,friendId,message) value(#{sendid},#{reciveid},#{messagetext})
+        insert into image(userId,friendId,message) value(#{userId},#{friendId},#{message})
     </insert>
     <delete id="DelImage">
-        delete  from image where userId=#{sendid} and friendId=#{reciveid} and sendTime=#{sendtime}
+        delete  from image where userId=#{userId} and friendId=#{friendId} and sendTime=#{sendtime}
     </delete>
     <delete id="DelReceiveImage">
         delete  from image where userId=#{sendid} and friendId=#{reciveid} and sendTime=#{sendtime}
