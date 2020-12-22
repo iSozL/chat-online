@@ -1287,6 +1287,13 @@ define({ "api": [
           },
           {
             "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "imageMark",
+            "description": "<p>权限信息</p>"
+          },
+          {
+            "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "message",
@@ -1304,7 +1311,7 @@ define({ "api": [
       "examples": [
         {
           "title": "有好友印象-示例:",
-          "content": "    HTTP/1.1 200 OK\n    {\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"123\",\n            \"sendtime\": \"2020-12-21 12:06:26\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"2020/12/21/12/06/25\",\n            \"sendtime\": \"2020-12-21 12:07:09\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"2020/12/21/12/06/25\",\n            \"sendtime\": \"2020-12-21 13:35:03\",\n            \"flag\": 0\n        }\n    ],\n    \"code\": 1\n}",
+          "content": "    HTTP/1.1 200 OK\n    {\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"123\",\n            \"sendtime\": \"2020-12-21 12:06:26\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"2020/12/21/12/06/25\",\n            \"sendtime\": \"2020-12-21 12:07:09\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"你好\",\n            \"sendtime\": \"2020-12-22 12:01:23\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"1\",\n            \"sendtime\": \"2020-12-22 12:08:15\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"11\",\n            \"sendtime\": \"2020-12-22 12:08:16\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"111\",\n            \"sendtime\": \"2020-12-22 12:08:17\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"111\",\n            \"sendtime\": \"2020-12-22 12:08:18\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"111\",\n            \"sendtime\": \"2020-12-22 12:08:20\",\n            \"flag\": 0\n        }\n    ],\n    \"imageMark\": 0\n}",
           "type": "json"
         }
       ]
@@ -1331,7 +1338,7 @@ define({ "api": [
       "examples": [
         {
           "title": "无好友印象-示例：",
-          "content": "HTTP/1.1 200 OK\n{\n \"message\": \"暂无印象\",\n \"data\": null,\n \"code\": 0\n}",
+          "content": "   HTTP/1.1 200 OK\n   {\n    \"code\": 0,\n    \"message\": \"暂无印象\",\n    \"data\": null,\n    \"imageMark\": 1\n}",
           "type": "json"
         }
       ]
