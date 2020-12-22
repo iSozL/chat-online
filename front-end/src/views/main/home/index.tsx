@@ -4,12 +4,15 @@ import FriendContent from '../friendContent/index';
 import Message from '../message/index'
 import { Container } from '../store/index'
 import AddFriend from '../addFriend/index'
-import { Popover } from "antd"; 
+import { Popover, Switch } from "antd"; 
 import Setting from '../setting/index'
 import { useHistory } from 'react-router-dom'
 import {changeUserContext, CHANGE_USER} from '../store/index'
 import request from '../../../utils/request'
-
+import Comments from '../commets/index'
+const blackStyle = {
+  background: "#0000009e",
+}
 let socket: any
 const Home: React.FC = () => {
   const history = useHistory()
@@ -29,49 +32,6 @@ const Home: React.FC = () => {
   } else {
     alert("你的浏览器不支持 WebSocket！");
   }
-  // if (socket) {
-  //   socket.onmessage = function (event: any) {
-  //     event = JSON.parse(event.data)
-  //     if (!event.flag) {
-  //       if (event.sender === info.userId) {
-  //         let data = {
-  //           message: event.message,
-  //           time: new Date(),
-  //           my: true,
-  //           tag: event.receiver,
-  //           tag1: event.sender
-  //         }
-  //         useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
-  //       } else {
-  //         console.log(isRead, event.sender)
-  //         let newRead: any
-  //         if (isRead) {
-  //           newRead = isRead
-  //         } else {
-  //           newRead = []
-  //         }
-  //         if (newRead.indexOf(event.sender) === -1) {
-  //           newRead.push(event.sender)
-  //         }
-  //         setRead(newRead)
-  //         let data = {
-  //           message: event.message,
-  //           time: new Date(),
-  //           my: false,
-  //           tag: event.receiver,
-  //           tag1: event.sender
-  //         }
-  //         useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: true, msgs: userMsg.msgs.concat(data)}})
-  //       }
-  //     }
-  //   };
-  //   socket.onopen = function (event: any) {
-  //     console.log("连接开始")
-  //   };
-  //   socket.onclose = function (event: any) {
-  //     console.log("连接关闭")
-  //   };
-  // }
   
   const [select, setSelect] = useState<string>("me")
   const menu = (
@@ -81,13 +41,16 @@ const Home: React.FC = () => {
     </div>
   )
 
+  const changeBlack = (value: boolean) => {
+    useDispatch({type: CHANGE_USER, state:{black: value}})
+  }
+  
   useEffect(() => {
     const fetchAdds = async () => {
       await request.post(`http://101.132.134.186:8080/showveritymessage`, {
         userId: info.userId
       }).then(value => {
         if (value.data.code) {
-          console.log(value.data.data)
           setAdd(value.data.data)
         }
       })
@@ -97,8 +60,8 @@ const Home: React.FC = () => {
 
   return (
     <div className="main">
-      <div className="main-container">
-        <div className="aside">
+      <div className="main-container" style={userMsg.black ? {borderRadius: 0} : {}}>
+        <div className="aside" style={userMsg.black ? blackStyle : {}}>
           <div className="avater">
             <img onClick={() => {setSelect("me")}} src={require('../../../assets/imgs/avater.svg')} />
           </div>
@@ -108,11 +71,20 @@ const Home: React.FC = () => {
           <div>
             <img className="me" onClick={() => {setSelect("add")}} src={require('../../../assets/imgs/me.svg')} />
           </div>
+          <div>
+            <img className="comments" onClick={() => {setSelect("comments")}} src={require('../../../assets/imgs/comments.svg')} />
+          </div>
+          <div style={{marginTop: "50px"}}>
+            <Switch onChange={changeBlack} />
+          </div>
+          <div>
+            黑夜
+          </div>
           <Popover placement="left" content={menu}>
-            <img className="me" style={{marginTop: "50vh"}} src={require('../../../assets/imgs/more.svg')} />
+            <img className="me" style={{marginTop: "20vh"}} src={require('../../../assets/imgs/more.svg')} />
           </Popover>
         </div>
-        <div className="main-body">
+        <div className="main-body" style={userMsg.black ? blackStyle : {}}>
           {
             (() => {
               switch(select) {
@@ -133,6 +105,12 @@ const Home: React.FC = () => {
                   return (
                     <>
                       <Setting />
+                    </>
+                  )
+                case "comments":
+                  return (
+                    <>
+                      <Comments />
                     </>
                   )
                 default:

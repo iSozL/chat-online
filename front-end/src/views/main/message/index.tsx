@@ -9,11 +9,22 @@ import request from '../../../utils/request'
 if (!window.WebSocket) {
   window.WebSocket = window.MozWebSocket;
 }
+const blackStyle = {
+  background: "#0000009e",
+}
 const Message = (props: any) => {
   let socket = props.socket
   let scroll = useRef<any>()
+  async function getMsgList() {
+    await request.get(`http://101.132.134.186:8080/ShowFriendLastMessage?userId=${info.userId}`).then(value => {
+      if (value.data.code) {
+        console.log(value.data.data)
+        console.log(userMsg.msgs)
+        useDispatch({type: CHANGE_USER, state:{msgList: value.data.data}})
+      }
+    })
+  }
   const { userMsg, useDispatch } = useContext(changeUserContext)
-  console.log(userMsg.msgs,'message')
   let info: any = JSON.parse(window.localStorage.getItem("userInfo"))
 
   const inputs = useRef<any>()
@@ -38,8 +49,11 @@ const Message = (props: any) => {
         tag: userMsg.userId,
         tag1: info.userId
       }
-      useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: userMsg.msgs.concat(datas)}})
+      useDispatch({type: CHANGE_USER, state:{msgs: userMsg.msgs.concat(datas)}})
       inputs.current.value = ""
+      setTimeout(() => {
+        getMsgList()
+      }, 100)
       setTimeout(() => {
         scroll.current.scrollToBottom()
       }, 1)
@@ -82,7 +96,6 @@ const Message = (props: any) => {
             tag1: item.sender
           }
           return data
-          // useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: userMsg.msgs.concat(data)}})
         } else {
           let data = {
             message: item.message,
@@ -92,7 +105,6 @@ const Message = (props: any) => {
             tag1: item.sender
           }
           return data
-          // useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: userMsg.msgs.concat(data)}})
         }
       })
       useDispatch({type: CHANGE_USER, state:{username: userMsg.username, userId: userMsg.userId, show: userMsg.show, msgs: arr}})
@@ -102,21 +114,18 @@ const Message = (props: any) => {
     })
   }
 
-  // const test = (value: any) => {
-  //   console.log(scroll)
-  // }
   const emoji = (
     <div>
       <Picker onSelect={(emoji: any)=> {inputs.current.value += emoji.native}} />
     </div>
   )
   return (
-    <div className="msg-container">
+    <div className="msg-container" style={userMsg.black ? {background: "rgb(0 0 0 / 0%)"} : {}}>
       {
         userMsg.show ? 
         <>
         <div className="msg-body">
-          <div className="msg-header">
+          <div className="msg-header" style={ userMsg.black ? {background: "rgb(0 0 0 / 20%)"} : {}}>
             {userMsg.username}
           </div>
           <div className="history" onClick={getHistory}>
@@ -124,30 +133,32 @@ const Message = (props: any) => {
             查看历史聊天记录
           </div>
           <div>
-            <Scrollbars style={{height: "48vh", width: "99%", display: "flex"}} ref={scroll} >
-              {
-                userMsg.msgs.map((item: any, index: number) => {
-                  if (!item.my && (item.tag1 === userMsg.userId)) {
-                    return (
-                      <div style={{padding: "10px 30px"}} key={index}>
-                        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
-                        <div className="arrow-box popper border arrow-left">
-                          {item.message}
+            <Scrollbars style={{height: "48vh"}} ref={scroll}>
+              <div style={{display: "flex", flexDirection: "column"}}>
+                {
+                  userMsg.msgs.map((item: any, index: number) => {
+                    if (!item.my && (item.tag1 === userMsg.userId)) {
+                      return (
+                        <div style={{padding: "10px 30px"}} key={index}>
+                          <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
+                          <div className="arrow-box popper border arrow-left" style={{wordBreak: "break-all", wordWrap: "break-word"}}>
+                            <div style={{wordBreak: "break-all", wordWrap: "break-word"}}>{item.message}</div>
+                          </div>
                         </div>
-                      </div>
-                    )
-                  } else if (item.tag === userMsg.userId && item.tag1 === info.userId) {
-                    return (
-                      <div style={{padding: "10px 30px", flex: 1, textAlign: "right"}} key={index}>
-                        <div className="arrow-box popper border arrow-right">
-                          {item.message}
+                      )
+                    } else if (item.tag === userMsg.userId && item.tag1 === info.userId) {
+                      return (
+                        <div style={{padding: "10px 30px", alignSelf: "flex-end"}} key={index}>
+                          <div className="arrow-box popper border arrow-right" style={{wordBreak: "break-all", wordWrap: "break-word"}}>
+                            <div style={{wordBreak: "break-all", wordWrap: "break-word"}}>{item.message}</div>
+                          </div>
+                          <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
                         </div>
-                        <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
-                      </div>
-                    )
-                  }
-                })
-              }
+                      )
+                    }
+                  })
+                }
+              </div>
             </Scrollbars>
           </div>
         </div>
@@ -158,7 +169,7 @@ const Message = (props: any) => {
             </Popover>
           </div>
           <div className="footer-body">
-            <textarea className="ant-input" ref={inputs} onKeyDown={(e) => {isEnter(e)}} />
+            <textarea className="ant-input" ref={inputs} onKeyDown={(e) => {isEnter(e)}} style={userMsg.black ? {background: "rgb(0 0 0 / 0%)"} : {}} />
             <Button style={{float: 'right', marginTop: "10px"}} type="primary" onClick={() =>send(inputs.current.value)}>发送</Button>
           </div>
           <div className="footer-bottom">
