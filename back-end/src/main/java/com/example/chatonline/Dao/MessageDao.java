@@ -42,6 +42,9 @@ public interface MessageDao {
     public boolean DelReceiveImage(Message message);
     //显示接受到的好友印象
     public ArrayList<Image> ShowImage(String reciveId);
-
+    //更改印象可见权限
+    public boolean ChangMark(String userId,String note);
+    //得到所选用户权限信息
+    public Integer GetImageMark(String userId);
 }
 

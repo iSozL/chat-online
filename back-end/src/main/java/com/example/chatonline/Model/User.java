@@ -14,8 +14,7 @@ public class User {
     private  String nickname;
     private  String sex;
     private  ArrayList<Group> groups;
-    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
-    private Date birthday;
+    private int age;
     private String address;
     private String phone;
 

@@ -51,5 +51,12 @@ public class MessageService {
     public boolean DelReceiveImage(Message message){
         return messageDao.DelReceiveImage(message);
     }
+    //显示已接收的好友印象
     public ArrayList<Image> ShowImage(String reciveId){return messageDao.ShowImage(reciveId);}
+    //修改好友备注
+    public boolean ChangMark(String userId,String note) { return messageDao.ChangMark(userId,note); }
+    //得到所选用户权限信息
+    public Integer GetImageMark(String userId){
+        return messageDao.GetImageMark(userId);
+    }
 }

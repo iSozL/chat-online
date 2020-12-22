@@ -66,11 +66,11 @@
     </update>
     <update id="UpdateInfo">
         update user
-        set nickname=#{nickname},sex=#{sex},birthday=#{birth},address=#{address},phone=#{phone},signature=#{signature}
+        set nickname=#{nickname},sex=#{sex},age=#{age},address=#{address},phone=#{phone},signature=#{signature}
         where userId=#{userId}
     </update>
     <select id="ShowInfo" resultType="com.example.chatonline.Model.User">
-        select nickname,sex,birthday,address,phone,signature
+        select userId,nickname,sex,age,signature,address,phone
         from user
         where userId=#{userId}
     </select>

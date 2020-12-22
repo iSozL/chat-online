@@ -479,8 +479,6 @@ public class UserController {
 
         //获取发送方的备注和分组信息
         map = messageService.FindVerifyMessage(message);
-        System.out.println((String)map.get("groupname"));
-
 
         int flag;
         flag=userService.AddFriend(userId,sendId,note,groupname,(String) map.get("note"),(String) map.get("groupname"));

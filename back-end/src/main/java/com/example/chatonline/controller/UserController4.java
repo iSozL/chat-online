@@ -1,6 +1,5 @@
 package com.example.chatonline.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.example.chatonline.Config.DateConverterConfig;
 import com.example.chatonline.Model.JsonResult;
 import com.example.chatonline.Model.Message;
@@ -8,13 +7,11 @@ import com.example.chatonline.Model.Image;
 import com.example.chatonline.Service.MessageService;
 import com.example.chatonline.Service.UserService;
 import com.example.chatonline.Util.JWTUtil;
-import lombok.Data;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -71,7 +68,7 @@ public class UserController4 {
         message.setReciveid(friendId);
         message.setMessagetext(mes);
         if (messageService.addImage(message))
-            return jsonResult.success("留言成功");
+            return JsonResult.success("留言成功");
         else
             return JsonResult.fail("留言失败");
     }
@@ -117,7 +114,7 @@ public class UserController4 {
         message.setSendtime(dateConverterConfig.convert(time));
         boolean i = messageService.DelImage(message);
         if (i)
-            return jsonResult.success("删除成功");
+            return JsonResult.success("删除成功");
         else
             return JsonResult.fail("删除失败");
     }
@@ -163,7 +160,7 @@ public class UserController4 {
         message.setSendtime(dateConverterConfig.convert(time));
         boolean i = messageService.DelImage(message);
         if (i)
-            return jsonResult.success("删除成功");
+            return JsonResult.success("删除成功");
         else
             return JsonResult.fail("删除失败");
     }
@@ -232,6 +229,109 @@ public class UserController4 {
         }
         else
             return JsonResult.fail("暂无印象");
+    }
+    /**
+     * @api {Get} ChangMark 更改印象观看权限
+     * @apiDescription  更改印象观看权限接口
+     * @apiGroup 用户
+     * @apiName 更改印象观看权限
+     * @apiversion 0.1.0
+     *
+     * @apiParam {String} userId 用户ID
+     * @apiParam {String} note 权限标记
+     *
+     * @apiSuccess {int} status 响应状态码
+     * @apiSuccess {String} message 响应描述
+     * @apiSuccess {String} data 返回相关信息，成功的时候才存在
+     *
+     * @apiSuccessExample {json} 有好友印象-示例:
+     *     HTTP/1.1 200 OK
+     *     {
+     *     "message": "success",
+     *     "data": "更改印象权限成功",
+     *     "code": 1
+     * }
+     * @apiError {int} status 响应状态码
+     * @apiError {String} message 响应描述
+     * @apiErrorExample {json} 无好友印象-示例：
+     *    HTTP/1.1 200 OK
+     *    {
+     *     "message": "更改印象权限失败",
+     *     "data": null,
+     *     "code": 0
+     * }
+     */
+    @CrossOrigin
+    @GetMapping("/ChangMark")
+    public JsonResult ChangMark(@RequestParam("userId") String userId,@RequestParam("note") String note)
+    {
+        boolean date = messageService.ChangMark(userId,note);
+        if(date)
+            return JsonResult.success("更改好印象权限成功");
+        else
+            return JsonResult.fail("更改好友印象权限失败");
+    }
+    /**
+     * @api {Get} ShowFriendImage 显示好友收到的印象
+     * @apiDescription  显示好友收到的印象接口
+     * @apiGroup 消息
+     * @apiName 显示好友收到的印象
+     * @apiversion 0.1.0
+     *
+     * @apiParam {String} friendId 好友ID
+     * @apiSuccess {int} status 响应状态码
+     * @apiSuccess {String} message 响应描述
+     * @apiSuccess {String} data 返回相关信息，成功的时候才存在
+     *
+     * @apiSuccessExample {json} 有印象权限-示例1:
+     *     HTTP/1.1 200 OK
+     *     {
+     *     "message": "success",
+     *     "data": [
+     *         {
+     *             "userId": "0",
+     *             "friendId": "4",
+     *             "message": "123",
+     *             "sendtime": "2020-12-21 11:50:03",
+     *             "flag": 0
+     *         }
+     *     ],
+     *     "code": 1
+     * }
+     * @apiSuccessExample {json} 有印象权限-示例2:
+     * HTTP/1.1 200 OK
+     * {
+     *     "message": "暂无印象",
+     *     "data": null,
+     *     "code": 0
+     * }
+     * @apiError {int} status 响应状态码
+     * @apiError {String} message 响应描述
+     * @apiErrorExample {json} 无印象权限-示例：
+     * HTTP/1.1 200 OK
+     * {
+     *     "message": "未获得观看好友印象权限",
+     *     "data": null,
+     *     "code": 0
+     * }
+     */
+    @CrossOrigin
+    @GetMapping("/ShowFriendImage")
+    public  JsonResult ShowFriendImage(@RequestParam("friendId") String friendId)
+    {
+        Integer integer = messageService.GetImageMark(friendId);
+        if(integer == 0){
+            String receiveId = friendId;
+            ArrayList<Image> images = messageService.ShowImage(receiveId);
+            if(images.size()!=0)
+            {
+                return JsonResult.success(images);
+            }
+            else
+                return JsonResult.fail("暂无印象");
+        }
+       else
+           return JsonResult.fail("未获得观看好友印象权限");
     }
 
 }
