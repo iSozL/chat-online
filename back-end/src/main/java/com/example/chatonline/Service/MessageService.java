@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,16 +25,21 @@ public class MessageService {
     {
         return messageDao.FindVerifyMessage(message);
     }
-    //删除验证消息
+    //删除未处理验证消息
     public boolean DelVerifyMessage(Message message){
         return messageDao.DelVerifyMessage(message);
     }
-    //添加验证消息
+    //添加未处理验证消息
     public boolean  AddVerifyMessage(Message message,String note,String groupname) { return messageDao.AddVerifyMessage(message, note, groupname); }
     //显示验证消息
     public ArrayList<Message> ShowVerifyMessage(String reciveId) {return messageDao.ShowVerifyMessage(reciveId);}
+
     //处理验证消息
     public boolean HandleVerifyMessage(int type,String userId,String reciveId){return messageDao.HandleVerifyMessage(type, userId, reciveId);}
+    //拒绝好友请求
+    public boolean Refuseadd(String userId, String sendId, Date sendtime){return messageDao.Refuseadd(userId, sendId, sendtime);}
+    //删除已处理或者未处理消息验证消息
+    public boolean DeleteVerifyMessage(String userId, String sendId, Date sendtime){return messageDao.DeleteVerifyMessage(userId, sendId, sendtime);}
     //显示消息列表
     public ArrayList<Map<String,Object>> ShowsendLastMessage(String userId){ return messageDao.ShowsendLastMessage(userId); }
     public ArrayList<Map<String,Object>> ShowreciveLastMessage(String userId){ return messageDao.ShowreciveLastMessage(userId); }

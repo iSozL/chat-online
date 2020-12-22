@@ -1,6 +1,5 @@
 {
   "name": "chat-online",
-  "sideEffects": false,
   "version": "1.0.0",
   "description": "在线聊天",
   "main": "index.js",

@@ -1060,11 +1060,209 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "handlemessage",
-    "title": "处理验证消息",
-    "description": "<p>处理验证消息接口</p>",
+    "url": "deleteveritymessage",
+    "title": "删除验证消息",
+    "description": "<p>删除验证消息接口</p>",
     "group": "消息",
-    "name": "处理验证消息",
+    "name": "删除验证消息",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "sendId",
+            "description": "<p>发送方ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "sendtime",
+            "description": "<p>发送时间</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回分组信息 成功的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "删除验证消息成功-示例:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"message\": \"success\",\n  \"data\": \"删除成功\",\n  \"code\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "删除验证消息失败-示例：",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"删除失败\",\n  \"data\":null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "groupTitle": "消息"
+  },
+  {
+    "type": "post",
+    "url": "refuseadd",
+    "title": "拒绝好友请求",
+    "description": "<p>拒绝好友请求接口</p>",
+    "group": "消息",
+    "name": "拒绝好友请求",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "sendId",
+            "description": "<p>发送方ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "sendtime",
+            "description": "<p>发送时间</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回分组信息 成功的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "拒绝好友请求成功-示例:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"message\": \"success\",\n  \"data\": \"已拒绝\",\n  \"code\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "拒绝好友请求失败-示例：",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"拒绝失败\",\n  \"data\":null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
+    "groupTitle": "消息"
+  },
+  {
+    "type": "post",
+    "url": "handlemessage",
+    "title": "接受好友请求",
+    "description": "<p>接受好友请求接口</p>",
+    "group": "消息",
+    "name": "接受好友请求",
     "version": "0.1.0",
     "parameter": {
       "fields": {
@@ -1112,6 +1310,13 @@ define({ "api": [
           },
           {
             "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "imageMark",
+            "description": "<p>权限信息</p>"
+          },
+          {
+            "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "message",
@@ -1128,8 +1333,13 @@ define({ "api": [
       },
       "examples": [
         {
+<<<<<<< HEAD
+          "title": "有好友印象-示例:",
+          "content": "    HTTP/1.1 200 OK\n    {\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"123\",\n            \"sendtime\": \"2020-12-21 12:06:26\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"2020/12/21/12/06/25\",\n            \"sendtime\": \"2020-12-21 12:07:09\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"你好\",\n            \"sendtime\": \"2020-12-22 12:01:23\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"1\",\n            \"sendtime\": \"2020-12-22 12:08:15\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"11\",\n            \"sendtime\": \"2020-12-22 12:08:16\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"111\",\n            \"sendtime\": \"2020-12-22 12:08:17\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"111\",\n            \"sendtime\": \"2020-12-22 12:08:18\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"111\",\n            \"sendtime\": \"2020-12-22 12:08:20\",\n            \"flag\": 0\n        }\n    ],\n    \"imageMark\": 0\n}",
+=======
           "title": "添加好友成功-示例:",
           "content": "HTTP/1.1 200 OK\n{\n  \"message\": \"success\",\n  \"data\": \"已添加\",\n  \"code\": 1\n}",
+>>>>>>> e81b651ea7da6597fbfeea975bfae40d18b6369a
           "type": "json"
         }
       ]
@@ -1155,8 +1365,13 @@ define({ "api": [
       },
       "examples": [
         {
+<<<<<<< HEAD
+          "title": "无好友印象-示例：",
+          "content": "   HTTP/1.1 200 OK\n   {\n    \"code\": 0,\n    \"message\": \"暂无印象\",\n    \"data\": null,\n    \"imageMark\": 1\n}",
+=======
           "title": "未能查询到分组信息-示例：",
           "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"添加失败\",\n  \"data\":null\n}",
+>>>>>>> e81b651ea7da6597fbfeea975bfae40d18b6369a
           "type": "json"
         }
       ]
@@ -1287,13 +1502,6 @@ define({ "api": [
           },
           {
             "group": "Success 200",
-            "type": "int",
-            "optional": false,
-            "field": "imageMark",
-            "description": "<p>权限信息</p>"
-          },
-          {
-            "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "message",
@@ -1311,7 +1519,7 @@ define({ "api": [
       "examples": [
         {
           "title": "有好友印象-示例:",
-          "content": "    HTTP/1.1 200 OK\n    {\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"123\",\n            \"sendtime\": \"2020-12-21 12:06:26\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"2020/12/21/12/06/25\",\n            \"sendtime\": \"2020-12-21 12:07:09\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"你好\",\n            \"sendtime\": \"2020-12-22 12:01:23\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"1\",\n            \"sendtime\": \"2020-12-22 12:08:15\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"11\",\n            \"sendtime\": \"2020-12-22 12:08:16\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"111\",\n            \"sendtime\": \"2020-12-22 12:08:17\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"111\",\n            \"sendtime\": \"2020-12-22 12:08:18\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"111\",\n            \"sendtime\": \"2020-12-22 12:08:20\",\n            \"flag\": 0\n        }\n    ],\n    \"imageMark\": 0\n}",
+          "content": "    HTTP/1.1 200 OK\n    {\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"123\",\n            \"sendtime\": \"2020-12-21 12:06:26\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"2020/12/21/12/06/25\",\n            \"sendtime\": \"2020-12-21 12:07:09\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"2020/12/21/12/06/25\",\n            \"sendtime\": \"2020-12-21 13:35:03\",\n            \"flag\": 0\n        }\n    ],\n    \"code\": 1\n}",
           "type": "json"
         }
       ]
@@ -1338,7 +1546,7 @@ define({ "api": [
       "examples": [
         {
           "title": "无好友印象-示例：",
-          "content": "   HTTP/1.1 200 OK\n   {\n    \"code\": 0,\n    \"message\": \"暂无印象\",\n    \"data\": null,\n    \"imageMark\": 1\n}",
+          "content": "HTTP/1.1 200 OK\n{\n \"message\": \"暂无印象\",\n \"data\": null,\n \"code\": 0\n}",
           "type": "json"
         }
       ]
@@ -1613,110 +1821,6 @@ define({ "api": [
       ]
     },
     "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController4.java",
-    "groupTitle": "消息"
-  },
-  {
-    "type": "post",
-    "url": "showveritymessage",
-    "title": "预处理验证消息",
-    "description": "<p>预处理验证消息接口</p>",
-    "group": "消息",
-    "name": "预处理验证消息",
-    "version": "0.1.0",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "userId",
-            "description": "<p>用户ID</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "sendId",
-            "description": "<p>发送方ID</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "int",
-            "optional": false,
-            "field": "type",
-            "description": "<p>1表示同意、-1表示拒绝</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "int",
-            "optional": false,
-            "field": "status",
-            "description": "<p>响应状态码</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "message",
-            "description": "<p>响应描述</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "data",
-            "description": "<p>返回分组信息 成功的时候才存在</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "type=1-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"code\": 1,\n  \"message\": \"success\",\n  \"data\": [\n      {\n          \"groupname\": \"分组一\",\n          \"count_num\": 6\n      }\n  ],\n\n}",
-          "type": "json"
-        },
-        {
-          "title": "type=-1-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"message\": \"已拒绝\",\n  \"data\": null,\n  \"code\": 0\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "type": "int",
-            "optional": false,
-            "field": "status",
-            "description": "<p>响应状态码</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "type": "String",
-            "optional": false,
-            "field": "message",
-            "description": "<p>响应描述</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "未能查询到分组信息-示例：",
-          "content": " HTTP/1.1 200 OK\n{\n  \"code\":-1,\n  \"message\": \"未能查询到分组信息\",\n  \"data\":null\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
     "groupTitle": "消息"
   },
   {
