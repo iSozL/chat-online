@@ -248,9 +248,9 @@ public class UserController4 {
      * @apiErrorExample {json} 无好友印象-示例：
      *    HTTP/1.1 200 OK
      *    {
-     *     "code": 0,
-     *     "message": "暂无印象",
-     *     "data": null,
+     *     "code": 1,
+     *     "message": "success",
+     *     "data": "暂无印象",
      *     "imageMark": 1
      * }
      */
@@ -267,7 +267,7 @@ public class UserController4 {
             return JsonResult.success(images).put("imageMark",imageMark);
         }
         else
-            return JsonResult.fail("暂无印象").put("imageMark",imageMark);
+            return JsonResult.success("暂无印象").put("imageMark",imageMark);
     }
     /**
      * @api {Get} ChangMark 更改印象观看权限
