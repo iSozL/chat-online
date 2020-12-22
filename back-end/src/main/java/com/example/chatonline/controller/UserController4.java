@@ -245,6 +245,7 @@ public class UserController4 {
      * }
      * @apiError {int} status 响应状态码
      * @apiError {String} message 响应描述
+     * @apiError {int} imageMark 权限信息
      * @apiErrorExample {json} 无好友印象-示例：
      *    HTTP/1.1 200 OK
      *    {
