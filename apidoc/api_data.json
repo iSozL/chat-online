@@ -1544,7 +1544,6 @@
         {
           "title": "无好友印象-示例：",
           "content": "   HTTP/1.1 200 OK\n   {\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": \"暂无印象\",\n    \"imageMark\": 1\n}",
-          "content": "   HTTP/1.1 200 OK\n   {\n    \"code\": 0,\n    \"message\": \"暂无印象\",\n    \"data\": null,\n    \"imageMark\": 1\n}",
           "type": "json"
         }
       ]
