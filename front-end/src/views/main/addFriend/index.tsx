@@ -24,10 +24,10 @@ const AddFriend = (props: any) => {
     if(data.code) {
       console.log(typeof(data.data[0].groupname))
       setGroup(data.data)
+      setVisible(true)
     } else {
       message.error(data.message)
     }
-    setVisible(true)
   }
   const onSearch = async (value: string) => {
     const {data} = await request.get(`http://101.132.134.186:8080/find?userId=${value}`)
@@ -72,7 +72,7 @@ const AddFriend = (props: any) => {
         onCancel={() => setVisible(false)}
         width={500}
       >
-        <Form {...layout} onFinish={send}>
+        <Form {...layout} onFinish={send} initialValues={{groupname: "我的好友"}}>
           <Form.Item name="groupname" label="选择列表">
             <Select style={{ width: 120 }} onChange={select}>
               {
