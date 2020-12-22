@@ -1,5 +1,6 @@
 package com.example.chatonline.controller;
 
+import com.example.chatonline.Config.DateConverterConfig;
 import com.example.chatonline.Model.Group;
 import com.example.chatonline.Model.JsonResult;
 import com.example.chatonline.Model.Message;
@@ -29,6 +30,8 @@ public class UserController {
     private  JsonResult jsonResult;
     @Autowired
     private MessageService messageService;
+    @Autowired
+    private DateConverterConfig dateConverterConfig;
 
     /**
      * @api {post} login 登录
@@ -357,85 +360,40 @@ public class UserController {
             return JsonResult.fail("暂无验证消息");
     }
 
+//    @CrossOrigin
+//    @PostMapping("/prehandlemessage")
+//    public JsonResult prehandle(@RequestBody String Json)
+//    {
+//        Map<String,Object> map =(Map) JSON.parse(Json);
+//        int type = (Integer) map.get("type");
+//        String userId = (String) map.get("userId");
+//        String sendId = (String) map.get("sendId");
+//        //接受，设置所属分组，和备注
+//        if(type==1)
+//        {
+//            ArrayList<Group> groupinfo = userService.ShowGroup(userId);
+//            if(groupinfo!=null)
+//            {
+//                return JsonResult.success(groupinfo);
+//            }
+//            else
+//                return JsonResult.error("未能查询到分组信息",null);
+//        }
+//        //拒绝
+//        else
+//        {
+//            boolean flag;
+//            do{
+//                flag=messageService.HandleVerifyMessage(type,sendId,userId);
+//            }while(!flag);
+//            return JsonResult.fail("已拒绝");
+//        }
+//    }
     /**
-     * @api {post} showveritymessage 预处理验证消息
-     * @apiDescription  预处理验证消息接口
+     * @api {post} handlemessage 接受好友请求
+     * @apiDescription  接受好友请求接口
      * @apiGroup 消息
-     * @apiName 预处理验证消息
-     * @apiversion 0.1.0
-     *
-     * @apiParam {String} userId 用户ID
-     * @apiParam {String} sendId 发送方ID
-     * @apiParam {int} type 1表示同意、-1表示拒绝
-     *
-     * @apiSuccess {int} status 响应状态码
-     * @apiSuccess {String} message 响应描述
-     * @apiSuccess {String} data 返回分组信息 成功的时候才存在
-     *
-     * @apiSuccessExample {json} type=1-示例:
-     *     HTTP/1.1 200 OK
-     *     {
-     *       "code": 1,
-     *       "message": "success",
-     *       "data": [
-     *           {
-     *               "groupname": "分组一",
-     *               "count_num": 6
-     *           }
-     *       ],
-     *
-     *     }
-     * @apiSuccessExample {json} type=-1-示例:
-     *     HTTP/1.1 200 OK
-     *     {
-     *       "message": "已拒绝",
-     *       "data": null,
-     *       "code": 0
-     *     }
-     * @apiError {int} status 响应状态码
-     * @apiError {String} message 响应描述
-     * @apiErrorExample {json} 未能查询到分组信息-示例：
-     *      HTTP/1.1 200 OK
-     *     {
-     *       "code":-1,
-     *       "message": "未能查询到分组信息",
-     *       "data":null
-     *     }
-     */
-    @CrossOrigin
-    @PostMapping("/prehandlemessage")
-    public JsonResult prehandle(@RequestBody String Json)
-    {
-        Map<String,Object> map =(Map) JSON.parse(Json);
-        int type = (Integer) map.get("type");
-        String userId = (String) map.get("userId");
-        String sendId = (String) map.get("sendId");
-        //接受，设置所属分组，和备注
-        if(type==1)
-        {
-            ArrayList<Group> groupinfo = userService.ShowGroup(userId);
-            if(groupinfo!=null)
-            {
-                return JsonResult.success(groupinfo);
-            }
-            else
-                return JsonResult.error("未能查询到分组信息",null);
-        }
-        //拒绝
-        else
-        {
-            boolean flag;
-            do{
-                flag=messageService.HandleVerifyMessage(type,sendId,userId);
-            }while(!flag);
-            return JsonResult.fail("已拒绝");
-        }
-    }
-    /**
-     * @api {post} handlemessage 处理验证消息
-     * @apiDescription  处理验证消息接口
-     * @apiGroup 消息
-     * @apiName 处理验证消息
+     * @apiName 接受好友请求
      * @apiversion 0.1.0
      *
      * @apiParam {String} userId 用户ID
@@ -487,23 +445,116 @@ public class UserController {
         } else {
             return JsonResult.fail("添加失败");
         }
-//        do {
-//            //修改验证消息表
-//            flag = messageService.HandleVerifyMessage(1, sendId, userId);
-//        } while (!flag);
-//
-//        do {
-//            //添加好友关系
-//            flag=userService.AddFriend(userId, sendId, note, groupname);
-//        } while (!flag);
-//        do {
-//            //添加好友关系
-//            flag=userService.AddFriend(sendId, userId, (String) map.get("note"), (String) map.get("groupname"));
-//        } while (!flag);
-//        userService.AddGroupNum(sendId,(String) map.get("groupname"));
-//        userService.AddGroupNum(userId,groupname);
+    }
+    /**
+     * @api {post} refuseadd 拒绝好友请求
+     * @apiDescription  拒绝好友请求接口
+     * @apiGroup 消息
+     * @apiName 拒绝好友请求
+     * @apiversion 0.1.0
+     *
+     * @apiParam {String} userId 用户ID
+     * @apiParam {String} sendId 发送方ID
+     * @apiParam {String} sendtime 发送时间
+     *
+     * @apiSuccess {int} status 响应状态码
+     * @apiSuccess {String} message 响应描述
+     * @apiSuccess {String} data 返回分组信息 成功的时候才存在
+     *
+     * @apiSuccessExample {json} 拒绝好友请求成功-示例:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "message": "success",
+     *       "data": "已拒绝",
+     *       "code": 1
+     *     }
+     * @apiError {int} status 响应状态码
+     * @apiError {String} message 响应描述
+     * @apiErrorExample {json} 拒绝好友请求失败-示例：
+     *      HTTP/1.1 200 OK
+     *     {
+     *       "code":0,
+     *       "message": "拒绝失败",
+     *       "data":null
+     *     }
+     *
+     */
+
+    @CrossOrigin
+    @PostMapping("/refuseadd")
+    public JsonResult Refuse(@RequestBody String Json)
+    {
+        Map<String, Object> map = (Map) JSON.parse(Json);
+        String userId = (String) map.get("userId");
+        String sendId = (String) map.get("sendId");
+        Date sendtime = dateConverterConfig.convert((String) map.get("sendtime"));
+        boolean flag;
+        flag = messageService.Refuseadd(userId,sendId,sendtime);
+        if(flag)
+        {
+            return JsonResult.success("已拒绝");
+        }
+        else
+        {
+            return JsonResult.fail("拒绝失败");
+        }
 
     }
+
+    /**
+     * @api {post} deleteveritymessage 删除验证消息
+     * @apiDescription  删除验证消息接口
+     * @apiGroup 消息
+     * @apiName 删除验证消息
+     * @apiversion 0.1.0
+     *
+     * @apiParam {String} userId 用户ID
+     * @apiParam {String} sendId 发送方ID
+     * @apiParam {String} sendtime 发送时间
+     *
+     * @apiSuccess {int} status 响应状态码
+     * @apiSuccess {String} message 响应描述
+     * @apiSuccess {String} data 返回分组信息 成功的时候才存在
+     *
+     * @apiSuccessExample {json} 删除验证消息成功-示例:
+     *     HTTP/1.1 200 OK
+     *     {
+     *       "message": "success",
+     *       "data": "删除成功",
+     *       "code": 1
+     *     }
+     * @apiError {int} status 响应状态码
+     * @apiError {String} message 响应描述
+     * @apiErrorExample {json} 删除验证消息失败-示例：
+     *      HTTP/1.1 200 OK
+     *     {
+     *       "code":0,
+     *       "message": "删除失败",
+     *       "data":null
+     *     }
+     *
+     */
+    @CrossOrigin
+    @PostMapping("/deleteveritymessage")
+    public JsonResult Delete(@RequestBody String Json)
+    {
+        Map<String, Object> map = (Map) JSON.parse(Json);
+        String userId = (String) map.get("userId");
+        String sendId = (String) map.get("sendId");
+        Date sendtime = dateConverterConfig.convert((String) map.get("sendtime"));
+        boolean flag;
+        flag = messageService.DeleteVerifyMessage(userId,sendId,sendtime);
+        if(flag)
+        {
+            return JsonResult.success("删除成功");
+        }
+        else
+        {
+            return JsonResult.fail("删除失败");
+        }
+    }
+
+
 
 }
 
