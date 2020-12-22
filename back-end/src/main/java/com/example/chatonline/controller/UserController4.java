@@ -63,10 +63,10 @@ public class UserController4 {
     @CrossOrigin
     @GetMapping("/addImage")
     public JsonResult AddImage(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("mes") String mes){
-        Message message = new Message();
-        message.setSendid(userId);
-        message.setReciveid(friendId);
-        message.setMessagetext(mes);
+        Image message = new Image();
+        message.setUserId(userId);
+        message.setFriendId(friendId);
+        message.setMessage(mes);
         if (messageService.addImage(message))
             return JsonResult.success("留言成功");
         else
@@ -107,9 +107,9 @@ public class UserController4 {
     @CrossOrigin
     @GetMapping("/DelImage")
     public JsonResult DelImage(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("time") String time){
-        Message message = new Message();
-        message.setSendid(userId);
-        message.setReciveid(friendId);
+        Image message = new Image();
+        message.setUserId(userId);
+        message.setFriendId(friendId);
         //Date date=dateConverterConfig.convert(sendtime);
         message.setSendtime(dateConverterConfig.convert(time));
         boolean i = messageService.DelImage(message);
@@ -153,9 +153,9 @@ public class UserController4 {
     @CrossOrigin
     @GetMapping("/DelReceiveImage")
     public JsonResult DelReceiveImage(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("time") String time){
-        Message message = new Message();
-        message.setSendid(friendId);
-        message.setReciveid(userId);
+        Image message = new Image();
+        message.setUserId(friendId);
+        message.setFriendId(userId);
         //Date date=dateConverterConfig.convert(sendtime);
         message.setSendtime(dateConverterConfig.convert(time));
         boolean i = messageService.DelImage(message);

@@ -42,9 +42,9 @@ public class MessageService {
         return messageDao.DeleteAllMessage(userId, friendId);
     }
     //添加好友映像
-    public boolean addImage(Message message) { return messageDao.addImage(message);}
+    public boolean addImage(Image message) { return messageDao.addImage(message);}
     //删除自己发送的好友印象
-    public boolean DelImage(Message message){
+    public boolean DelImage(Image message){
         return messageDao.DelImage(message);
     }
     //删除接收的好友印象
@@ -53,7 +53,7 @@ public class MessageService {
     }
     //显示已接收的好友印象
     public ArrayList<Image> ShowImage(String reciveId){return messageDao.ShowImage(reciveId);}
-    //修改好友备注
+    //修改好友权限
     public boolean ChangMark(String userId,String note) { return messageDao.ChangMark(userId,note); }
     //得到所选用户权限信息
     public Integer GetImageMark(String userId){

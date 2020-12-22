@@ -35,9 +35,9 @@ public interface MessageDao {
     //删除好友所有历史消息
     public Integer DeleteAllMessage(String userId, String friendId);
     //添加好友映像
-    public boolean addImage(Message message);
+    public boolean addImage(Image message);
     //删除自己发送的好友印象
-    public boolean DelImage(Message message);
+    public boolean DelImage(Image message);
     //删除接收的的好友印象
     public boolean DelReceiveImage(Message message);
     //显示接受到的好友印象
