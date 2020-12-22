@@ -6,7 +6,29 @@
   align-items: center;
 }
 .comments-body {
-  width: 70%;
-  background: '#fff';
+  width: 600px;
+  height: 400px;
+  background: '#d5d8db';
   opacity: 0.8;
+  display: flex;
+}
+.comment {
+  background: #fff;
+  height: 100px;
+  width: 500px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 40px;
+}
+.comment > div {
+  padding: 0 30px;
+}
+.delete {
+  color: #1890ff
+}
+.delete:hover {
+  cursor: pointer;
 }
