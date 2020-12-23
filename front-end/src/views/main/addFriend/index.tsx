@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Input, message, Button, Modal, Select, Form } from 'antd';
 const { Search } = Input
 import request from '../../../utils/request'
+import Scroll from 'react-custom-scrollbars'
 import './index.scss'
 const { Option } = Select
 const layout = {
@@ -104,22 +105,26 @@ const AddFriend = (props: any) => {
       <div style={{width: "600px", height: "400px", marginTop: "60px"}} className="add-content">
         {
           userContent ? 
-          userContent.map((item:any, index:number) => {
-            return (
-              <div className="add-msg">
-                <div className="add-msg-item">
-                  <img style={{width: "70px", paddingLeft: "10px"}} src={require('../../../assets/imgs/avater.svg')} />
-                  <div style={{height: "50px", paddingLeft: "10px"}}>
-                    <div>昵称：{item.nickname}</div>
-                    <div>性别：{item.sex}</div>
+          <Scroll style={{width: "600px"}}>
+            {
+              userContent.map((item:any, index:number) => {
+                return (
+                  <div className="add-msg" key={index}>
+                    <div className="add-msg-item">
+                      <img style={{width: "70px", paddingLeft: "10px"}} src={require('../../../assets/imgs/avater.svg')} />
+                      <div style={{height: "50px", paddingLeft: "10px"}}>
+                        <div>昵称：{item.nickname}</div>
+                        <div>性别：{item.sex}</div>
+                      </div>
+                    </div>
+                    <div style={{marginRight: "10%"}}>
+                      <Button type="primary" onClick={() => preAdd(item.userId)}>添加好友</Button>
+                    </div>
                   </div>
-                </div>
-                <div style={{marginRight: "10%"}}>
-                  <Button type="primary" onClick={() => preAdd(item.userId)}>添加好友</Button>
-                </div>
-              </div>
-            )
-          }) :
+                )
+              })
+            }
+          </Scroll> :
           ""
         }
       </div>
