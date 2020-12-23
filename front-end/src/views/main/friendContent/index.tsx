@@ -24,7 +24,7 @@ const Mes = (props: any) => {
       if (value.data.code) {
         setMes(value.data.data)
       } else {
-        message.error(value.data.message)
+        // message.error(value.data.message)
       }
     })
   }
@@ -167,6 +167,7 @@ const FriendContent = (props: any) => {
   const [visible1, setVisible1] = useState(false);
   const [curId, setId] = useState()
   const send = async (value: any) => {
+    console.log(value)
     let datas = {
       userId: info.userId,
       sendId: curId,
@@ -181,6 +182,21 @@ const FriendContent = (props: any) => {
       getFriendList()
       setVisible1(false)
       setVisible(false)
+      fetchAdds()
+    } else {
+      message.error(data.message)
+    }
+  }
+
+
+  const refuse = async (value: string, time: string) => {
+    const {data} = await request.post(`http://101.132.134.186:8080/refuseadd`, {
+      userId: info.userId,
+      sendId: value,
+      sendtime: time
+    })
+    if (data.code) {
+      message.success(data.message)
       fetchAdds()
     } else {
       message.error(data.message)
@@ -268,6 +284,9 @@ const FriendContent = (props: any) => {
     const deleteFriend = async () => {
       await request.get(`http://101.132.134.186:8080/DeleteFriend?userId=${info.userId}&friendId=${msg.userId}`).then(async (value) => {
         if (value.data.code) {
+          if (msg.userId === userMsg.userId) {
+            useDispatch({type: CHANGE_USER, state:{show: false}})
+          }
           message.success(value.data.message)
         } else {
           message.error(value.data.message)
@@ -310,7 +329,7 @@ const FriendContent = (props: any) => {
           onCancel={() => setMove(false)}
           width={500}
         >
-          <Form {...layout} onFinish={groupMove}>
+          <Form {...layout} onFinish={groupMove} initialValues={{groupname: "我的好友"}}>
             <Form.Item name="groupname" label="选择分组">
               <Select style={{ width: 120 }}>
                 {
@@ -422,7 +441,7 @@ const FriendContent = (props: any) => {
         onOk={() => {setVisible1(false)}}
         onCancel={() => {setVisible1(false)}}
       >
-        <Form {...layout} onFinish={send}>
+        <Form {...layout} onFinish={send} initialValues={{groupname: "我的好友"}}>
           <Form.Item name="groupname" label="选择列表">
             <Select style={{ width: 120 }}>
               {
@@ -469,7 +488,7 @@ const FriendContent = (props: any) => {
                     <Button type="primary" onClick={() => {setVisible1(true); setId(item.sendid)}}>接受</Button>
                   </div>
                   <div style={{marginLeft: "10px"}}>
-                    <Button type="primary" danger>拒绝</Button>
+                    <Button type="primary" danger onClick={() => {refuse(item.sendid, item.sendtime)}}>拒绝</Button>
                   </div>
                 </div>
               )
@@ -509,7 +528,11 @@ const FriendContent = (props: any) => {
                       <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
                       <div className="msg">
                         <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>
-                          {item.nickname}
+                          {
+                            typeof item.nickname === "string" && item.nickname["length"] > 8 ? 
+                            item.nickname.slice(0, 7) + "..." : 
+                            item.nickname
+                          }
                         </div>
                         <div style={{paddingLeft: "5px"}}>
                           {
@@ -564,7 +587,13 @@ const FriendContent = (props: any) => {
                                       <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
                                     </Popover>
                                       <div className="msg">
-                                        <div style={{padding: "5px 0 0 5px", fontSize: "18px", lineHeight: "1.5"}}>{i.nickname}{ typeof i.note === "string" ? `(${i.note})` : "" }</div>
+                                        <div style={{padding: "5px 0 0 5px", fontSize: "18px", lineHeight: "1.5"}}>
+                                          {
+                                            typeof i.nickname === "string" && i.nickname["length"] > 8 ? 
+                                            i.nickname.slice(0, 5) + "..." : 
+                                            i.nickname
+                                          }{ typeof i.note === "string" ? `(${i.note})` : "" }
+                                        </div>
                                         <div style={{paddingLeft: "5px", lineHeight: "1.5"}}>{ typeof i.signature === "string" ? i.signature : ""}</div>
                                       </div>
                                     </div>

@@ -6,10 +6,12 @@ import Scroll from 'react-custom-scrollbars'
 const Comments = () => {
   let info = JSON.parse(window.localStorage.getItem("userInfo"))
   const [commentList, setList] = useState<any>()
+  const [visible, setV] = useState<boolean>()
   async function getMes() {
     await request.get(`http://101.132.134.186:8080/ShowImage?userId=${info.userId}`).then(async value => {
       if (value.data.code) {
         setList(value.data.data)
+        setV(!Boolean(value.data.imageMark))
       } else {
         message.error(value.data.message)
       }
@@ -30,6 +32,7 @@ const Comments = () => {
     await request.get(`http://101.132.134.186:8080/ChangMark?userId=${info.userId}&note=${note}`).then(async value => {
       if (value.data.code) {
         message.success(value.data.message)
+        getMes()
       } else {
         message.error(value.data.message)
       }
@@ -71,7 +74,7 @@ const Comments = () => {
           </div>
         </Scroll>
         <div style={{position: "fixed", alignItems: "flex-end", top: "70px"}}>
-          对好友可见？<Switch defaultChecked onChange={onChange} />
+          对好友可见？<Switch checked={visible} onChange={onChange} />
         </div>
       </div>
     </div>
