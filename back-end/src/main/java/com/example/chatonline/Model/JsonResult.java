@@ -48,7 +48,7 @@ public class JsonResult extends HashMap<String, Object> implements Serializable 
     }
 
     public static JsonResult logout() {
-        return new JsonResult(LOGOUT, "未登录", null);
+        return new JsonResult(LOGOUT, "太久未访问，请重新登录", null);
     }
 
     //快速生成一个Map键值对
