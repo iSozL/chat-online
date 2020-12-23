@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 public class VarifyController {
     @Autowired
@@ -22,9 +24,9 @@ public class VarifyController {
     @PostMapping("/varify")
     public JsonResult varity(@RequestParam("token") String token)
     {
-        Object message = jwtUtil.parseJWTToken(token);
-        if(message!=null)
-            return  JsonResult.success(message);
+        Map<String,Object> map = jwtUtil.parseJWTToken(token);
+        if(map!=null)
+            return  JsonResult.success(map);
         else
             return  JsonResult.fail("token已失效");
     }

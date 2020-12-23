@@ -173,13 +173,21 @@ public class UserController {
      */
     @CrossOrigin
     @GetMapping("/find")
-    public JsonResult find(@RequestParam("userId") String userId)
+    public JsonResult find(@RequestHeader("token") String token)
     {
-        User data = userService.Query(userId);
-        if(data!=null)
-            return  JsonResult.success(data);
+        String userId =null;
+        Map<String,Object> maptoken=jwtUtil.parseJWTToken(token);
+        if(maptoken==null)
+            return  JsonResult.logout();
         else
-            return JsonResult.fail("未查询到该用户");
+        {
+            userId=(String)maptoken.get("uid");
+            User data = userService.Query(userId);
+            if(data!=null)
+                return  JsonResult.success(data);
+            else
+                return JsonResult.fail("未查询到该用户");
+        }
     }
     /**
      * @api {post} PreAddfriend 预添加好友
