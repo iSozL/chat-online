@@ -2033,7 +2033,7 @@ define({ "api": [
       "examples": [
         {
           "title": "查找成功-示例:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": {\n\n  }\n}",
+          "content": "HTTP/1.1 200 OK\n{\n  \"code\":1,\n  \"message\": \"success\",\n  \"data\": [user1,user2...]\n}",
           "type": "json"
         }
       ]

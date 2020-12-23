@@ -156,9 +156,7 @@ public class UserController {
      *     {
      *       "code":1,
      *       "message": "success",
-     *       "data": {
-     *
-     *       }
+     *       "data": [user1,user2...]
      *     }
      * @apiError {int} status 响应状态码
      * @apiError {String} message 响应描述
@@ -173,21 +171,14 @@ public class UserController {
      */
     @CrossOrigin
     @GetMapping("/find")
-    public JsonResult find(@RequestHeader("token") String token)
+    public JsonResult find(@RequestParam("userId") String userId)
     {
-        String userId =null;
-        Map<String,Object> maptoken=jwtUtil.parseJWTToken(token);
-        if(maptoken==null)
-            return  JsonResult.logout();
+        ArrayList<User> data = userService.Query(userId);
+        if(data!=null)
+            return  JsonResult.success(data);
         else
-        {
-            userId=(String)maptoken.get("uid");
-            User data = userService.Query(userId);
-            if(data!=null)
-                return  JsonResult.success(data);
-            else
-                return JsonResult.fail("未查询到该用户");
-        }
+            return JsonResult.fail("未查询到该用户");
+
     }
     /**
      * @api {post} PreAddfriend 预添加好友
