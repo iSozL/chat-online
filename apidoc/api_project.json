@@ -1,4 +1,3 @@
-
 {
   "name": "api文档",
   "version": "0.1.0",
@@ -10,9 +9,8 @@
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2020-12-23T01:52:16.772Z",
+    "time": "2020-12-24T15:43:53.903Z",
     "url": "https://apidocjs.com",
     "version": "0.25.0"
   }
-
 }
