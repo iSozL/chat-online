@@ -1,8 +1,7 @@
 package com.example.chatonline.controller;
 
 import com.example.chatonline.Model.JsonResult;
-import com.example.chatonline.Service.UserService;
-import com.example.chatonline.Util.DBUtil;
+import com.example.chatonline.Service.UserServiceImpl;
 import com.example.chatonline.Util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,9 +15,7 @@ public class VarifyController {
     @Autowired
     private JWTUtil jwtUtil;
     @Autowired
-    private DBUtil dbUtil;
-    @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     @Autowired
     private  JsonResult jsonResult;
     @PostMapping("/varify")

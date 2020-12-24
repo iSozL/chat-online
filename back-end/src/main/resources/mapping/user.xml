@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.chatonline.Dao.UserDao">
+
     <select id="Login" resultType="com.example.chatonline.Model.User">
         select * from user where userId = #{id} and password=#{password}
     </select>
+
+
     <select id="QueryUser" resultType="com.example.chatonline.Model.User">
-        select userId,sex,nickname from user where userId = #{id} or nickname = #{id}
+        select userId,sex,nickname from user where userId = #{id} or nickname=#{id}
     </select>
+    <select id="QueryUser2" resultType="com.example.chatonline.Model.User">
+        select userId,sex,nickname from user where userId = #{id}
+    </select>
+
+
+
     <insert id="Register" >
         insert into user(userId,nickname,password) value(#{userId},#{nickname},#{password})
     </insert>
+
     <select id="GroupFriends" resultType="map">
         select user.nickname,user.userId,user.sex,user.age,user.address,user.phone,user.signature,friendrelation.note,friendrelation.groupname,friendrelation.evaluate
         from user,friendrelation
         where user.userId in (select friendId from friendrelation where userId = #{userId}) and friendrelation.userId = #{userId} and friendrelation.friendId = user.userId
     </select>
+
     <select id="ShowGroup" resultType="com.example.chatonline.Model.Group">
         select groupname,count_num from friendgroup where userId = #{id}
     </select>
+
     <insert id="CreatGroup">
         insert into friendgroup(userId,groupname,count_num,flag)
         value (#{id},#{groupname},0,#{type});
@@ -35,9 +47,11 @@
         from  friendrelation
         where userId = #{userId} and groupname = #{groupname}
     </select>
+
     <select id="FindRelation" resultType="boolean">
         select count(*) from friendrelation where userId = #{userId} and friendId=#{friendId}
     </select>
+
 <!--    <insert id="AddFriend">-->
 <!--        insert into friendrelation(userId,friendId,groupname,note) value (#{userId},#{friendId},#{groupname},#{note})-->
 <!--    </insert>-->
