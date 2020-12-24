@@ -172,6 +172,7 @@ public class UserController2 {
      *       "data":null
      *     }
      */
+
     @GetMapping("/ShowGroup")
     @CrossOrigin
     public JsonResult ShowGroup(@RequestParam("userId") String userId)
@@ -184,6 +185,7 @@ public class UserController2 {
         else
             return JsonResult.error("未能查询到分组信息",null);
     }
+
     /**
      *
      * @api {post} updateinfo 编辑个人资料

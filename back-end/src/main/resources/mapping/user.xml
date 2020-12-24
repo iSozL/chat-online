@@ -60,9 +60,11 @@
 <!--        set count_num=count_num+1-->
 <!--        where userId=#{id} and groupname=#{groupname}-->
 <!--    </update>-->
+
     <select id="AddFriend"  resultType="Integer" statementType="CALLABLE">
         call Addfriend(#{userId},#{friendId},#{groupnameA},#{groupnameB},#{noteA},#{noteB},#{flag,mode=OUT,jdbcType=INTEGER})
     </select>
+
     <update id="GroupMove">
         update friendrelation
         set groupname=#{postGroupname}

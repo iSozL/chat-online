@@ -434,10 +434,8 @@ public class UserController {
         Message message = new Message();
         message.setSendid(sendId);
         message.setReciveid(userId);
-
         //获取发送方的备注和分组信息
         map = messageServiceImpl.FindVerifyMessage(message);
-
         int flag;
         flag= userServiceImpl.AddFriend(userId,sendId,note,groupname,(String) map.get("note"),(String) map.get("groupname"));
         if (flag==1) {
