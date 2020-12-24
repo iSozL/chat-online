@@ -293,6 +293,47 @@ public class UserController2 {
         else
             return JsonResult.fail("显示失败");
     }
+
+    /**
+     *
+     * @api {post} updatepassword 修改密码
+     * @apiDescription  修改密码接口
+     * @apiGroup 用户
+     * @apiName 修改密码
+     * @apiversion 0.1.0
+     *
+     * @apiParam {String} userId 用户ID
+     * @apiParam {String} oldpassword 原密码
+     * @apiParam {String} newpassword 新密码
+     * @apiSuccess {int} status 响应状态码
+     * @apiSuccess {String} message 响应描述
+     * @apiSuccess {String} data 返回相关信息，成功的时候才存在
+     *
+     * @apiSuccessExample {json} 修改成功-示例:
+     *     HTTP/1.1 200 OK
+     *     "message": "success",
+     *     "data":"修改成功",
+     *     "code": 1
+     *     }
+     * @apiError {int} status 响应状态码
+     * @apiError {String} message 响应描述
+     * @apiErrorExample {json} 原密码错误-示例：
+     *      HTTP/1.1 200 OK
+     *     {
+     *       "code":0,
+     *       "message": "原密码错误",
+     *       "data":null
+     *     }
+     * @apiError {int} status 响应状态码
+     * @apiError {String} message 响应描述
+     * @apiErrorExample {json} 新密码与原密码一致-示例：
+     *      HTTP/1.1 200 OK
+     *     {
+     *       "code":-1,
+     *       "message": "新密码与原密码一致",
+     *       "data":null
+     *     }
+     */
     @CrossOrigin
     @PostMapping("/updatepassword")
     public JsonResult UpdatePassword(@RequestBody String Json)

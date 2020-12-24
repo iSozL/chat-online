@@ -1,4 +1,3 @@
-
 [
   {
     "type": "get",
@@ -1486,6 +1485,13 @@
           },
           {
             "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "imageMark",
+            "description": "<p>权限信息</p>"
+          },
+          {
+            "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "message",
@@ -1503,7 +1509,7 @@
       "examples": [
         {
           "title": "有好友印象-示例:",
-          "content": "    HTTP/1.1 200 OK\n    {\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"123\",\n            \"sendtime\": \"2020-12-21 12:06:26\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"2020/12/21/12/06/25\",\n            \"sendtime\": \"2020-12-21 12:07:09\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"2020/12/21/12/06/25\",\n            \"sendtime\": \"2020-12-21 13:35:03\",\n            \"flag\": 0\n        }\n    ],\n    \"code\": 1\n}",
+          "content": "    HTTP/1.1 200 OK\n    {\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": [\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"123\",\n            \"sendtime\": \"2020-12-21 12:06:26\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"0\",\n            \"friendId\": \"101\",\n            \"message\": \"2020/12/21/12/06/25\",\n            \"sendtime\": \"2020-12-21 12:07:09\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"你好\",\n            \"sendtime\": \"2020-12-22 12:01:23\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"1\",\n            \"sendtime\": \"2020-12-22 12:08:15\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"11\",\n            \"sendtime\": \"2020-12-22 12:08:16\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"111\",\n            \"sendtime\": \"2020-12-22 12:08:17\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"111\",\n            \"sendtime\": \"2020-12-22 12:08:18\",\n            \"flag\": 0\n        },\n        {\n            \"userId\": \"85561384\",\n            \"friendId\": \"101\",\n            \"message\": \"111\",\n            \"sendtime\": \"2020-12-22 12:08:20\",\n            \"flag\": 0\n        }\n    ],\n    \"imageMark\": 0\n}",
           "type": "json"
         }
       ]
@@ -1524,13 +1530,20 @@
             "optional": false,
             "field": "message",
             "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "imageMark",
+            "description": "<p>权限信息</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "无好友印象-示例：",
-          "content": "HTTP/1.1 200 OK\n{\n \"message\": \"暂无印象\",\n \"data\": null,\n \"code\": 0\n}",
+          "content": "   HTTP/1.1 200 OK\n   {\n    \"code\": 1,\n    \"message\": \"success\",\n    \"data\": \"暂无印象\",\n    \"imageMark\": 1\n}",
           "type": "json"
         }
       ]
@@ -1806,6 +1819,110 @@
     },
     "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController4.java",
     "groupTitle": "消息"
+  },
+  {
+    "type": "post",
+    "url": "updatepassword",
+    "title": "修改密码",
+    "description": "<p>修改密码接口</p>",
+    "group": "用户",
+    "name": "修改密码",
+    "version": "0.1.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "userId",
+            "description": "<p>用户ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "oldpassword",
+            "description": "<p>原密码</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "newpassword",
+            "description": "<p>新密码</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "data",
+            "description": "<p>返回相关信息，成功的时候才存在</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "修改成功-示例:",
+          "content": "HTTP/1.1 200 OK\n\"message\": \"success\",\n\"data\":\"修改成功\",\n\"code\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "type": "int",
+            "optional": false,
+            "field": "status",
+            "description": "<p>响应状态码</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>响应描述</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "原密码错误-示例：",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":0,\n  \"message\": \"原密码错误\",\n  \"data\":null\n}",
+          "type": "json"
+        },
+        {
+          "title": "新密码与原密码一致-示例：",
+          "content": " HTTP/1.1 200 OK\n{\n  \"code\":-1,\n  \"message\": \"新密码与原密码一致\",\n  \"data\":null\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController2.java",
+    "groupTitle": "用户"
   },
   {
     "type": "get",
@@ -2380,5 +2497,4 @@
     "filename": "back-end/src/main/java/com/example/chatonline/controller/UserController.java",
     "groupTitle": "登录注册"
   }
-
 ]
