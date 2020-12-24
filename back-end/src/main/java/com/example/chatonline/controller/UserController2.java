@@ -4,27 +4,23 @@ import com.alibaba.fastjson.JSON;
 import com.example.chatonline.Config.DateConverterConfig;
 import com.example.chatonline.Model.Group;
 import com.example.chatonline.Model.JsonResult;
-import com.example.chatonline.Model.Message;
 import com.example.chatonline.Model.User;
-import com.example.chatonline.Service.MessageService;
-import com.example.chatonline.Service.UserService;
+import com.example.chatonline.Service.MessageServiceImpl;
+import com.example.chatonline.Service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
 import java.util.*;
 
 @RestController
 @CrossOrigin
 public class UserController2 {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     @Autowired
     private JsonResult jsonResult;
     @Autowired
-    private MessageService messageService;
+    private MessageServiceImpl messageServiceImpl;
     @Autowired
     private DateConverterConfig dateConverterConfig;
     /**
@@ -67,8 +63,8 @@ public class UserController2 {
     @GetMapping("/ShowFriendLastMessage")
     @CrossOrigin
     public JsonResult ShowFriendLastMessage(@RequestParam("userId") String userId) {
-        ArrayList<Map<String, Object>> sendmessages = messageService.ShowsendLastMessage(userId);
-        ArrayList<Map<String, Object>> recivemessages = messageService.ShowreciveLastMessage(userId);
+        ArrayList<Map<String, Object>> sendmessages = messageServiceImpl.ShowsendLastMessage(userId);
+        ArrayList<Map<String, Object>> recivemessages = messageServiceImpl.ShowreciveLastMessage(userId);
         ArrayList<Map<String, Object>> needmessages=new ArrayList<>();
 
 
@@ -180,7 +176,7 @@ public class UserController2 {
     @CrossOrigin
     public JsonResult ShowGroup(@RequestParam("userId") String userId)
     {
-        ArrayList<Group> groupinfo = userService.ShowGroup(userId);
+        ArrayList<Group> groupinfo = userServiceImpl.ShowGroup(userId);
         if(groupinfo!=null)
         {
             return JsonResult.success(groupinfo);
@@ -236,7 +232,7 @@ public class UserController2 {
         String signature = (String) map.get("signature");
         String phone = (String) map.get("phone");
         int age= (int)map.get("age");
-        if(userService.UpdateInfo(userId,nickname,sex,age,signature,address,phone))
+        if(userServiceImpl.UpdateInfo(userId,nickname,sex,age,signature,address,phone))
         {
             return JsonResult.success("修改成功");
         }
@@ -287,7 +283,7 @@ public class UserController2 {
     @GetMapping("/ShowInfo")
     public JsonResult ShowInfo(@RequestParam("userId") String userId)
     {
-        User user=userService.ShowInfo(userId);
+        User user= userServiceImpl.ShowInfo(userId);
         if(user!=null)
         {
             return JsonResult.success(user);

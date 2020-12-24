@@ -1,8 +1,8 @@
 package com.example.chatonline.controller;
 
 import com.example.chatonline.Model.JsonResult;
-import com.example.chatonline.Service.MessageService;
-import com.example.chatonline.Service.UserService;
+import com.example.chatonline.Service.MessageServiceImpl;
+import com.example.chatonline.Service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +16,11 @@ import java.util.Map;
 @CrossOrigin
 public class UserController3 {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     @Autowired
     private JsonResult jsonResult;
     @Autowired
-    private MessageService messageService;
+    private MessageServiceImpl messageServiceImpl;
     /**
      * @api {get} GroupMove 好友移动
      * @apiDescription  好友移动接口
@@ -62,7 +62,7 @@ public class UserController3 {
     public JsonResult GroupMove(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("preGroupname") String preGroupname,@RequestParam("postGroupname") String postGroupname)
     {
 
-        if(userService.GroupMove(userId,friendId,postGroupname))
+        if(userServiceImpl.GroupMove(userId,friendId,postGroupname))
             return  JsonResult.success("移动好友分组成功");
         else
             return JsonResult.fail("好友分组移动失败");
@@ -113,7 +113,7 @@ public class UserController3 {
     @GetMapping("/GroupFriends")
     public JsonResult GroupFriends(@RequestParam("userId") String userId)
     {
-        ArrayList<Map<String,Object>> users = userService.GroupFriends(userId);
+        ArrayList<Map<String,Object>> users = userServiceImpl.GroupFriends(userId);
 
         if(users!=null)
             return  JsonResult.success(users);
@@ -159,7 +159,7 @@ public class UserController3 {
     @GetMapping("/CreatGroup")
     public JsonResult CreatGroup(@RequestParam("userId") String userId,@RequestParam("groupname") String groupname)
     {
-        boolean date = userService.CreatGroup(userId,groupname,0);
+        boolean date = userServiceImpl.CreatGroup(userId,groupname,0);
         if(date)
             return  JsonResult.success("添加好友分组成功");
         else
@@ -210,19 +210,19 @@ public class UserController3 {
     @GetMapping("/DelGroup")
     public JsonResult DelGroup(@RequestParam("userId") String userId,@RequestParam("groupname") String groupname)
     {
-        String defGroupname = userService.getDefGroupname(userId);
+        String defGroupname = userServiceImpl.getDefGroupname(userId);
         if (defGroupname.equals(groupname)){
             return JsonResult.fail("不能删除系统默认分组");
         }
         else {
-            ArrayList<Map<String, Object>> friendIdList = userService.getFriendsId(userId, groupname);
+            ArrayList<Map<String, Object>> friendIdList = userServiceImpl.getFriendsId(userId, groupname);
             for (int i = 0; i < friendIdList.size(); i++) {
                 String friendId = (String) friendIdList.get(i).get("friendId");
-                boolean flag = userService.GroupMove(userId, friendId, defGroupname);
+                boolean flag = userServiceImpl.GroupMove(userId, friendId, defGroupname);
                 if (!flag)
                     return JsonResult.fail("删除好友分组失败");
             }
-            boolean date = userService.DelGroup(userId, groupname);
+            boolean date = userServiceImpl.DelGroup(userId, groupname);
             if (date)
                 return JsonResult.success("删除好友分组成功");
             else
@@ -268,7 +268,7 @@ public class UserController3 {
     @GetMapping("/ChangeNote")
     public JsonResult ChangeNote(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("note") String note)
     {
-        boolean date = userService.ChangeNote(userId,friendId,note);
+        boolean date = userServiceImpl.ChangeNote(userId,friendId,note);
         if(date)
             return JsonResult.success("更改好友备注成功");
         else

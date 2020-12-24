@@ -15,6 +15,7 @@ import java.util.Map;
 public interface UserDao {
     public User Login(String id,String password);
     public ArrayList<User> QueryUser(String  id);
+    public User QueryUser2(String id);
     public Boolean Register(User user);
     public ArrayList<Map<String,Object>> GroupFriends(String userId);
     public Boolean FindRelation(String userId,String friendId);

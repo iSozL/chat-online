@@ -2,12 +2,10 @@ package com.example.chatonline.controller;
 
 import com.example.chatonline.Config.DateConverterConfig;
 import com.example.chatonline.Model.JsonResult;
-import com.example.chatonline.Model.Message;
 import com.example.chatonline.Model.Image;
-import com.example.chatonline.Service.MessageService;
-import com.example.chatonline.Service.UserService;
+import com.example.chatonline.Service.MessageServiceImpl;
+import com.example.chatonline.Service.UserServiceImpl;
 import com.example.chatonline.Util.JWTUtil;
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +17,11 @@ public class UserController4 {
     @Autowired
     private JWTUtil jwtUtil;
     @Autowired
-    private  UserService userService;
+    private UserServiceImpl userServiceImpl;
     @Autowired
     private  JsonResult jsonResult;
     @Autowired
-    private MessageService messageService;
+    private MessageServiceImpl messageServiceImpl;
     @Autowired
     private DateConverterConfig dateConverterConfig;
 
@@ -67,7 +65,7 @@ public class UserController4 {
         message.setUserId(userId);
         message.setFriendId(friendId);
         message.setMessage(mes);
-        if (messageService.addImage(message))
+        if (messageServiceImpl.addImage(message))
             return JsonResult.success("留言成功");
         else
             return JsonResult.fail("留言失败");
@@ -112,7 +110,7 @@ public class UserController4 {
         message.setFriendId(friendId);
         //Date date=dateConverterConfig.convert(sendtime);
         message.setSendtime(dateConverterConfig.convert(time));
-        boolean i = messageService.DelImage(message);
+        boolean i = messageServiceImpl.DelImage(message);
         if (i)
             return JsonResult.success("删除成功");
         else
@@ -158,7 +156,7 @@ public class UserController4 {
         message.setFriendId(userId);
         //Date date=dateConverterConfig.convert(sendtime);
         message.setSendtime(dateConverterConfig.convert(time));
-        boolean i = messageService.DelImage(message);
+        boolean i = messageServiceImpl.DelImage(message);
         if (i)
             return JsonResult.success("删除成功");
         else
@@ -261,8 +259,8 @@ public class UserController4 {
     {
 
         String receiveId = userId;
-        ArrayList<Image> images = messageService.ShowImage(receiveId);
-        int imageMark = messageService.GetImageMark(userId);
+        ArrayList<Image> images = messageServiceImpl.ShowImage(receiveId);
+        int imageMark = messageServiceImpl.GetImageMark(userId);
         if(images.size()!=0)
         {
             return JsonResult.success(images).put("imageMark",imageMark);
@@ -305,7 +303,7 @@ public class UserController4 {
     @GetMapping("/ChangMark")
     public JsonResult ChangMark(@RequestParam("userId") String userId,@RequestParam("note") String note)
     {
-        boolean date = messageService.ChangMark(userId,note);
+        boolean date = messageServiceImpl.ChangMark(userId,note);
         if(date)
             return JsonResult.success("更改好印象权限成功");
         else
@@ -359,10 +357,10 @@ public class UserController4 {
     @GetMapping("/ShowFriendImage")
     public  JsonResult ShowFriendImage(@RequestParam("friendId") String friendId)
     {
-        Integer integer = messageService.GetImageMark(friendId);
+        Integer integer = messageServiceImpl.GetImageMark(friendId);
         if(integer == 0){
             String receiveId = friendId;
-            ArrayList<Image> images = messageService.ShowImage(receiveId);
+            ArrayList<Image> images = messageServiceImpl.ShowImage(receiveId);
             if(images.size()!=0)
             {
                 return JsonResult.success(images);
