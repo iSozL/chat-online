@@ -28,7 +28,7 @@ public class UserService {
         return userDao.Login(id,password);
     }
     //查询用户
-    public User Query(String  id) {return userDao.QueryUser(id);}
+    public ArrayList<User> Query(String  id) {return userDao.QueryUser(id);}
     //查找是否为好友关系
     public Boolean FindRelation(String id, String friendId)
     {

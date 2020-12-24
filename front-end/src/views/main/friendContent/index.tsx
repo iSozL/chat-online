@@ -528,7 +528,11 @@ const FriendContent = (props: any) => {
                       <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
                       <div className="msg">
                         <div style={{padding: "5px 0 0 5px", fontSize: "18px"}}>
-                          {item.nickname}
+                          {
+                            typeof item.nickname === "string" && item.nickname["length"] > 8 ? 
+                            item.nickname.slice(0, 7) + "..." : 
+                            item.nickname
+                          }
                         </div>
                         <div style={{paddingLeft: "5px"}}>
                           {
@@ -583,7 +587,13 @@ const FriendContent = (props: any) => {
                                       <img style={{width: "50px"}} src={require('../../../assets/imgs/avater.svg')} />
                                     </Popover>
                                       <div className="msg">
-                                        <div style={{padding: "5px 0 0 5px", fontSize: "18px", lineHeight: "1.5"}}>{i.nickname}{ typeof i.note === "string" ? `(${i.note})` : "" }</div>
+                                        <div style={{padding: "5px 0 0 5px", fontSize: "18px", lineHeight: "1.5"}}>
+                                          {
+                                            typeof i.nickname === "string" && i.nickname["length"] > 8 ? 
+                                            i.nickname.slice(0, 5) + "..." : 
+                                            i.nickname
+                                          }{ typeof i.note === "string" ? `(${i.note})` : "" }
+                                        </div>
                                         <div style={{paddingLeft: "5px", lineHeight: "1.5"}}>{ typeof i.signature === "string" ? i.signature : ""}</div>
                                       </div>
                                     </div>

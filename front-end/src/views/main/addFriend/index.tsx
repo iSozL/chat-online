@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Input, message, Button, Modal, Select, Form } from 'antd';
 const { Search } = Input
 import request from '../../../utils/request'
+import Scroll from 'react-custom-scrollbars'
 import './index.scss'
 const { Option } = Select
 const layout = {
@@ -13,17 +14,19 @@ const AddFriend = (props: any) => {
   const [userContent, setContent] = useState<any>()
   const [visible, setVisible] = useState<boolean>(false);
   const [userGroup, setGroup] = useState<any>([{groupname: "请等待"}])
+  const [curId, setId] = useState<string>()
   const select = (value: string) => {
     console.log(value)
   }
-  const preAdd = async () => {
+  const preAdd = async (userId: string) => {
     const {data} = await request.post(`http://101.132.134.186:8080/PreAddfriend`, {
       userId: info.userId,
-      friendId: userContent.userId
+      friendId: userId
     })
     if(data.code) {
       console.log(typeof(data.data[0].groupname))
       setGroup(data.data)
+      setId(userId)
       setVisible(true)
     } else {
       message.error(data.message)
@@ -42,7 +45,7 @@ const AddFriend = (props: any) => {
   const send = async (value: any) => {
     let datas = {
       userId: info.userId,
-      friendId: userContent.userId,
+      friendId: curId,
       ...value
     }
     const {data} = await request.post('http://101.132.134.186:8080/addfriend', {
@@ -53,7 +56,7 @@ const AddFriend = (props: any) => {
       setVisible(false)
       console.log(props.socket)
       props.socket.send(JSON.stringify({
-        receiver: userContent.userId,
+        receiver: curId,
         flag: 1
       }))
     } else {
@@ -63,7 +66,7 @@ const AddFriend = (props: any) => {
 
   return (
     <div className="search-container">
-      <Search placeholder="请输入查找的 ID" onSearch={onSearch} style={{width: 600}} />
+      <Search placeholder="请输入查找的 ID / 昵称" onSearch={onSearch} style={{width: 600}} />
       <Modal
         title="添加好友"
         centered
@@ -102,18 +105,26 @@ const AddFriend = (props: any) => {
       <div style={{width: "600px", height: "400px", marginTop: "60px"}} className="add-content">
         {
           userContent ? 
-          <div className="add-msg">
-            <div className="add-msg-item">
-              <img style={{width: "70px", paddingLeft: "10px"}} src={require('../../../assets/imgs/avater.svg')} />
-              <div style={{height: "50px", paddingLeft: "10px"}}>
-                <div>昵称：{userContent.nickname}</div>
-                <div>性别：{userContent.sex}</div>
-              </div>
-            </div>
-            <div style={{marginRight: "10%"}}>
-              <Button type="primary" onClick={preAdd}>添加好友</Button>
-            </div>
-          </div> :
+          <Scroll style={{width: "600px"}}>
+            {
+              userContent.map((item:any, index:number) => {
+                return (
+                  <div className="add-msg" key={index}>
+                    <div className="add-msg-item">
+                      <img style={{width: "70px", paddingLeft: "10px"}} src={require('../../../assets/imgs/avater.svg')} />
+                      <div style={{height: "50px", paddingLeft: "10px"}}>
+                        <div>昵称：{item.nickname}</div>
+                        <div>性别：{item.sex}</div>
+                      </div>
+                    </div>
+                    <div style={{marginRight: "10%"}}>
+                      <Button type="primary" onClick={() => preAdd(item.userId)}>添加好友</Button>
+                    </div>
+                  </div>
+                )
+              })
+            }
+          </Scroll> :
           ""
         }
       </div>

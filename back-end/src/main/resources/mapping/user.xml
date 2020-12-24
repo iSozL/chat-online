@@ -5,7 +5,7 @@
         select * from user where userId = #{id} and password=#{password}
     </select>
     <select id="QueryUser" resultType="com.example.chatonline.Model.User">
-        select userId,sex,nickname from user where userId = #{id}
+        select userId,sex,nickname from user where userId = #{id} or nickname = #{id}
     </select>
     <insert id="Register" >
         insert into user(userId,nickname,password) value(#{userId},#{nickname},#{password})
