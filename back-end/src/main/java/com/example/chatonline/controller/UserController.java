@@ -5,8 +5,8 @@ import com.example.chatonline.Model.Group;
 import com.example.chatonline.Model.JsonResult;
 import com.example.chatonline.Model.Message;
 import com.example.chatonline.Model.User;
-import com.example.chatonline.Service.MessageService;
-import com.example.chatonline.Service.UserService;
+import com.example.chatonline.Service.MessageServiceImpl;
+import com.example.chatonline.Service.UserServiceImpl;
 import com.example.chatonline.Util.COMUtil;
 import com.example.chatonline.Util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +25,11 @@ public class UserController {
     @Autowired
     private JWTUtil jwtUtil;
     @Autowired
-    private  UserService userService;
+    private UserServiceImpl userServiceImpl;
     @Autowired
     private  JsonResult jsonResult;
     @Autowired
-    private MessageService messageService;
+    private MessageServiceImpl messageServiceImpl;
     @Autowired
     private DateConverterConfig dateConverterConfig;
 
@@ -67,15 +67,14 @@ public class UserController {
      */
     @CrossOrigin
     @PostMapping("/login")
-//    @ResponseBody
     public JsonResult login2(@RequestBody String Json,
                              HttpServletResponse response) throws Exception {
         Map<String,Object> map = (Map)JSON.parse(Json);
         String userId = (String) map.get("userId");
         String password = (String) map.get("password");
-        User user = userService.login(userId,password);
+        User user = userServiceImpl.login(userId,password);
         if (user != null) {
-            user.setGroups(userService.ShowGroup(userId));
+            user.setGroups(userServiceImpl.ShowGroup(userId));
             String token = jwtUtil.creatJwtToken(userId,password);
             response.addHeader("token",token);
             return jsonResult.success(user);
@@ -128,12 +127,14 @@ public class UserController {
         Boolean flag;
         user.setNickname(nickname);
         user.setPassword(password);
+        //直至ID唯一
         do {
-            user.setUserId(COMUtil.initUserId()+"");
-            flag = userService.register(user);
+            int tmp=COMUtil.initUserId();
+            user.setUserId(tmp+"");
+            flag = userServiceImpl.register(user);
         }while (!flag);
         //初始分组
-        userService.CreatGroup(user.getUserId(),"我的好友",1);
+        userServiceImpl.CreatGroup(user.getUserId(),"我的好友",1);
         return JsonResult.success(user.getUserId());
     }
 
@@ -173,7 +174,7 @@ public class UserController {
     @GetMapping("/find")
     public JsonResult find(@RequestParam("userId") String userId)
     {
-        ArrayList<User> data = userService.Query(userId);
+        ArrayList<User> data = userServiceImpl.Query(userId);
         if(data!=null)
             return  JsonResult.success(data);
         else
@@ -224,17 +225,17 @@ public class UserController {
         Map<String,Object> map = (Map)JSON.parse(Json);
         String userId= (String) map.get("userId");
         String friendId = (String) map.get("friendId");
-        if(userService.FindRelation(userId,friendId))
+        if(userId.equals(friendId))
+        {
+            return JsonResult.error("不能添加自己为好友",null);
+        }
+        if(userServiceImpl.FindRelation(userId,friendId))
         {
             return JsonResult.fail("该用户已在好友列表中");
         }
-        ArrayList<Group> groupinfo = userService.ShowGroup(userId);
-        if(groupinfo!=null)
-        {
+        ArrayList<Group> groupinfo = userServiceImpl.ShowGroup(userId);
             return JsonResult.success(groupinfo);
-        }
-        else
-            return JsonResult.error("未能查询到分组信息",null);
+
     }
 
     /**
@@ -284,8 +285,8 @@ public class UserController {
         message.setMessagetext((String) map.get("message"));
         message.setSendtime(new Date());
         //删除之前的验证消息
-        messageService.DelVerifyMessage(message);
-        if(messageService.AddVerifyMessage(message,note,groupname))
+        messageServiceImpl.DelVerifyMessage(message);
+        if(messageServiceImpl.AddVerifyMessage(message,note,groupname))
             return JsonResult.success("发送成功");
         else
             return JsonResult.fail("发送失败");
@@ -350,7 +351,7 @@ public class UserController {
     {
         Map<String,Object> map = (Map)JSON.parse(Json);
         String userId = (String) map.get("userId");
-        ArrayList<Message> messages = messageService.ShowVerifyMessage(userId);
+        ArrayList<Message> messages = messageServiceImpl.ShowVerifyMessage(userId);
         if(messages.size()!=0)
         {
             return JsonResult.success(messages);
@@ -435,10 +436,10 @@ public class UserController {
         message.setReciveid(userId);
 
         //获取发送方的备注和分组信息
-        map = messageService.FindVerifyMessage(message);
+        map = messageServiceImpl.FindVerifyMessage(message);
 
         int flag;
-        flag=userService.AddFriend(userId,sendId,note,groupname,(String) map.get("note"),(String) map.get("groupname"));
+        flag= userServiceImpl.AddFriend(userId,sendId,note,groupname,(String) map.get("note"),(String) map.get("groupname"));
         if (flag==1) {
             return  JsonResult.success("已添加");
         } else {
@@ -488,7 +489,7 @@ public class UserController {
         String sendId = (String) map.get("sendId");
         Date sendtime = dateConverterConfig.convert((String) map.get("sendtime"));
         boolean flag;
-        flag = messageService.Refuseadd(userId,sendId,sendtime);
+        flag = messageServiceImpl.Refuseadd(userId,sendId,sendtime);
         if(flag)
         {
             return JsonResult.success("已拒绝");
@@ -542,7 +543,7 @@ public class UserController {
         String sendId = (String) map.get("sendId");
         Date sendtime = dateConverterConfig.convert((String) map.get("sendtime"));
         boolean flag;
-        flag = messageService.DeleteVerifyMessage(userId,sendId,sendtime);
+        flag = messageServiceImpl.DeleteVerifyMessage(userId,sendId,sendtime);
         if(flag)
         {
             return JsonResult.success("删除成功");

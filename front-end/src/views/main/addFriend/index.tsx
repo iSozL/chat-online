@@ -23,7 +23,7 @@ const AddFriend = (props: any) => {
       userId: info.userId,
       friendId: userId
     })
-    if(data.code) {
+    if(data.code === '1') {
       console.log(typeof(data.data[0].groupname))
       setGroup(data.data)
       setId(userId)

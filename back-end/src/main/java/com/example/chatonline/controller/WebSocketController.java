@@ -3,9 +3,7 @@ package com.example.chatonline.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.chatonline.Model.Message;
-import com.example.chatonline.Service.MessageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import com.example.chatonline.Service.MessageServiceImpl;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
@@ -17,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @ServerEndpoint(value = "/websocket/{userId}")
 public class WebSocketController {
 
-    private MessageService messageService = new MessageService();
+    private MessageServiceImpl messageServiceImpl = new MessageServiceImpl();
 
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
@@ -82,7 +80,7 @@ public class WebSocketController {
         inmessage.setSendid(userId);
         inmessage.setMessagetext(sendMessage);
         inmessage.setSendtime(new Date());
-        messageService.InsertMessage(inmessage);
+        messageServiceImpl.InsertMessage(inmessage);
         try {
             if (webSocketMap.get(reviceUserid) != null) {
                 webSocketMap.get(reviceUserid).sendMessage(userId+"|"+sendMessage);
