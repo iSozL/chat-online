@@ -96,4 +96,9 @@
     <update id="ChangeNote">
         update friendrelation set note = #{note} where userId = #{userId} AND friendId=#{friendId}
     </update>
+    <update id="UpdatePassword">
+        update user
+        set password=#{newpassword}
+        where userId = #{userId} and password=#{oldpassword}
+    </update>
 </mapper>
