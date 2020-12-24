@@ -266,10 +266,12 @@ public class UserController3 {
      */
     @CrossOrigin
     @GetMapping("/ChangeNote")
-    public JsonResult ChangeNote(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("note") String note)
-    {
-        boolean date = userServiceImpl.ChangeNote(userId,friendId,note);
-        if(date)
+    public JsonResult ChangeNote(@RequestParam("userId") String userId,@RequestParam("friendId") String friendId,@RequestParam("note") String note) {
+        if (note.equals("undefined")){
+            note=null;
+        }
+        boolean date = userServiceImpl.ChangeNote(userId, friendId, note);
+        if (date)
             return JsonResult.success("更改好友备注成功");
         else
             return JsonResult.fail("更改好友备注失败");
