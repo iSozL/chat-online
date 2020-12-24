@@ -16,9 +16,11 @@
     <insert id="AddVerifyMessage">
         insert into veritymessage() value(#{message.sendid},#{message.reciveid},#{message.sendtime},#{message.messagetext},0,#{groupname},#{note})
     </insert>
+
     <select id="ShowVerifyMessage" resultType="com.example.chatonline.Model.Message">
         select sendId,reciveId,sendtime,message messagetext,messagetype texttype from veritymessage where reciveId=#{reciveId}
     </select>
+
     <update id="HandleVerifyMessage">
         update veritymessage
         set messagetype=#{type}
@@ -33,6 +35,7 @@
         delete from veritymessage
         where reciveId=#{userId} and sendId=#{sendId} and sendtime=#{sendtime}
     </delete>
+
     <select id="ShowsendLastMessage" resultType="map">
         select nickname,messagetxt,sendtime,reciveId,sendId from user,lastfriendmessage
         where sendId=#{userId} and reciveId=user.userId
@@ -41,6 +44,7 @@
         select nickname,messagetxt,sendtime,sendId,reciveId from lastfriendmessage,user
         where reciveId=#{userId} and sendId=user.userId
     </select>
+
     <select id="DeleteAllMessage" resultType="Integer" statementType="CALLABLE">
         CALL Deletemessage(#{userId},#{friendId},#{flag,mode=OUT,jdbcType=INTEGER});
     </select>

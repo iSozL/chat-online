@@ -172,6 +172,7 @@ public class UserController2 {
      *       "data":null
      *     }
      */
+
     @GetMapping("/ShowGroup")
     @CrossOrigin
     public JsonResult ShowGroup(@RequestParam("userId") String userId)
@@ -184,6 +185,7 @@ public class UserController2 {
         else
             return JsonResult.error("未能查询到分组信息",null);
     }
+
     /**
      *
      * @api {post} updateinfo 编辑个人资料
@@ -290,6 +292,25 @@ public class UserController2 {
         }
         else
             return JsonResult.fail("显示失败");
+    }
+    @CrossOrigin
+    @PostMapping("/updatepassword")
+    public JsonResult UpdatePassword(@RequestBody String Json)
+    {
+        Map<String,Object> map = (Map)JSON.parse(Json);
+        String userId = (String) map.get("userId");
+        String oldpassword= (String) map.get("oldpassword");
+        String newpassword = (String) map.get("newpassword");
+        if(oldpassword.equals(newpassword))
+            return JsonResult.error("新密码与原密码一致",null);
+        if (userServiceImpl.UpdatePassword(userId,oldpassword,newpassword)) {
+            return JsonResult.success("修改成功");
+        } else {
+            return JsonResult.fail("原密码错误");
         }
+
+
+
+    }
 
 }

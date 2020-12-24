@@ -76,4 +76,6 @@ public class UserServiceImpl {
     }
     //修改好友备注
     public boolean ChangeNote(String userId, String friendId,String note) { return userDao.ChangeNote(userId,friendId,note); }
+    //修改密码
+    public boolean UpdatePassword(String userId,String oldpassword, String newpassword){return userDao.UpdatePassword(userId, oldpassword, newpassword);}
 }
