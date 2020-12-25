@@ -342,6 +342,8 @@ public class UserController2 {
         String userId = (String) map.get("userId");
         String oldpassword= (String) map.get("oldpassword");
         String newpassword = (String) map.get("newpassword");
+        if(newpassword.equals(""))
+            return JsonResult.error("新密码不能为空",null);
         if(oldpassword.equals(newpassword))
             return JsonResult.error("新密码与原密码一致",null);
         if (userServiceImpl.UpdatePassword(userId,oldpassword,newpassword)) {
