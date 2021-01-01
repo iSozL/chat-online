@@ -4,6 +4,7 @@ web程序设计大作业
 ### Client
 
 **需要安装 node 环境**
+**需要安装 webpack && webpack-cli**
 
 ------
 
